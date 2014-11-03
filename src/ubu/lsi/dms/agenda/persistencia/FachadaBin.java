@@ -16,7 +16,7 @@ import ubu.lsi.dms.agenda.modelo.TipoContacto;
 public class FachadaBin implements FachadaPersistente {
 
 	@Override
-	public Contacto getContacto(String apellido) {
+	public Collection<Contacto> getContacto(String apellido) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -28,27 +28,9 @@ public class FachadaBin implements FachadaPersistente {
 	}
 
 	@Override
-	public TipoContacto getTipoContacto() {
+	public Collection<TipoContacto> getTipoContacto() {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	@Override
-	public void updateContacto(Contacto contacto) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void updateLlamada(Llamada llamada) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void updateTipoContacto() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -64,7 +46,25 @@ public class FachadaBin implements FachadaPersistente {
 	}
 
 	@Override
-	public void insertTipoContacto(int idTipoContacto, String TipoContacto) {
+	public void insertTipoContacto(String TipoContacto) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateContacto(Contacto contacto) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateLlamada(Llamada llamada) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateTipoContacto(TipoContacto tipoContacto) {
 		// TODO Auto-generated method stub
 		
 	}

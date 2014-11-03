@@ -17,22 +17,22 @@ import ubu.lsi.dms.agenda.modelo.TipoContacto;
  */
 public interface FachadaPersistente {
 
-	public Contacto getContacto(String apellido);
+	public Collection<Contacto> getContacto(String apellido);
 
 	public Collection<Llamada> getLlamadas(Contacto contacto);
 
-	public TipoContacto getTipoContacto();
+	public Collection<TipoContacto> getTipoContacto();
 
-	public void updateContacto(Contacto contacto);
-
-	public void updateLlamada(Llamada llamada);
-
-	public void updateTipoContacto();
-	
 	public void insertContacto(Contacto contacto);
-	
+
 	public void insertLlamada(Llamada llamada);
+
+	public void insertTipoContacto(String TipoContacto);
 	
-	public void insertTipoContacto(int idTipoContacto, String TipoContacto);
+	public void updateContacto(Contacto contacto);
+	
+	public void updateLlamada(Llamada llamada);
+	
+	public void updateTipoContacto(TipoContacto tipoContacto);
 
 }
