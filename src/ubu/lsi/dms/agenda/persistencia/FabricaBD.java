@@ -14,7 +14,6 @@ public class FabricaBD implements FabricaPersistencia {
 	 */
 	@Override
 	public FachadaPersistente createFachadaPersistente() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	
