@@ -152,13 +152,52 @@ public class FachadaBin implements FachadaPersistente {
 
 	@Override
 	public void updateLlamada(Llamada llamada) {
-		// TODO Auto-generated method stub
-
+		Collection<Llamada> llamadas;
+		try {
+			ObjectInputStream in = new ObjectInputStream( new FileInputStream (filellamadas.toString()));
+			llamadas = (Collection<Llamada>) in.readObject();
+			in.close();			
+		
+		for (Llamada l : llamadas ){
+			if (l.getIdLlamada() == llamada.getIdLlamada()){
+				llamadas.remove(l);
+				llamadas.add(llamada);			
+			}
+			
+			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filellamadas.toString()));
+			out.writeObject(llamadas);
+			out.close();
+		}
+		
+		} catch (ClassNotFoundException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void updateTipoContacto(TipoContacto tipoContacto) {
-		// TODO Auto-generated method stub
+		Collection<TipoContacto> tipos;
+		try {
+			ObjectInputStream in = new ObjectInputStream( new FileInputStream (fileTipoContacto.toString()));
+			tipos = (Collection<TipoContacto>) in.readObject();
+			in.close();			
+		
+		for (TipoContacto t : tipos ){
+			if (t.getIdTipoContacto() == tipoContacto.getIdTipoContacto()){
+				tipos.remove(t);
+				tipos.add(tipoContacto);			
+			}
+			
+			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fileTipoContacto.toString()));
+			out.writeObject(tipos);
+			out.close();
+		}
+		
+		} catch (ClassNotFoundException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
 
 	}
 
