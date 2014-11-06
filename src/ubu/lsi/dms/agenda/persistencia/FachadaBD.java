@@ -1,16 +1,12 @@
-/**
- * 
- */
 package ubu.lsi.dms.agenda.persistencia;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.logging.Logger;
-
 import ubu.lsi.dms.agenda.modelo.Contacto;
 import ubu.lsi.dms.agenda.modelo.Llamada;
 import ubu.lsi.dms.agenda.modelo.TipoContacto;
@@ -64,12 +60,13 @@ public class FachadaBD implements FachadaPersistente {
 	@Override
 	public Collection<Contacto> getContacto(String apellido) {
 		Collection<Contacto> contactos = new ArrayList<Contacto>();
-		Connection conn = null;
 		PreparedStatement contacts = null;
 		PreparedStatement tipo = null;
 		ResultSet rs = null;
 		ResultSet rs2 = null;
-		try {
+		String URL="jdbc:hsqldb:hsql://localhost";
+		try {			
+			Connection conn = DriverManager.getConnection(URL, FabricaBD.getUsuario(), FabricaBD.getContraseña());
 			contacts = conn.prepareStatement("SELECT * FROM contactos WHERE Apellidos=?");
 			contacts.setString(1,apellido);
 			rs = contacts.executeQuery();
@@ -122,10 +119,11 @@ public class FachadaBD implements FachadaPersistente {
 	@Override
 	public Collection<Llamada> getLlamadas(Contacto contacto) {
 		Collection<Llamada> llamadas = new ArrayList<Llamada>();
-		Connection conn = null;
 		PreparedStatement calls = null;
 		ResultSet rs = null;
+		String URL="jdbc:hsqldb:hsql://localhost";
 		try {
+			Connection conn = DriverManager.getConnection(URL, FabricaBD.getUsuario(), FabricaBD.getContraseña());
 			calls = conn.prepareStatement("SELECT * FROM Llamadas WHERE IdContacto=?");
 			calls.setInt(1, contacto.getIdContacto());
 			rs = calls.executeQuery();
@@ -152,10 +150,11 @@ public class FachadaBD implements FachadaPersistente {
 	@Override
 	public Collection<TipoContacto> getTipoContacto() {
 		Collection<TipoContacto> tipoContacto = new ArrayList<TipoContacto>();
-		Connection conn = null;
 		PreparedStatement type = null;
 		ResultSet rs = null;
-		try {
+		String URL="jdbc:hsqldb:hsql://localhost";
+		try {			
+			Connection conn = DriverManager.getConnection(URL, FabricaBD.getUsuario(), FabricaBD.getContraseña());
 			type = conn.prepareStatement("SELECT * FROM tipoContacto");		
 			rs=type.executeQuery();
 			while (rs.next()) {				
@@ -177,10 +176,11 @@ public class FachadaBD implements FachadaPersistente {
 	 */
 	@Override
 	public void insertContacto(Contacto contacto) {
-		Connection conn = null;
 		PreparedStatement st_insert_Contacto = null;
 		PreparedStatement count_Contacto=null;
-		try{	
+		String URL="jdbc:hsqldb:hsql://localhost";
+		try{
+			Connection conn = DriverManager.getConnection(URL, FabricaBD.getUsuario(), FabricaBD.getContraseña());
 			count_Contacto=conn.prepareStatement("SELECT COUNT(*) FROM Contactos");
 			st_insert_Contacto = conn.prepareStatement(
 					"INSERT INTO Contactos VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
@@ -216,10 +216,11 @@ public class FachadaBD implements FachadaPersistente {
 	 */
 	@Override
 	public void insertLlamada(Llamada llamada) {
-		Connection conn = null;
 		PreparedStatement count_Llamadas=null;
 		PreparedStatement st_insert_Llamada = null;
-		try{		
+		String URL="jdbc:hsqldb:hsql://localhost";
+		try{	
+			Connection conn = DriverManager.getConnection(URL, FabricaBD.getUsuario(), FabricaBD.getContraseña());
 			count_Llamadas=conn.prepareStatement("SELECT COUNT(*) FROM Llamadas");
 			st_insert_Llamada = conn.prepareStatement(
 					"INSERT INTO LLamadas VALUES (?,?,?,?,?)");
@@ -243,10 +244,11 @@ public class FachadaBD implements FachadaPersistente {
 	 */
 	@Override
 	public void insertTipoContacto(String TipoContacto){
-		Connection conn = null;
 		PreparedStatement count_TipoContacto=null;
 		PreparedStatement st_insert_Tiposdecontacto = null;
+		String URL="jdbc:hsqldb:hsql://localhost";
 		try{		
+			Connection conn = DriverManager.getConnection(URL, FabricaBD.getUsuario(), FabricaBD.getContraseña());
 			count_TipoContacto=conn.prepareStatement("SELECT COUNT(*) FROM Llamadas");
 			st_insert_Tiposdecontacto = conn.prepareStatement(
 					"INSERT INTO Tiposdecontacto VALUES (?,?)");
