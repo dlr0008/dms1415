@@ -5,6 +5,7 @@ package ubu.lsi.dms.agenda.persistencia;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -120,14 +121,33 @@ public class FachadaBin implements FachadaPersistente {
 
 	@Override
 	public void insertTipoContacto(String TipoContacto) {
-		// TODO Auto-generated method stub
+		
 
 	}
 
 	@Override
 	public void updateContacto(Contacto contacto) {
-		// TODO Auto-generated method stub
-
+		Collection<Contacto> contactos;
+		try {
+			ObjectInputStream in = new ObjectInputStream( new FileInputStream (fileContactos.toString()));
+			contactos = (Collection<Contacto>) in.readObject();
+			in.close();			
+		
+		for (Contacto c : contactos ){
+			if (c.getIdContacto() == contacto.getIdContacto()){
+				contactos.remove(c);
+				contactos.add(contacto);			
+			}
+			
+			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fileContactos.toString()));
+			out.writeObject(contactos);
+			out.close();
+		}
+		
+		} catch (ClassNotFoundException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
