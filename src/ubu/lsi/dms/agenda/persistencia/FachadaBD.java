@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.logging.Logger;
 
 import ubu.lsi.dms.agenda.modelo.Contacto;
 import ubu.lsi.dms.agenda.modelo.Llamada;
@@ -19,6 +20,28 @@ import ubu.lsi.dms.agenda.modelo.TipoContacto;
  *
  */
 public class FachadaBD implements FachadaPersistente {
+	
+	private static Logger l = null;
+	
+	int idContacto=0;
+	String nombre=null;
+	String apellidos=null;
+	String estimado=null;
+	String direccion=null;
+	String ciudad=null;
+	String prov=null;
+	String codPostal=null;
+	String region=null;
+	String pais=null;;
+	String nombreCompania=null;
+	String cargo=null;
+	String telefonoTrabajo=null;
+	String extensionTrabajo=null;
+	String telefonoMovil=null;
+	String numFax=null;
+	String nomCorreoElectronico=null;
+	int IdTipoContacto=0; //Esto tiene que ser TipoContacto
+	String notas=null;
 
 	@Override
 	public Collection<Contacto> getContacto(String apellido) {
@@ -32,25 +55,25 @@ public class FachadaBD implements FachadaPersistente {
 			contacts = conn.prepareStatement("select * from contactos");
 			rs = contacts.executeQuery();
 			while (rs.next()) {
-				int idContacto=rs.getInt("IdContacto");
-				String nombre=rs.getString("Nombre");
-				String apellidos=rs.getString("Apellidos");
-				String estimado=rs.getString("Estimado");
-				String direccion=rs.getString("Direccion");
-				String ciudad=rs.getString("Ciudad");
-				String prov=rs.getString("Prov");
-				String codPostal=rs.getString("CodPostal");
-				String region=rs.getString("Region");
-				String pais=rs.getString("Pais");
-				String nombreCompania=rs.getString("NombreCompania");
-				String cargo=rs.getString("Cargo");
-				String telefonoTrabajo=rs.getString("TelefonoTrabajo");
-				String extensionTrabajo=rs.getString("ExtensionTrabajo");
-				String telefonoMovil=rs.getString("TelefonoMovil");
-				String numFax=rs.getString("NumFax");
-				String nomCorreoElectronico=rs.getString("NomCorreoElectronico");
-				int IdTipoContacto=rs.getInt("IdTipoContacto");
-				String notas=rs.getString("Notas");
+				idContacto=rs.getInt("IdContacto");
+				nombre=rs.getString("Nombre");
+				apellidos=rs.getString("Apellidos");
+				estimado=rs.getString("Estimado");
+				direccion=rs.getString("Direccion");
+				ciudad=rs.getString("Ciudad");
+				prov=rs.getString("Prov");
+				codPostal=rs.getString("CodPostal");
+				region=rs.getString("Region");
+				pais=rs.getString("Pais");
+				nombreCompania=rs.getString("NombreCompania");
+				cargo=rs.getString("Cargo");
+				telefonoTrabajo=rs.getString("TelefonoTrabajo");
+				extensionTrabajo=rs.getString("ExtensionTrabajo");
+				telefonoMovil=rs.getString("TelefonoMovil");
+				numFax=rs.getString("NumFax");
+				nomCorreoElectronico=rs.getString("NomCorreoElectronico");
+				IdTipoContacto=rs.getInt("IdTipoContacto");
+				notas=rs.getString("Notas");
 				tipo = conn.prepareStatement("select tipoContacto from tipoContacto where IdTipoContacto=?");
 				tipo.setInt(1, IdTipoContacto);
 				rs2=tipo.executeQuery();
@@ -118,19 +141,75 @@ public class FachadaBD implements FachadaPersistente {
 
 	@Override
 	public void insertContacto(Contacto contacto) {
-		// TODO Auto-generated method stub
+		Connection conn = null;
+		PreparedStatement ins=null;
+		PreparedStatement st_insert_Contacto = null;
+		try{			
+			st_insert_Contacto = conn.prepareStatement(
+					"INSERT INTO Contactos VALUES (seq_facturas.nextval,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			st_insert_Contacto.setString(1,contacto.nombre);
+			st_insert_Contacto.setString(2,contacto.apellidos);
+			st_insert_Contacto.setString(3,contacto.estimado);
+			st_insert_Contacto.setString(4,contacto.direccion);
+			st_insert_Contacto.setString(5,contacto.ciudad);
+			st_insert_Contacto.setString(6,contacto.prov);
+			st_insert_Contacto.setString(7,contacto.codPostal);
+			st_insert_Contacto.setString(8,contacto.region);
+			st_insert_Contacto.setString(9,contacto.pais);
+			st_insert_Contacto.setString(10,contacto.nombreCompania);
+			st_insert_Contacto.setString(11,contacto.cargo);
+			st_insert_Contacto.setString(12,contacto.telefonoTrabajo);
+			st_insert_Contacto.setString(13,contacto.extensionTrabajo);
+			st_insert_Contacto.setString(14,contacto.telefonoMovil);
+			st_insert_Contacto.setString(15,contacto.numFax);
+			st_insert_Contacto.setString(16,contacto.nomCorreoElectronico);
+			st_insert_Contacto.setInt(17,contacto.tipoContacto);
+			st_insert_Contacto.setString(18,contacto.notas);	
+		}catch(SQLException e){
+			System.err.println(e.getMessage());
+			System.err.println(e.getStackTrace());
+		}
 		
 	}
 
 	@Override
 	public void insertLlamada(Llamada llamada) {
-		// TODO Auto-generated method stub
+		Connection conn = null;
+		PreparedStatement ins=null;
+		PreparedStatement st_insert_Llamada = null;
+		try{		
+			
+			st_insert_Llamada = conn.prepareStatement(
+					"INSERT INTO LLamadas VALUES (seq_facturas.nextval,?,?,?,?)");
+			st_insert_Llamada.setInt(1,llamada.contacto); //el idContacto es de tipo Contacto
+			st_insert_Llamada.setString(2,llamada.fechaLlamada);
+			st_insert_Llamada.setString(3,llamada.asunto);
+			st_insert_Llamada.setString(4,llamada.notas);
+			
+		}catch(SQLException e){
+			System.err.println(e.getMessage());
+			System.err.println(e.getStackTrace());
+		}
 		
 	}
+		
 
 	@Override
 	public void insertTipoContacto(String TipoContacto) {
-		// TODO Auto-generated method stub
+		Connection conn = null;
+		PreparedStatement ins=null;
+		PreparedStatement st_insert_Tiposdecontacto = null;
+		try{		
+			
+			st_insert_Tiposdecontacto = conn.prepareStatement(
+					"INSERT INTO Tiposdecontacto VALUES (seq_facturas.nextval,?)");
+			st_insert_Tiposdecontacto.setString(1,TipoContacto);
+
+			
+		}catch(SQLException e){
+			System.err.println(e.getMessage());
+			System.err.println(e.getStackTrace());
+		}
 		
 	}
 

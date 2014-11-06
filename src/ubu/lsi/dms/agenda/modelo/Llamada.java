@@ -9,10 +9,10 @@ import java.io.Serializable;
 @SuppressWarnings("serial")
 public class Llamada implements Serializable{
 	
-	 private int idLlamada;
-	 private Contacto contacto;
-	 private String fechaLlamada ;
-	 private String asunto,notas;
+	 public int idLlamada;
+	 public Contacto contacto;
+	 public String fechaLlamada ;
+	 public String asunto,notas;
 	 
 	 
 

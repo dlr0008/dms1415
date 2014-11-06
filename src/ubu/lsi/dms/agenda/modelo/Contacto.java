@@ -9,12 +9,12 @@ import java.io.Serializable;
  */
 @SuppressWarnings("serial")
 public class Contacto implements Serializable{
-	private int idContacto;
-	private String  nombre ,  apellidos ,  estimado ,  direccion ,  ciudad ,  prov ,  codPostal ,  region ,
+	public int idContacto;
+	public String  nombre ,  apellidos ,  estimado ,  direccion ,  ciudad ,  prov ,  codPostal ,  region ,
 	pais ,  nombreCompania ,  cargo ,  telefonoTrabajo ,  extensionTrabajo ,  telefonoMovil ,  numFax ,
 	nomCorreoElectronico, notas;
 	
-	private TipoContacto tipoContacto;
+	public TipoContacto tipoContacto;
 	
 	public Contacto(int idContacto, String nombre, String apellidos,
 			String estimado, String direccion, String ciudad, String prov,
