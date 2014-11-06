@@ -18,7 +18,6 @@ public class FabricaBin implements FabricaPersistencia {
 	 */
 	@Override
 	public FachadaPersistente createFachadaPersistente() {
-		// TODO Auto-generated method stub
-		return null;
+		return FachadaBin.getInstance();		
 	}
 }
