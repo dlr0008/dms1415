@@ -15,33 +15,39 @@ public class initfiles {
 
 	public static void main(String[] args) throws IOException,
 			ClassNotFoundException {
-		String fileContactos = "." + File.separator + "res"
-				+ File.separator + "contactos.dat";
+		String fileContactos = "." + File.separator + "res" + File.separator
+				+ "contactos.dat";
 		String filellamadas = "." + File.separator + "res" + File.separator
 				+ "contactos.dat";
 		Collection<Contacto> contactos = new ArrayList<Contacto>();
 		iniContactos(contactos);
 		FabricaBin fabricabinaria = new FabricaBin();
-		FachadaPersistente fachadabinaria = fabricabinaria.createFachadaPersistente();
-		
-		contactos = fachadabinaria.getContacto("hola");
+		FachadaPersistente fachadabinaria = fabricabinaria
+				.createFachadaPersistente();
 		for (Contacto c : contactos) {
-			Logger.getLogger("global").info(c.toString());
+			System.out.println(c.toString());
+			fachadabinaria.insertContacto(c);
 		}
+		Collection<Contacto> contacto1 = fachadabinaria
+				.getContacto("Apellidos001");
+
+		for (Contacto cont : contacto1) {
+			System.out.println(cont.toString());
+		}
+
 	}
 
 	private static void iniContactos(Collection<Contacto> contactos) {
-		Contacto contacto = null;
-		for (int i = 1; i < 10; i++) {
-			contacto = new Contacto("nombre " + i, " apellido " + i,
-					" telefono " + i);
-			Llamada llamada = null;
-			for (int j = 1; j < 5; j++) {
-				llamada = new Llamada("Asunto " + i + j);
-				contacto.addLlamada(llamada);
-			}
-			contactos.add(contacto);
-		}
-	}
+		TipoContacto tipoContacto = new TipoContacto(1, "Tipo001");
+		for (int i = 1; i <= 9; i++)
+			contactos.add(new Contacto(i, "Nombre00" + i, "Apellidos00" + i,
+					"Estimado00" + i, " Direccion00" + i, "Ciudad00" + i,
+					"Prov00" + i, "CodPostal000" + i, "Region000" + i,
+					"Pais000" + i, "NombreCompania000" + i, "Cargo000" + i,
+					"TelefonoTrabajo00" + i, "ExtensionTrabajo00" + i,
+					"TelefonoMovil00" + i, "NumFax00" + i,
+					" NomCorreoElectronico00" + i + "@ubu.es", "Notas00" + i,
+					tipoContacto));
 
+	}
 }
