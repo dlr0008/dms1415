@@ -99,7 +99,7 @@ public class FachadaBin implements FachadaPersistente {
 			out.writeObject(contacto);
 			out.close();
 		} catch (IOException E) {
-			System.err.println("No se pudo insetar el contacto");
+			System.err.println("No se pudo insertar el contacto");
 
 		}
 
@@ -113,7 +113,7 @@ public class FachadaBin implements FachadaPersistente {
 			out.writeObject(llamada);
 			out.close();
 		} catch (Exception E) {
-			System.err.println("No se pudo insetar el contacto");
+			System.err.println("No se pudo insertar la llamada");
 
 		}
 
@@ -121,7 +121,16 @@ public class FachadaBin implements FachadaPersistente {
 
 	@Override
 	public void insertTipoContacto(String TipoContacto) {
-		
+		try {
+			ObjectOutputStream out = new ObjectOutputStream(
+					new FileOutputStream(fileTipoContacto.toString()));
+			out.writeObject(TipoContacto);
+			out.close();
+		} catch (Exception E) {
+			System.err.println("No se pudo insertar el tipo de Contacto");
+
+		}
+
 
 	}
 
