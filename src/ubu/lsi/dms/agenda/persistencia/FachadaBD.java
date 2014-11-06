@@ -225,7 +225,7 @@ public class FachadaBD implements FachadaPersistente {
 			st_insert_Llamada = conn.prepareStatement(
 					"INSERT INTO LLamadas VALUES (?,?,?,?,?)");
 			st_insert_Llamada.setInt(1,Integer.parseInt(count_Llamadas.toString())+1);
-			st_insert_Llamada.setInt(2,llamada.getContacto().getTipoContacto().getIdTipoContacto()); 
+			st_insert_Llamada.setInt(2,llamada.getContacto().getIdContacto()); 
 			st_insert_Llamada.setString(3,llamada.getFechaLlamada());
 			st_insert_Llamada.setString(4,llamada.getAsunto());
 			st_insert_Llamada.setString(5,llamada.getNotas());
@@ -269,8 +269,40 @@ public class FachadaBD implements FachadaPersistente {
 	 */
 	@Override
 	public void updateContacto(Contacto contacto) {
-		// TODO Auto-generated method stub
+		String URL = "jdbc:hsqldb:hsql://localhost";
+		try {
+			Connection conn = DriverManager.getConnection(URL, FabricaBD.getUsuario(), FabricaBD.getContraseña());
+			PreparedStatement st_update_Contacto = null;
 		
+			st_update_Contacto=conn.prepareStatement("UPDATE Contactos"
+					+ " SET IdContacto=?, Nombre=?, Apellidos=?, Estimado=?, Direccion=?, Ciudad=?, Prov=?, CodPostal=?, Region=?, Pais=?, NombreCompania=?, Cargo=?, TelefonoTrabajo=?, ExtesionTrabajo=?, TelefonoMovil=?, NumFax=?, NomCorreoElectronico=?, IdTipoContacto=?, Notas=?"
+					+ " WHERE IdContacto=?");
+			
+			st_update_Contacto.setInt(1, contacto.getIdContacto());
+			st_update_Contacto.setString(2,contacto.getNombre());
+			st_update_Contacto.setString(3,contacto.getApellidos());
+			st_update_Contacto.setString(4,contacto.getEstimado());
+			st_update_Contacto.setString(5,contacto.getDireccion());
+			st_update_Contacto.setString(6,contacto.getCiudad());
+			st_update_Contacto.setString(7,contacto.getProv());
+			st_update_Contacto.setString(8,contacto.getCodPostal());
+			st_update_Contacto.setString(9,contacto.getRegion());
+			st_update_Contacto.setString(10,contacto.getPais());
+			st_update_Contacto.setString(11,contacto.getNombreCompania());
+			st_update_Contacto.setString(12,contacto.getCargo());
+			st_update_Contacto.setString(13,contacto.getTelefonoTrabajo());
+			st_update_Contacto.setString(14,contacto.getExtensionTrabajo());
+			st_update_Contacto.setString(15,contacto.getTelefonoMovil());
+			st_update_Contacto.setString(16,contacto.getNumFax());
+			st_update_Contacto.setString(17,contacto.getNomCorreoElectronico());
+			st_update_Contacto.setInt(18,contacto.getTipoContacto().getIdTipoContacto());
+			st_update_Contacto.setString(19,contacto.getNotas());
+			st_update_Contacto.setInt(20, contacto.getIdContacto());
+			
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+			System.err.println(e.getStackTrace());
+		}
 	}
 	
 	/*
@@ -279,7 +311,25 @@ public class FachadaBD implements FachadaPersistente {
 	 */
 	@Override
 	public void updateLlamada(Llamada llamada) {
-		// TODO Auto-generated method stub
+		String URL = "jdbc:hsqldb:hsql://localhost";
+		try {
+			Connection conn = DriverManager.getConnection(URL, FabricaBD.getUsuario(), FabricaBD.getContraseña());
+			PreparedStatement st_update_Llamada = null;
+			
+			st_update_Llamada=conn.prepareStatement("UPDATE Llamadas"
+					+ " SET IdLlamada=?, IdContacto=?, FechaLlamada=?, Asunto=?, Notas=?"
+					+ " WHERE IdLlamada=?");
+			st_update_Llamada.setInt(1,llamada.getIdLlamada());
+			st_update_Llamada.setInt(2,llamada.getContacto().getIdContacto()); 
+			st_update_Llamada.setString(3,llamada.getFechaLlamada());
+			st_update_Llamada.setString(4,llamada.getAsunto());
+			st_update_Llamada.setString(5,llamada.getNotas());
+			st_update_Llamada.setInt(6, llamada.getIdLlamada());
+			
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+			System.err.println(e.getStackTrace());
+		}
 		
 	}
 	
@@ -289,7 +339,21 @@ public class FachadaBD implements FachadaPersistente {
 	 */
 	@Override
 	public void updateTipoContacto(TipoContacto tipoContacto) {
-		// TODO Auto-generated method stub
+		String URL = "jdbc:hsqldb:hsql://localhost";
+		try {
+			Connection conn = DriverManager.getConnection(URL, FabricaBD.getUsuario(), FabricaBD.getContraseña());
+			PreparedStatement st_update_tipoContacto = null;
+			
+			st_update_tipoContacto=conn.prepareStatement("UPDATE Tiposdecontacto"
+					+ " SET IdTipoContacto=?, TipoContacto=?"
+					+ " WHERE IdTipoContacto=?");
+			st_update_tipoContacto.setInt(1,tipoContacto.getIdTipoContacto());
+			st_update_tipoContacto.setString(2,tipoContacto.getTipoContacto());
+			
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+			System.err.println(e.getStackTrace());
+		}
 		
 	}
 
