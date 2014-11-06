@@ -20,6 +20,26 @@ public class TipoContacto implements Serializable{
 	}
 
 
+	public int getIdTipoContacto() {
+		return idTipoContacto;
+	}
+
+
+	public void setIdTipoContacto(int idTipoContacto) {
+		this.idTipoContacto = idTipoContacto;
+	}
+
+
+	public String getTipoContacto() {
+		return TipoContacto;
+	}
+
+
+	public void setTipoContacto(String tipoContacto) {
+		TipoContacto = tipoContacto;
+	}
+
+
 	@Override
 	public String toString() {
 		return "TipoContacto [idTipoContacto=" + idTipoContacto

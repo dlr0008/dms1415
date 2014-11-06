@@ -9,10 +9,10 @@ import java.io.Serializable;
 @SuppressWarnings("serial")
 public class Llamada implements Serializable{
 	
-	 public int idLlamada;
-	 public Contacto contacto;
-	 public String fechaLlamada ;
-	 public String asunto,notas;
+	 private int idLlamada;
+	 private Contacto contacto;
+	 private String fechaLlamada ;
+	 private String asunto,notas;
 	 
 	 
 
@@ -32,6 +32,49 @@ public class Llamada implements Serializable{
 				+ ", fechaLlamada=" + fechaLlamada + ", asunto=" + asunto
 				+ ", notas=" + notas + "]";
 	}
+
+	public int getIdLlamada() {
+		return idLlamada;
+	}
+
+	public void setIdLlamada(int idLlamada) {
+		this.idLlamada = idLlamada;
+	}
+
+	public Contacto getContacto() {
+		return contacto;
+	}
+
+	public void setContacto(Contacto contacto) {
+		this.contacto = contacto;
+	}
+
+	public String getFechaLlamada() {
+		return fechaLlamada;
+	}
+
+	public void setFechaLlamada(String fechaLlamada) {
+		this.fechaLlamada = fechaLlamada;
+	}
+
+	public String getAsunto() {
+		return asunto;
+	}
+
+	public void setAsunto(String asunto) {
+		this.asunto = asunto;
+	}
+
+	public String getNotas() {
+		return notas;
+	}
+
+	public void setNotas(String notas) {
+		this.notas = notas;
+	}
+	
+	
+	
 
 	 
 	 

@@ -9,13 +9,165 @@ import java.io.Serializable;
  */
 @SuppressWarnings("serial")
 public class Contacto implements Serializable{
-	public int idContacto;
-	public String  nombre ,  apellidos ,  estimado ,  direccion ,  ciudad ,  prov ,  codPostal ,  region ,
+	private int idContacto;
+	private String  nombre ,  apellidos ,  estimado ,  direccion ,  ciudad ,  prov ,  codPostal ,  region ,
 	pais ,  nombreCompania ,  cargo ,  telefonoTrabajo ,  extensionTrabajo ,  telefonoMovil ,  numFax ,
 	nomCorreoElectronico, notas;
 	
 	public TipoContacto tipoContacto;
 	
+	public int getIdContacto() {
+		return idContacto;
+	}
+
+	public void setIdContacto(int idContacto) {
+		this.idContacto = idContacto;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getApellidos() {
+		return apellidos;
+	}
+
+	public void setApellidos(String apellidos) {
+		this.apellidos = apellidos;
+	}
+
+	public String getEstimado() {
+		return estimado;
+	}
+
+	public void setEstimado(String estimado) {
+		this.estimado = estimado;
+	}
+
+	public String getDireccion() {
+		return direccion;
+	}
+
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
+	}
+
+	public String getCiudad() {
+		return ciudad;
+	}
+
+	public void setCiudad(String ciudad) {
+		this.ciudad = ciudad;
+	}
+
+	public String getProv() {
+		return prov;
+	}
+
+	public void setProv(String prov) {
+		this.prov = prov;
+	}
+
+	public String getCodPostal() {
+		return codPostal;
+	}
+
+	public void setCodPostal(String codPostal) {
+		this.codPostal = codPostal;
+	}
+
+	public String getRegion() {
+		return region;
+	}
+
+	public void setRegion(String region) {
+		this.region = region;
+	}
+
+	public String getPais() {
+		return pais;
+	}
+
+	public void setPais(String pais) {
+		this.pais = pais;
+	}
+
+	public String getNombreCompania() {
+		return nombreCompania;
+	}
+
+	public void setNombreCompania(String nombreCompania) {
+		this.nombreCompania = nombreCompania;
+	}
+
+	public String getCargo() {
+		return cargo;
+	}
+
+	public void setCargo(String cargo) {
+		this.cargo = cargo;
+	}
+
+	public String getTelefonoTrabajo() {
+		return telefonoTrabajo;
+	}
+
+	public void setTelefonoTrabajo(String telefonoTrabajo) {
+		this.telefonoTrabajo = telefonoTrabajo;
+	}
+
+	public String getExtensionTrabajo() {
+		return extensionTrabajo;
+	}
+
+	public void setExtensionTrabajo(String extensionTrabajo) {
+		this.extensionTrabajo = extensionTrabajo;
+	}
+
+	public String getTelefonoMovil() {
+		return telefonoMovil;
+	}
+
+	public void setTelefonoMovil(String telefonoMovil) {
+		this.telefonoMovil = telefonoMovil;
+	}
+
+	public String getNumFax() {
+		return numFax;
+	}
+
+	public void setNumFax(String numFax) {
+		this.numFax = numFax;
+	}
+
+	public String getNomCorreoElectronico() {
+		return nomCorreoElectronico;
+	}
+
+	public void setNomCorreoElectronico(String nomCorreoElectronico) {
+		this.nomCorreoElectronico = nomCorreoElectronico;
+	}
+
+	public String getNotas() {
+		return notas;
+	}
+
+	public void setNotas(String notas) {
+		this.notas = notas;
+	}
+
+	public TipoContacto getTipoContacto() {
+		return tipoContacto;
+	}
+
+	public void setTipoContacto(TipoContacto tipoContacto) {
+		this.tipoContacto = tipoContacto;
+	}
+
 	public Contacto(int idContacto, String nombre, String apellidos,
 			String estimado, String direccion, String ciudad, String prov,
 			String codPostal, String region, String pais,
