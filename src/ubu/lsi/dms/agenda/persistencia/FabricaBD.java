@@ -4,19 +4,16 @@
 package ubu.lsi.dms.agenda.persistencia;
 
 /**
- * @author alumno
- *
+ * Fabrica para crea la fachada BD
+ * 
+ * @author <A HREF="mailto:jld0016@alu.ubu.es">Jorge Laguna</A>
+ * @author <A HREF="mailto:rmp0046@alu.ubu.es">Roberto Miranda</A>
+ * @author <A HREF="mailto:aam0093@alu.ubu.es">Asier Alonso</A>
+ * @author <A HREF="mailto:dlr0008@alu.ubu.es">Daniel Lozano</A> 
+ * @version 1.0
+ * 
  */
 public class FabricaBD implements FabricaPersistencia {
-
-	/* (non-Javadoc)
-	 * @see ubu.lsi.dms.agenda.persistencia.FabricaPersistencia#crearFachadaPersistente()
-	 */
-	@Override
-	public FachadaPersistente createFachadaPersistente() {
-		return null;
-	}
-	
 	/**
 	 * Servidor donde está funcionado el SGBD.
 	 */
@@ -47,6 +44,14 @@ public class FabricaBD implements FabricaPersistencia {
 	 */
 	private static final String baseDeDatos = "Agenda";
 
+	/* (non-Javadoc)
+	 * @see ubu.lsi.dms.agenda.persistencia.FabricaPersistencia#crearFachadaPersistente()
+	 */
+	@Override
+	public FachadaPersistente createFachadaPersistente() {
+		return FachadaBD.getInstance();
+	}	
+	
 	public static String getServidor() {
 		return servidor;
 	}
