@@ -11,6 +11,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Collection;
 
+import sun.security.jca.GetInstance;
 import ubu.lsi.dms.agenda.modelo.Contacto;
 import ubu.lsi.dms.agenda.modelo.Llamada;
 import ubu.lsi.dms.agenda.modelo.TipoContacto;
@@ -24,9 +25,19 @@ public class FachadaBin implements FachadaPersistente {
 	private String fileContactos = "." + File.separator + "res"
 			+ File.separator + "contactos.dat";
 	private String filellamadas = "." + File.separator + "res" + File.separator
-			+ "contactos.dat";
+			+ "llamadas.dat";
 	private String fileTipoContacto = "." + File.separator + "res"
-			+ File.separator + "contactos.dat";
+			+ File.separator + "tipos.dat";
+	private static final FachadaPersistente fachadaBin = new FachadaBin();
+
+	public FachadaBin() {
+	}
+
+	public static FachadaPersistente getInstance() {
+
+		return fachadaBin;
+
+	}
 
 	@Override
 	public Collection<Contacto> getContacto(String apellido) {
