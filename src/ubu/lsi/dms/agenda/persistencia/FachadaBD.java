@@ -34,27 +34,25 @@ public class FachadaBD implements FachadaPersistente {
 	  return instance;
 	 }
 	
-	private static Logger l = null;
-	
-	int idContacto=0;
-	String nombre=null;
-	String apellidos=null;
-	String estimado=null;
-	String direccion=null;
-	String ciudad=null;
-	String prov=null;
-	String codPostal=null;
-	String region=null;
-	String pais=null;;
-	String nombreCompania=null;
-	String cargo=null;
-	String telefonoTrabajo=null;
-	String extensionTrabajo=null;
-	String telefonoMovil=null;
-	String numFax=null;
-	String nomCorreoElectronico=null;
-	int IdTipoContacto=0;
-	String notas=null;
+	private int idContacto=0;
+	private String nombre=null;
+	private String apellidos=null;
+	private String estimado=null;
+	private String direccion=null;
+	private String ciudad=null;
+	private String prov=null;
+	private String codPostal=null;
+	private String region=null;
+	private String pais=null;;
+	private String nombreCompania=null;
+	private String cargo=null;
+	private String telefonoTrabajo=null;
+	private String extensionTrabajo=null;
+	private String telefonoMovil=null;
+	private String numFax=null;
+	private String nomCorreoElectronico=null;
+	private int IdTipoContacto=0;
+	private String notas=null;
 	
 	
 	/*
@@ -147,8 +145,9 @@ public class FachadaBD implements FachadaPersistente {
 	}
 
 	/*
-	 * (non-Javadoc)
-	 * @see ubu.lsi.dms.agenda.persistencia.FachadaPersistente#getTipoContacto()
+	 * Descripcion - Devuelve todos los Tipo de Contactos
+	 * @return contactos - Collection de todos los tipos de Contacto.
+	 * @see ubu.lsi.dms.agenda.persistencia.FachadaPersistente#getContacto(java.lang.String)
 	 */
 	@Override
 	public Collection<TipoContacto> getTipoContacto() {
@@ -157,7 +156,7 @@ public class FachadaBD implements FachadaPersistente {
 		PreparedStatement type = null;
 		ResultSet rs = null;
 		try {
-			type = conn.prepareStatement("select * from tipoContacto");		
+			type = conn.prepareStatement("SELECT * FROM tipoContacto");		
 			rs=type.executeQuery();
 			while (rs.next()) {				
 				int IdTipoContacto=rs.getInt("IdTipoContacto");
@@ -172,35 +171,38 @@ public class FachadaBD implements FachadaPersistente {
 		return tipoContacto;
 	}
 	/*
-	 * (non-Javadoc)
-	 * @see ubu.lsi.dms.agenda.persistencia.FachadaPersistente#insertContacto(ubu.lsi.dms.agenda.modelo.Contacto)
+	 * Descripcion - Inserta el Contacto pasado por parametro al final de la Base de Datos
+	 * @param contacto - Contacto a insertar.
+	 * @see ubu.lsi.dms.agenda.persistencia.FachadaPersistente#getContacto(java.lang.String)
 	 */
 	@Override
 	public void insertContacto(Contacto contacto) {
 		Connection conn = null;
-		PreparedStatement ins=null;
 		PreparedStatement st_insert_Contacto = null;
-		try{			
+		PreparedStatement count_Contacto=null;
+		try{	
+			count_Contacto=conn.prepareStatement("SELECT COUNT(*) FROM Contactos");
 			st_insert_Contacto = conn.prepareStatement(
-					"INSERT INTO Contactos VALUES (seq_facturas.nextval,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-			st_insert_Contacto.setString(1,contacto.getNombre());
-			st_insert_Contacto.setString(2,contacto.getApellidos());
-			st_insert_Contacto.setString(3,contacto.getEstimado());
-			st_insert_Contacto.setString(4,contacto.getDireccion());
-			st_insert_Contacto.setString(5,contacto.getCiudad());
-			st_insert_Contacto.setString(6,contacto.getProv());
-			st_insert_Contacto.setString(7,contacto.getCodPostal());
-			st_insert_Contacto.setString(8,contacto.getRegion());
-			st_insert_Contacto.setString(9,contacto.getPais());
-			st_insert_Contacto.setString(10,contacto.getNombreCompania());
-			st_insert_Contacto.setString(11,contacto.getCargo());
-			st_insert_Contacto.setString(12,contacto.getTelefonoTrabajo());
-			st_insert_Contacto.setString(13,contacto.getExtensionTrabajo());
-			st_insert_Contacto.setString(14,contacto.getTelefonoMovil());
-			st_insert_Contacto.setString(15,contacto.getNumFax());
-			st_insert_Contacto.setString(16,contacto.getNomCorreoElectronico());
-			st_insert_Contacto.setInt(17,contacto.getTipoContacto().getIdTipoContacto());
-			st_insert_Contacto.setString(18,contacto.getNotas());	
+					"INSERT INTO Contactos VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			st_insert_Contacto.setInt(1, Integer.parseInt(count_Contacto.toString())+1);
+			st_insert_Contacto.setString(2,contacto.getNombre());
+			st_insert_Contacto.setString(3,contacto.getApellidos());
+			st_insert_Contacto.setString(4,contacto.getEstimado());
+			st_insert_Contacto.setString(5,contacto.getDireccion());
+			st_insert_Contacto.setString(6,contacto.getCiudad());
+			st_insert_Contacto.setString(7,contacto.getProv());
+			st_insert_Contacto.setString(8,contacto.getCodPostal());
+			st_insert_Contacto.setString(9,contacto.getRegion());
+			st_insert_Contacto.setString(10,contacto.getPais());
+			st_insert_Contacto.setString(11,contacto.getNombreCompania());
+			st_insert_Contacto.setString(12,contacto.getCargo());
+			st_insert_Contacto.setString(13,contacto.getTelefonoTrabajo());
+			st_insert_Contacto.setString(14,contacto.getExtensionTrabajo());
+			st_insert_Contacto.setString(15,contacto.getTelefonoMovil());
+			st_insert_Contacto.setString(16,contacto.getNumFax());
+			st_insert_Contacto.setString(17,contacto.getNomCorreoElectronico());
+			st_insert_Contacto.setInt(18,contacto.getTipoContacto().getIdTipoContacto());
+			st_insert_Contacto.setString(19,contacto.getNotas());	
 		}catch(SQLException e){
 			System.err.println(e.getMessage());
 			System.err.println(e.getStackTrace());
@@ -208,22 +210,24 @@ public class FachadaBD implements FachadaPersistente {
 		
 	}
 	/*
-	 * (non-Javadoc)
-	 * @see ubu.lsi.dms.agenda.persistencia.FachadaPersistente#insertLlamada(ubu.lsi.dms.agenda.modelo.Llamada)
+	 * Descripcion - Inserta la Llamada pasado por parametro al final de la Base de Datos
+	 * @param llamada - llamada a insertar.
+	 * @see ubu.lsi.dms.agenda.persistencia.FachadaPersistente#getContacto(java.lang.String)
 	 */
 	@Override
 	public void insertLlamada(Llamada llamada) {
 		Connection conn = null;
-		PreparedStatement ins=null;
+		PreparedStatement count_Llamadas=null;
 		PreparedStatement st_insert_Llamada = null;
 		try{		
-			
+			count_Llamadas=conn.prepareStatement("SELECT COUNT(*) FROM Llamadas");
 			st_insert_Llamada = conn.prepareStatement(
-					"INSERT INTO LLamadas VALUES (seq_facturas.nextval,?,?,?,?)");
-			st_insert_Llamada.setInt(1,llamada.getContacto().getTipoContacto().getIdTipoContacto()); 
-			st_insert_Llamada.setString(2,llamada.getFechaLlamada());
-			st_insert_Llamada.setString(3,llamada.getAsunto());
-			st_insert_Llamada.setString(4,llamada.getNotas());
+					"INSERT INTO LLamadas VALUES (?,?,?,?,?)");
+			st_insert_Llamada.setInt(1,Integer.parseInt(count_Llamadas.toString())+1);
+			st_insert_Llamada.setInt(2,llamada.getContacto().getTipoContacto().getIdTipoContacto()); 
+			st_insert_Llamada.setString(3,llamada.getFechaLlamada());
+			st_insert_Llamada.setString(4,llamada.getAsunto());
+			st_insert_Llamada.setString(5,llamada.getNotas());
 			
 		}catch(SQLException e){
 			System.err.println(e.getMessage());
@@ -233,19 +237,21 @@ public class FachadaBD implements FachadaPersistente {
 	}
 		
 	/*
-	 * 
-	 * @see ubu.lsi.dms.agenda.persistencia.FachadaPersistente#insertTipoContacto(java.lang.String)
+	 * Descripcion - Inserta el tipo contacto pasado por parametro al final de la Base de Datos
+	 * @param TipoContacto - tipoContacto a insertar.
+	 * @see ubu.lsi.dms.agenda.persistencia.FachadaPersistente#getContacto(java.lang.String)
 	 */
 	@Override
-	public void insertTipoContacto(String TipoContacto) {
+	public void insertTipoContacto(String TipoContacto){
 		Connection conn = null;
-		PreparedStatement ins=null;
+		PreparedStatement count_TipoContacto=null;
 		PreparedStatement st_insert_Tiposdecontacto = null;
 		try{		
-			
+			count_TipoContacto=conn.prepareStatement("SELECT COUNT(*) FROM Llamadas");
 			st_insert_Tiposdecontacto = conn.prepareStatement(
-					"INSERT INTO Tiposdecontacto VALUES (seq_facturas.nextval,?)");
-			st_insert_Tiposdecontacto.setString(1,TipoContacto);
+					"INSERT INTO Tiposdecontacto VALUES (?,?)");
+			st_insert_Tiposdecontacto.setInt(1,Integer.parseInt(count_TipoContacto.toString())+1);
+			st_insert_Tiposdecontacto.setString(2,TipoContacto);
 
 			
 		}catch(SQLException e){
