@@ -21,6 +21,19 @@ import ubu.lsi.dms.agenda.modelo.TipoContacto;
  */
 public class FachadaBD implements FachadaPersistente {
 	
+	private static final FachadaPersistente instance = new FachadaBD();
+	 
+	/*
+	 * Constructor Fachada BD. Aplicando Singleton
+	 */
+	 private FachadaBD(){
+	  
+	 }
+	 
+	 public static FachadaPersistente getInstance() {
+	  return instance;
+	 }
+	
 	private static Logger l = null;
 	
 	int idContacto=0;
@@ -40,9 +53,16 @@ public class FachadaBD implements FachadaPersistente {
 	String telefonoMovil=null;
 	String numFax=null;
 	String nomCorreoElectronico=null;
-	int IdTipoContacto=0; //Esto tiene que ser TipoContacto
+	int IdTipoContacto=0;
 	String notas=null;
-
+	
+	
+	/*
+	 * Descripcion - Devuelve todos los contactos a partir del parametro introducido.
+	 * @param apellido - Campo a partir del cual vamos a filtar los contactos.
+	 * @return contactos - Collection de todos los contactos con el mismo apellido.
+	 * @see ubu.lsi.dms.agenda.persistencia.FachadaPersistente#getContacto(java.lang.String)
+	 */
 	@Override
 	public Collection<Contacto> getContacto(String apellido) {
 		Collection<Contacto> contactos = new ArrayList<Contacto>();
@@ -52,7 +72,8 @@ public class FachadaBD implements FachadaPersistente {
 		ResultSet rs = null;
 		ResultSet rs2 = null;
 		try {
-			contacts = conn.prepareStatement("select * from contactos");
+			contacts = conn.prepareStatement("SELECT * FROM contactos WHERE Apellidos=?");
+			contacts.setString(1,apellido);
 			rs = contacts.executeQuery();
 			while (rs.next()) {
 				idContacto=rs.getInt("IdContacto");
@@ -74,6 +95,7 @@ public class FachadaBD implements FachadaPersistente {
 				nomCorreoElectronico=rs.getString("NomCorreoElectronico");
 				IdTipoContacto=rs.getInt("IdTipoContacto");
 				notas=rs.getString("Notas");
+				
 				tipo = conn.prepareStatement("select tipoContacto from tipoContacto where IdTipoContacto=?");
 				tipo.setInt(1, IdTipoContacto);
 				rs2=tipo.executeQuery();
@@ -93,7 +115,12 @@ public class FachadaBD implements FachadaPersistente {
 		} 
 		return contactos;
 	}
-	
+	/*
+	 * Descripcion - Devuelve todos las llamadas a partir del parametro introducido.
+	 * @param contacto - Contacto con el que vamos a filtrar las llamadas realizadas.
+	 * @return llamadas - Todas las llamadas del contacto pasado por parametro
+	 * @see ubu.lsi.dms.agenda.persistencia.FachadaPersistente#getLlamadas(ubu.lsi.dms.agenda.modelo.Contacto)
+	 */
 	@Override
 	public Collection<Llamada> getLlamadas(Contacto contacto) {
 		Collection<Llamada> llamadas = new ArrayList<Llamada>();
@@ -101,14 +128,16 @@ public class FachadaBD implements FachadaPersistente {
 		PreparedStatement calls = null;
 		ResultSet rs = null;
 		try {
-			calls = conn.prepareStatement("select * from llamadas");
+			calls = conn.prepareStatement("SELECT * FROM Llamadas WHERE IdContacto=?");
+			calls.setInt(1, contacto.getIdContacto());
 			rs = calls.executeQuery();
 			while (rs.next()) {
 				int IdLlamada=rs.getInt("IdLlamada");
-				int IdContacto=rs.getInt("IdContacto");
 				String FechaLlamada=rs.getString("FechaLlamada");
 				String Asunto=rs.getString("Asunto");
 				String Notas=rs.getString("Notas");
+				Llamada llamada = new Llamada(IdLlamada, contacto, FechaLlamada, Asunto, Notas);
+				llamadas.add(llamada);
 			}
 		}catch(SQLException e) {
 			System.err.println(e.getMessage());
@@ -117,6 +146,10 @@ public class FachadaBD implements FachadaPersistente {
 		return llamadas;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see ubu.lsi.dms.agenda.persistencia.FachadaPersistente#getTipoContacto()
+	 */
 	@Override
 	public Collection<TipoContacto> getTipoContacto() {
 		Collection<TipoContacto> tipoContacto = new ArrayList<TipoContacto>();
@@ -138,7 +171,10 @@ public class FachadaBD implements FachadaPersistente {
 		}
 		return tipoContacto;
 	}
-
+	/*
+	 * (non-Javadoc)
+	 * @see ubu.lsi.dms.agenda.persistencia.FachadaPersistente#insertContacto(ubu.lsi.dms.agenda.modelo.Contacto)
+	 */
 	@Override
 	public void insertContacto(Contacto contacto) {
 		Connection conn = null;
@@ -147,31 +183,34 @@ public class FachadaBD implements FachadaPersistente {
 		try{			
 			st_insert_Contacto = conn.prepareStatement(
 					"INSERT INTO Contactos VALUES (seq_facturas.nextval,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-			st_insert_Contacto.setString(1,contacto.nombre);
-			st_insert_Contacto.setString(2,contacto.apellidos);
-			st_insert_Contacto.setString(3,contacto.estimado);
-			st_insert_Contacto.setString(4,contacto.direccion);
-			st_insert_Contacto.setString(5,contacto.ciudad);
-			st_insert_Contacto.setString(6,contacto.prov);
-			st_insert_Contacto.setString(7,contacto.codPostal);
-			st_insert_Contacto.setString(8,contacto.region);
-			st_insert_Contacto.setString(9,contacto.pais);
-			st_insert_Contacto.setString(10,contacto.nombreCompania);
-			st_insert_Contacto.setString(11,contacto.cargo);
-			st_insert_Contacto.setString(12,contacto.telefonoTrabajo);
-			st_insert_Contacto.setString(13,contacto.extensionTrabajo);
-			st_insert_Contacto.setString(14,contacto.telefonoMovil);
-			st_insert_Contacto.setString(15,contacto.numFax);
-			st_insert_Contacto.setString(16,contacto.nomCorreoElectronico);
-			st_insert_Contacto.setInt(17,contacto.tipoContacto);
-			st_insert_Contacto.setString(18,contacto.notas);	
+			st_insert_Contacto.setString(1,contacto.getNombre());
+			st_insert_Contacto.setString(2,contacto.getApellidos());
+			st_insert_Contacto.setString(3,contacto.getEstimado());
+			st_insert_Contacto.setString(4,contacto.getDireccion());
+			st_insert_Contacto.setString(5,contacto.getCiudad());
+			st_insert_Contacto.setString(6,contacto.getProv());
+			st_insert_Contacto.setString(7,contacto.getCodPostal());
+			st_insert_Contacto.setString(8,contacto.getRegion());
+			st_insert_Contacto.setString(9,contacto.getPais());
+			st_insert_Contacto.setString(10,contacto.getNombreCompania());
+			st_insert_Contacto.setString(11,contacto.getCargo());
+			st_insert_Contacto.setString(12,contacto.getTelefonoTrabajo());
+			st_insert_Contacto.setString(13,contacto.getExtensionTrabajo());
+			st_insert_Contacto.setString(14,contacto.getTelefonoMovil());
+			st_insert_Contacto.setString(15,contacto.getNumFax());
+			st_insert_Contacto.setString(16,contacto.getNomCorreoElectronico());
+			st_insert_Contacto.setInt(17,contacto.getTipoContacto().getIdTipoContacto());
+			st_insert_Contacto.setString(18,contacto.getNotas());	
 		}catch(SQLException e){
 			System.err.println(e.getMessage());
 			System.err.println(e.getStackTrace());
 		}
 		
 	}
-
+	/*
+	 * (non-Javadoc)
+	 * @see ubu.lsi.dms.agenda.persistencia.FachadaPersistente#insertLlamada(ubu.lsi.dms.agenda.modelo.Llamada)
+	 */
 	@Override
 	public void insertLlamada(Llamada llamada) {
 		Connection conn = null;
@@ -181,10 +220,10 @@ public class FachadaBD implements FachadaPersistente {
 			
 			st_insert_Llamada = conn.prepareStatement(
 					"INSERT INTO LLamadas VALUES (seq_facturas.nextval,?,?,?,?)");
-			st_insert_Llamada.setInt(1,llamada.contacto); //el idContacto es de tipo Contacto
-			st_insert_Llamada.setString(2,llamada.fechaLlamada);
-			st_insert_Llamada.setString(3,llamada.asunto);
-			st_insert_Llamada.setString(4,llamada.notas);
+			st_insert_Llamada.setInt(1,llamada.getContacto().getTipoContacto().getIdTipoContacto()); 
+			st_insert_Llamada.setString(2,llamada.getFechaLlamada());
+			st_insert_Llamada.setString(3,llamada.getAsunto());
+			st_insert_Llamada.setString(4,llamada.getNotas());
 			
 		}catch(SQLException e){
 			System.err.println(e.getMessage());
@@ -193,7 +232,10 @@ public class FachadaBD implements FachadaPersistente {
 		
 	}
 		
-
+	/*
+	 * 
+	 * @see ubu.lsi.dms.agenda.persistencia.FachadaPersistente#insertTipoContacto(java.lang.String)
+	 */
 	@Override
 	public void insertTipoContacto(String TipoContacto) {
 		Connection conn = null;
@@ -212,19 +254,31 @@ public class FachadaBD implements FachadaPersistente {
 		}
 		
 	}
-
+	
+	/*
+	 * (non-Javadoc)
+	 * @see ubu.lsi.dms.agenda.persistencia.FachadaPersistente#updateContacto(ubu.lsi.dms.agenda.modelo.Contacto)
+	 */
 	@Override
 	public void updateContacto(Contacto contacto) {
 		// TODO Auto-generated method stub
 		
 	}
-
+	
+	/*
+	 * (non-Javadoc)
+	 * @see ubu.lsi.dms.agenda.persistencia.FachadaPersistente#updateLlamada(ubu.lsi.dms.agenda.modelo.Llamada)
+	 */
 	@Override
 	public void updateLlamada(Llamada llamada) {
 		// TODO Auto-generated method stub
 		
 	}
-
+	
+	/*
+	 * (non-Javadoc)
+	 * @see ubu.lsi.dms.agenda.persistencia.FachadaPersistente#updateTipoContacto(ubu.lsi.dms.agenda.modelo.TipoContacto)
+	 */
 	@Override
 	public void updateTipoContacto(TipoContacto tipoContacto) {
 		// TODO Auto-generated method stub
