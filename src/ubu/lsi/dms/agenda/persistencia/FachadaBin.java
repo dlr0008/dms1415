@@ -25,24 +25,30 @@ public class FachadaBin implements FachadaPersistente {
 
 	private static String fileContactos = "." + File.separator + "res"
 			+ File.separator + "contactos.dat";
-	private String filellamadas = "." + File.separator + "res" + File.separator
-			+ "llamadas.dat";
+	private static String fileLlamadas = "." + File.separator + "res"
+			+ File.separator + "llamadas.dat";
 	private String fileTipoContacto = "." + File.separator + "res"
 			+ File.separator + "tipos.dat";
 	private static final FachadaPersistente fachadaBin = new FachadaBin();
 
-	private static ObjectOutputStream out = null;
-	private static ObjectInputStream in = null;
+	private static ObjectOutputStream outContactos = null;
+	private static ObjectInputStream inContactos = null;
+	private static ObjectOutputStream outLlamadas = null;
+	private static ObjectInputStream inLlamadas = null;
 
 	public FachadaBin() {
 	}
 
 	public static FachadaPersistente getInstance() {
 		try {
-			out = new ObjectOutputStream(new FileOutputStream(
+			outContactos = new ObjectOutputStream(new FileOutputStream(
 					fileContactos.toString(), true));
-			in = new ObjectInputStream(new FileInputStream(
+			inContactos = new ObjectInputStream(new FileInputStream(
 					fileContactos.toString()));
+			outLlamadas = new ObjectOutputStream(new FileOutputStream(
+					fileLlamadas.toString(), true));
+			inLlamadas = new ObjectInputStream(new FileInputStream(
+					fileLlamadas.toString()));
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -61,7 +67,7 @@ public class FachadaBin implements FachadaPersistente {
 		try {
 			while (true) {
 
-				Contacto c = (Contacto) in.readObject();
+				Contacto c = (Contacto) inContactos.readObject();
 				if (c.getApellidos().equals(apellido)) {
 					contactosFiltrado.add(c);
 				}
@@ -69,8 +75,8 @@ public class FachadaBin implements FachadaPersistente {
 			}
 
 		} catch (IOException | ClassNotFoundException E) {
-			in.close();
 			System.err.print("No se pudo obtener el contacto");
+			inContactos.close();
 		} finally {
 
 			return contactosFiltrado;
@@ -81,20 +87,19 @@ public class FachadaBin implements FachadaPersistente {
 	public Collection<Llamada> getLlamadas(Contacto contacto) {
 		Collection<Llamada> llamadasFiltrado = null;
 		try {
-			ObjectInputStream in = new ObjectInputStream(new FileInputStream(
-					filellamadas.toString()));
-			Collection<Llamada> llamadas = (Collection<Llamada>) in
-					.readObject();
+			while (true) {
 
-			in.close();
-			for (Llamada l : llamadas) {
-				if (l.getContacto() == contacto)
+				Llamada l = (Llamada) inLlamadas.readObject();
+				if ((l.getContacto().getNombre().equals(contacto.getNombre()))) {
+					System.out.println(l.toString());
 					llamadasFiltrado.add(l);
+				}
+
 			}
 		} catch (IOException | ClassNotFoundException E) {
-			System.err.print("No se pudo obtener las llamadas");
+			inLlamadas.close();
 		} finally {
-
+			
 			return llamadasFiltrado;
 		}
 	}
@@ -109,7 +114,7 @@ public class FachadaBin implements FachadaPersistente {
 	public void insertContacto(Contacto contacto) {
 
 		try {
-			out.writeObject(contacto);
+			outContactos.writeObject(contacto);
 		} catch (IOException E) {
 			System.err.println("No se pudo insertar el contacto");
 
@@ -120,12 +125,9 @@ public class FachadaBin implements FachadaPersistente {
 	@Override
 	public void insertLlamada(Llamada llamada) {
 		try {
-			ObjectOutputStream out = new ObjectOutputStream(
-					new FileOutputStream(filellamadas.toString()));
-			out.writeObject(llamada);
-			out.close();
-		} catch (Exception E) {
-			System.err.println("No se pudo insertar la llamada");
+			outLlamadas.writeObject(llamada);
+		} catch (IOException E) {
+			System.err.println("LLamada");
 
 		}
 
@@ -177,7 +179,7 @@ public class FachadaBin implements FachadaPersistente {
 		Collection<Llamada> llamadas;
 		try {
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(
-					filellamadas.toString()));
+					fileLlamadas.toString()));
 			llamadas = (Collection<Llamada>) in.readObject();
 			in.close();
 
@@ -188,7 +190,7 @@ public class FachadaBin implements FachadaPersistente {
 				}
 
 				ObjectOutputStream out = new ObjectOutputStream(
-						new FileOutputStream(filellamadas.toString()));
+						new FileOutputStream(fileLlamadas.toString()));
 				out.writeObject(llamadas);
 				out.close();
 			}
