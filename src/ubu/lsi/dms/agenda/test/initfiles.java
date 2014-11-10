@@ -39,7 +39,7 @@ public class initfiles {
 
 	private static void iniContactos(Collection<Contacto> contactos) {
 		TipoContacto tipoContacto = new TipoContacto(1, "Tipo001");
-		for (int i = 1; i <= 9; i++)
+		for (int i = 1; i <=9; i++)
 			contactos.add(new Contacto(i, "Nombre00" + i, "Apellidos00" + i,
 					"Estimado00" + i, " Direccion00" + i, "Ciudad00" + i,
 					"Prov00" + i, "CodPostal000" + i, "Region000" + i,
