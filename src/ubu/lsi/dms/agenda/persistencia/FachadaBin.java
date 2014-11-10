@@ -23,7 +23,7 @@ import ubu.lsi.dms.agenda.modelo.TipoContacto;
  */
 public class FachadaBin implements FachadaPersistente {
 
-	private String fileContactos = "." + File.separator + "res"
+	private static String fileContactos = "." + File.separator + "res"
 			+ File.separator + "contactos.dat";
 	private String filellamadas = "." + File.separator + "res" + File.separator
 			+ "llamadas.dat";
@@ -31,11 +31,25 @@ public class FachadaBin implements FachadaPersistente {
 			+ File.separator + "tipos.dat";
 	private static final FachadaPersistente fachadaBin = new FachadaBin();
 
+	private static ObjectOutputStream out = null;
+	private static ObjectInputStream in = null;
+
 	public FachadaBin() {
 	}
 
 	public static FachadaPersistente getInstance() {
-
+		try {
+			out = new ObjectOutputStream(new FileOutputStream(
+					fileContactos.toString(), true));
+			in = new ObjectInputStream(new FileInputStream(
+					fileContactos.toString()));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return fachadaBin;
 
 	}
@@ -43,18 +57,19 @@ public class FachadaBin implements FachadaPersistente {
 	@Override
 	public Collection<Contacto> getContacto(String apellido) {
 		Collection<Contacto> contactosFiltrado = null;
-		try {
-			ObjectInputStream in = new ObjectInputStream(new FileInputStream(
-					fileContactos.toString()));
-			Collection<Contacto> contactos = (Collection<Contacto>) in
-					.readObject();
 
-			in.close();
-			for (Contacto c : contactos) {
-				if (c.getApellidos() == apellido)
+		try {
+			while (true) {
+
+				Contacto c = (Contacto) in.readObject();
+				if (c.getApellidos().equals(apellido)) {
 					contactosFiltrado.add(c);
+				}
+
 			}
+
 		} catch (IOException | ClassNotFoundException E) {
+			in.close();
 			System.err.print("No se pudo obtener el contacto");
 		} finally {
 
@@ -94,10 +109,7 @@ public class FachadaBin implements FachadaPersistente {
 	public void insertContacto(Contacto contacto) {
 
 		try {
-			ObjectOutputStream out = new ObjectOutputStream(
-					new FileOutputStream(fileContactos.toString()));
 			out.writeObject(contacto);
-			out.close();
 		} catch (IOException E) {
 			System.err.println("No se pudo insertar el contacto");
 
@@ -123,7 +135,7 @@ public class FachadaBin implements FachadaPersistente {
 	public void insertTipoContacto(String TipoContacto) {
 		try {
 			ObjectOutputStream out = new ObjectOutputStream(
-					new FileOutputStream(fileTipoContacto.toString()));
+					new FileOutputStream(fileTipoContacto.toString(), true));
 			out.writeObject(TipoContacto);
 			out.close();
 		} catch (Exception E) {
@@ -131,28 +143,29 @@ public class FachadaBin implements FachadaPersistente {
 
 		}
 
-
 	}
 
 	@Override
 	public void updateContacto(Contacto contacto) {
 		Collection<Contacto> contactos;
 		try {
-			ObjectInputStream in = new ObjectInputStream( new FileInputStream (fileContactos.toString()));
+			ObjectInputStream in = new ObjectInputStream(new FileInputStream(
+					fileContactos.toString()));
 			contactos = (Collection<Contacto>) in.readObject();
-			in.close();			
-		
-		for (Contacto c : contactos ){
-			if (c.getIdContacto() == contacto.getIdContacto()){
-				contactos.remove(c);
-				contactos.add(contacto);			
+			in.close();
+
+			for (Contacto c : contactos) {
+				if (c.getIdContacto() == contacto.getIdContacto()) {
+					contactos.remove(c);
+					contactos.add(contacto);
+				}
+
+				ObjectOutputStream out = new ObjectOutputStream(
+						new FileOutputStream(fileContactos.toString()));
+				out.writeObject(contactos);
+				out.close();
 			}
-			
-			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fileContactos.toString()));
-			out.writeObject(contactos);
-			out.close();
-		}
-		
+
 		} catch (ClassNotFoundException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -163,21 +176,23 @@ public class FachadaBin implements FachadaPersistente {
 	public void updateLlamada(Llamada llamada) {
 		Collection<Llamada> llamadas;
 		try {
-			ObjectInputStream in = new ObjectInputStream( new FileInputStream (filellamadas.toString()));
+			ObjectInputStream in = new ObjectInputStream(new FileInputStream(
+					filellamadas.toString()));
 			llamadas = (Collection<Llamada>) in.readObject();
-			in.close();			
-		
-		for (Llamada l : llamadas ){
-			if (l.getIdLlamada() == llamada.getIdLlamada()){
-				llamadas.remove(l);
-				llamadas.add(llamada);			
+			in.close();
+
+			for (Llamada l : llamadas) {
+				if (l.getIdLlamada() == llamada.getIdLlamada()) {
+					llamadas.remove(l);
+					llamadas.add(llamada);
+				}
+
+				ObjectOutputStream out = new ObjectOutputStream(
+						new FileOutputStream(filellamadas.toString()));
+				out.writeObject(llamadas);
+				out.close();
 			}
-			
-			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filellamadas.toString()));
-			out.writeObject(llamadas);
-			out.close();
-		}
-		
+
 		} catch (ClassNotFoundException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -188,25 +203,27 @@ public class FachadaBin implements FachadaPersistente {
 	public void updateTipoContacto(TipoContacto tipoContacto) {
 		Collection<TipoContacto> tipos;
 		try {
-			ObjectInputStream in = new ObjectInputStream( new FileInputStream (fileTipoContacto.toString()));
+			ObjectInputStream in = new ObjectInputStream(new FileInputStream(
+					fileTipoContacto.toString()));
 			tipos = (Collection<TipoContacto>) in.readObject();
-			in.close();			
-		
-		for (TipoContacto t : tipos ){
-			if (t.getIdTipoContacto() == tipoContacto.getIdTipoContacto()){
-				tipos.remove(t);
-				tipos.add(tipoContacto);			
+			in.close();
+
+			for (TipoContacto t : tipos) {
+				if (t.getIdTipoContacto() == tipoContacto.getIdTipoContacto()) {
+					tipos.remove(t);
+					tipos.add(tipoContacto);
+				}
+
+				ObjectOutputStream out = new ObjectOutputStream(
+						new FileOutputStream(fileTipoContacto.toString()));
+				out.writeObject(tipos);
+				out.close();
 			}
-			
-			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fileTipoContacto.toString()));
-			out.writeObject(tipos);
-			out.close();
-		}
-		
+
 		} catch (ClassNotFoundException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}		
+		}
 
 	}
 
