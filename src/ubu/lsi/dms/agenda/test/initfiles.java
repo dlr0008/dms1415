@@ -28,18 +28,15 @@ public class initfiles {
 			System.out.println(c.toString());
 			fachadabinaria.insertContacto(c);
 		}
-		Collection<Contacto> contacto1 = fachadabinaria
-				.getContacto("Apellidos001");
-
-		for (Contacto cont : contacto1) {
-			System.out.println(cont.toString());
-		}
+		System.out.println("FINALIZADA INSERCIÓN");
+		
+		testContactos(contactos,fachadabinaria);
 
 	}
 
 	private static void iniContactos(Collection<Contacto> contactos) {
 		TipoContacto tipoContacto = new TipoContacto(1, "Tipo001");
-		for (int i = 1; i <=9; i++)
+		for (int i = 1; i <= 9; i++)
 			contactos.add(new Contacto(i, "Nombre00" + i, "Apellidos00" + i,
 					"Estimado00" + i, " Direccion00" + i, "Ciudad00" + i,
 					"Prov00" + i, "CodPostal000" + i, "Region000" + i,
@@ -48,6 +45,19 @@ public class initfiles {
 					"TelefonoMovil00" + i, "NumFax00" + i,
 					" NomCorreoElectronico00" + i + "@ubu.es", "Notas00" + i,
 					tipoContacto));
+
+	}
+
+	private static void testContactos(Collection<Contacto> contactos,
+			FachadaPersistente fachadabinaria) {
+
+		int i = 1;
+
+		for (Contacto c : contactos) {
+
+			assert c.equals(fachadabinaria.getContacto("Apellido00" + i));
+			i++;
+		}
 
 	}
 }
