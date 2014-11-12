@@ -9,17 +9,19 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import com.sun.javafx.accessible.utils.ControlTypeIds;
 
 import ubu.lsi.dms.agenda.modelo.Contacto;
 import ubu.lsi.dms.agenda.modelo.Llamada;
 import ubu.lsi.dms.agenda.modelo.TipoContacto;
 
 /**
- * @author Roberto Miranda Pérez.
+ * @author Roberto Miranda PÃ©rez.
  *
  */
 public class FachadaBin implements FachadaPersistente {
@@ -33,6 +35,7 @@ public class FachadaBin implements FachadaPersistente {
 	private static final FachadaPersistente fachadaBin = new FachadaBin();
 
 	public FachadaBin() {
+
 	}
 
 	public static FachadaPersistente getInstance() {
@@ -42,30 +45,32 @@ public class FachadaBin implements FachadaPersistente {
 
 	@Override
 	public Collection<Contacto> getContacto(String apellido) {
-		List<Contacto> contactosFiltrado = new ArrayList<Contacto>();
-		List<Contacto> contactos = new ArrayList<Contacto>();
+		// in = new ObjectInputStream(new FileInputStream(fileContactos));
+		ArrayList<Contacto> contactos = new ArrayList<Contacto>();
+		ArrayList<Contacto> contactosFiltrado = new ArrayList<Contacto>();
 		ObjectInputStream in = null;
 		try {
 			in = new ObjectInputStream(new FileInputStream(fileContactos));
+
 			contactos = (ArrayList<Contacto>) in.readObject();
+
 			for (Contacto c : contactos) {
-				System.out.println(c.toString());
 				if (c.getApellidos().equals(apellido))
 					contactosFiltrado.add(c);
-
 			}
 
 		} catch (IOException | ClassNotFoundException E) {
 			E.printStackTrace();
 		} finally {
-			try {
-				in.close();
-				return contactosFiltrado;
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			if (in != null)
+				try {
+					in.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			return contactosFiltrado;
+
 		}
-		return contactosFiltrado;
 	}
 
 	@Override
@@ -100,57 +105,114 @@ public class FachadaBin implements FachadaPersistente {
 	@Override
 	public void insertContacto(Contacto contacto) {
 		ObjectOutputStream out = null;
+		ArrayList<Contacto> contactos = null;
 		try {
-			out = new ObjectOutputStream(new FileOutputStream(fileContactos,
-					true));
-			out.writeObject(contacto);
+
+			if (!new File(fileContactos).exists()) {
+				System.out.println("No existe");
+				out = new ObjectOutputStream(new FileOutputStream(
+						fileContactos, true));
+				contactos = new ArrayList<Contacto>();
+				contactos.add(contacto);
+				out.writeObject(contactos);
+				out.close();
+			} else {
+				contactos = leerContactos();
+				new File(fileContactos).delete();
+				out = new ObjectOutputStream(new FileOutputStream(
+						fileContactos, true));
+				contactos.add(contacto);
+				out.writeObject(contactos);
+				out.close();
+			}
 
 		} catch (IOException E) {
-			System.err.println("No se pudo insertar el contacto");
-
+			E.printStackTrace();
 		} finally {
 			try {
 				out.close();
 			} catch (IOException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 
+	}
+
+	private ArrayList<Contacto> leerContactos() {
+
+		try {
+			ObjectInputStream in = new ObjectInputStream(new FileInputStream(
+					fileContactos));
+			ArrayList<Contacto> contactos = (ArrayList<Contacto>) in
+					.readObject();
+
+			in.close();
+
+			return contactos;
+
+		} catch (IOException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		return null;
 	}
 
 	@Override
 	public void insertLlamada(Llamada llamada) {
 		ObjectOutputStream out = null;
+		ArrayList<Llamada> llamadas = null;
 		try {
-			out = new ObjectOutputStream(new FileOutputStream(fileLlamadas,
-					true));
-			out.writeObject(llamada);
+
+			if (!new File(fileLlamadas).exists()) {
+				out = new ObjectOutputStream(new FileOutputStream(fileLlamadas,
+						true));
+				llamadas = new ArrayList<Llamada>();
+				llamadas.add(llamada);
+				out.writeObject(llamadas);
+				out.close();
+			} else {
+				llamadas = leerLlamadas();
+				new File(fileLlamadas).delete();
+				out = new ObjectOutputStream(new FileOutputStream(
+						fileLlamadas, true));
+				llamadas.add(llamada);
+				out.writeObject(llamadas);
+				out.close();
+			}
 
 		} catch (IOException E) {
-			System.err.println("No se pudo insertar el contacto");
-
+			E.printStackTrace();
 		} finally {
 			try {
 				out.close();
 			} catch (IOException e) {
-	
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 
 	}
 
+	private ArrayList<Llamada> leerLlamadas() {
+
+		try {
+			ObjectInputStream in = new ObjectInputStream(new FileInputStream(
+					fileLlamadas));
+			ArrayList<Llamada> llamadas = (ArrayList<Llamada>) in.readObject();
+
+			in.close();
+
+			return llamadas;
+
+		} catch (IOException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 	@Override
 	public void insertTipoContacto(String TipoContacto) {
-		try {
-			ObjectOutputStream out = new ObjectOutputStream(
-					new FileOutputStream(fileTipoContacto.toString(), true));
-			out.writeObject(TipoContacto);
-			out.close();
-		} catch (Exception E) {
-			System.err.println("No se pudo insertar el tipo de Contacto");
-
-		}
 
 	}
 
