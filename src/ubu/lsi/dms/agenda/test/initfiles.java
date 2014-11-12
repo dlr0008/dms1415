@@ -27,12 +27,15 @@ public class initfiles {
 	}
 
 	private static void iniLlamadas(Collection<Llamada> llamadas,
-			Collection<Contacto> contactos) {
-		int i = 1;
-		for (Contacto c : contactos) {
-			llamadas.add(new Llamada(i, c, "2014-10-18 0" + i + ":00:00",
-					"AsuntoLlamada00" + i, "NotaLlamada00" + i));
-			i++;
+			FachadaPersistente fachadaBinaria) {
+//		int i = 1;
+		Collection<Contacto> c = fachadaBinaria.getContacto("Apellidos001");
+
+		for (Contacto contacto : c) {
+			for (int i = 1; i <= 5; i++) {
+				llamadas.add(new Llamada(i, contacto, "2014-10-18 0" + i
+						+ ":00:00", "AsuntoLlamada00" + i, "NotaLlamada00" + i));
+			}
 		}
 	}
 
@@ -40,23 +43,24 @@ public class initfiles {
 			ClassNotFoundException {
 		Collection<Contacto> contactos = new ArrayList<Contacto>();
 		Collection<Llamada> llamadas = new ArrayList<Llamada>();
-		iniContactos(contactos);
-		iniLlamadas(llamadas, contactos);
+
 		FabricaBin fabricabinaria = new FabricaBin();
-		FachadaPersistente fachadabinaria = fabricabinaria
+		FachadaPersistente fachadaBinaria = fabricabinaria
 				.createFachadaPersistente();
+		iniContactos(contactos);
+		iniLlamadas(llamadas, fachadaBinaria);
 		for (Contacto c : contactos) {
 			// System.out.println(c.toString());
-			fachadabinaria.insertContacto(c);
+			fachadaBinaria.insertContacto(c);
 		}
 		for (Llamada l : llamadas) {
 			// System.out.println(l.toString());
-			fachadabinaria.insertLlamada(l);
+			fachadaBinaria.insertLlamada(l);
 		}
 		System.out.println("FINALIZADA INSERCIÓN");
 
-		testContactos(contactos, fachadabinaria);
-		// testLlamadas(contactos, fachadabinaria);
+		testContactos(contactos, fachadaBinaria);
+		testLlamadas(contactos, fachadaBinaria);
 
 		System.out.println("OK");
 
@@ -100,7 +104,7 @@ public class initfiles {
 		for (Contacto c : contacto) {
 			todos = fachadabinaria.getLlamadas(c);
 			for (Llamada l : todos) {
-				// assert i.equals(l.getIdLlamada();
+				System.out.println(l);
 				assert ("Nombre001".equals(l.getContacto().getNombre()));
 				assert ("2014-10-18 0" + i + ":00:00").equals(l
 						.getFechaLlamada());
