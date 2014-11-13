@@ -60,9 +60,14 @@ public class FachadaBin implements FachadaPersistente {
 
 	}
 
+	/**
+	 * Metodo para esperar antes de el borrado y creacion del fichero, ya que
+	 * pueden dar error al hacer als 2 operaciones seguidas.
+	 * 
+	 */
 	private void esperar() {
 		try {
-			Thread.sleep(10);
+			Thread.sleep(15);
 		} catch (InterruptedException ex) {
 			Thread.currentThread().interrupt();
 		}
