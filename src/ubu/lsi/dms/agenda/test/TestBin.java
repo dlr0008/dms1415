@@ -162,16 +162,18 @@ public class TestBin {
 
 			}
 		}
+		i = 1;
 		Collection<Llamada> actualizar = new ArrayList<Llamada>();
 		for (Contacto c : contacto) {
 			actualizar = fachadabinaria.getLlamadas(c);
 			for (Llamada l : actualizar) {
+				assert i == l.getIdLlamada();
 				if (l.getIdLlamada() == 3) {
 					l.setAsunto("NuevoAsunto");
 					l.setNotas("NuevasNotas");
 					fachadabinaria.updateLlamada(l);
 				}
-
+				i++;
 			}
 		}
 		for (Contacto c : contacto) {
@@ -203,7 +205,7 @@ public class TestBin {
 			i++;
 		}
 		for (TipoContacto t : tipos) {
-			if (t.getIdTipoContacto() == 1)
+			if (t.getIdTipoContacto() == 4)
 				t.setTipoContacto("NuevoTipo");
 			fachadaBinaria.updateTipoContacto(t);
 		}
@@ -212,6 +214,8 @@ public class TestBin {
 		i = 1;
 		for (TipoContacto t : tipos) {
 			assert t.getIdTipoContacto() == i;
+			if (i == 4)
+				assert t.getTipoContacto().equals("NuevoTipo");
 			i++;
 		}
 
