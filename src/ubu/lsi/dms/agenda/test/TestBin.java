@@ -47,6 +47,32 @@ public class TestBin {
 		}
 	}
 
+	private static void iniTipos(FachadaPersistente fachadaBinaria) {
+
+		for (int i = 1; i <= 9; i++)
+			fachadaBinaria.insertTipoContacto("Tipo00" + i);
+
+	}
+
+	private static void limpiarFicheros() {
+		File contactos = new File("." + File.separator + "res" + File.separator
+				+ "contactos.dat");
+		if (contactos.exists())
+			contactos.delete();
+
+		File llamadas = new File("." + File.separator + "res" + File.separator
+				+ "llamadas.dat");
+		if (llamadas.exists()) {
+			llamadas.delete();
+		}
+		File tipos = new File("." + File.separator + "res" + File.separator
+				+ "tipos.dat");
+		if (tipos.exists()) {
+			tipos.delete();
+		}
+
+	}
+
 	public static void main(String[] args) throws IOException,
 			ClassNotFoundException {
 		Collection<Contacto> contactos = new ArrayList<Contacto>();
@@ -56,13 +82,8 @@ public class TestBin {
 		FabricaBin fabricabinaria = new FabricaBin();
 		FachadaPersistente fachadaBinaria = fabricabinaria
 				.createFachadaPersistente();
-		new File("." + File.separator + "res" + File.separator
-				+ "contactos.dat").delete();
-		new File("." + File.separator + "res" + File.separator + "llamadas.dat")
-				.delete();
-		new File("." + File.separator + "res" + File.separator + "tipos.dat")
-				.delete();
 
+		limpiarFicheros();
 		iniContactos(contactos);
 		iniLlamadas(llamadas, fachadaBinaria);
 		iniTipos(fachadaBinaria);
@@ -77,30 +98,16 @@ public class TestBin {
 
 		System.out.println("FINALIZADA INSERCIÓN");
 
-		System.out.println("TEST CONTACTOS");
 		testContactos(contactos, fachadaBinaria);
-		System.out.println("TEST LLAMADAS");
 		testLlamadas(contactos, fachadaBinaria);
-		System.out.println("TEST TIPOS");
+
 		testTipos(fachadaBinaria);
 		System.out.println("OK");
 	}
 
-	private static void testTipos(FachadaPersistente fachadaBinaria) {
-		ArrayList<TipoContacto> tipos = (ArrayList<TipoContacto>) fachadaBinaria
-				.getTipoContacto();
-
-		int i = 1;
-		for (TipoContacto t : tipos) {
-			assert t.getIdTipoContacto() == i;
-			assert t.getTipoContacto().equals("Tipo00" + i);
-			i++;
-		}
-
-	}
-
 	private static void testContactos(Collection<Contacto> contactos,
 			FachadaPersistente fachadabinaria) {
+		System.out.println("TEST CONTACTOS");
 		Collection<Contacto> todos = new ArrayList<Contacto>();
 		for (int i = 1; i <= 9; i++) {
 			todos = fachadabinaria.getContacto("Apellidos00" + i);
@@ -123,12 +130,22 @@ public class TestBin {
 						.getNomCorreoElectronico());
 				assert ("Notas00" + i).equals(c.getNotas());
 			}
+
+		}
+		Collection<Contacto> actualizar = new ArrayList<Contacto>();
+		actualizar = fachadabinaria.getContacto("Apellidos002");
+		for (Contacto c : actualizar) {
+			c.setApellidos("NuevoApellido");
+			fachadabinaria.updateContacto(c);
 		}
 
+		assert fachadabinaria.getContacto("NuevoApellido").size() == 1;
+		assert fachadabinaria.getContacto("Apellidos002").size() == 0;
 	}
 
 	private static void testLlamadas(Collection<Contacto> contactos,
 			FachadaPersistente fachadabinaria) {
+		System.out.println("TEST LLAMADAS");
 		Collection<Contacto> contacto = new ArrayList<Contacto>();
 		Collection<Llamada> todos = new ArrayList<Llamada>();
 		int i = 1;
@@ -140,19 +157,63 @@ public class TestBin {
 				assert ("Nombre001".equals(l.getContacto().getNombre()));
 				assert ("2014-10-18 0" + i + ":00:00").equals(l
 						.getFechaLlamada());
-				assert ("2014-10-18 0" + i + ":00:00").equals(l
-						.getFechaLlamada());
 				assert ("AsuntoLlamada00" + i).equals(l.getAsunto());
 				i++;
 
 			}
 		}
+		Collection<Llamada> actualizar = new ArrayList<Llamada>();
+		for (Contacto c : contacto) {
+			actualizar = fachadabinaria.getLlamadas(c);
+			for (Llamada l : actualizar) {
+				if (l.getIdLlamada() == 3) {
+					l.setAsunto("NuevoAsunto");
+					l.setNotas("NuevasNotas");
+					fachadabinaria.updateLlamada(l);
+				}
+
+			}
+		}
+		for (Contacto c : contacto) {
+			actualizar = fachadabinaria.getLlamadas(c);
+			assert actualizar.size() == 5;
+			for (Llamada l : actualizar) {
+				if (l.getIdLlamada() == 3) {
+					assert l.getAsunto().equals("NuevoAsunto");
+					assert l.getNotas().equals("NuevasNotas");
+					l.setAsunto("Asunto003");
+					l.setNotas("Notas003");
+					fachadabinaria.updateLlamada(l);
+				}
+
+			}
+		}
 	}
 
-	private static void iniTipos(FachadaPersistente fachadaBinaria) {
+	private static void testTipos(FachadaPersistente fachadaBinaria) {
+		System.out.println("TEST TIPOS");
+		ArrayList<TipoContacto> tipos = (ArrayList<TipoContacto>) fachadaBinaria
+				.getTipoContacto();
 
-		for (int i = 1; i <= 9; i++)
-			fachadaBinaria.insertTipoContacto("Tipo00" + i);
+		int i = 1;
+		assert tipos.size() == 9;
+		for (TipoContacto t : tipos) {
+			assert t.getIdTipoContacto() == i;
+			assert t.getTipoContacto().equals("Tipo00" + i);
+			i++;
+		}
+		for (TipoContacto t : tipos) {
+			if (t.getIdTipoContacto() == 1)
+				t.setTipoContacto("NuevoTipo");
+			fachadaBinaria.updateTipoContacto(t);
+		}
+		tipos = (ArrayList<TipoContacto>) fachadaBinaria.getTipoContacto();
+		assert tipos.size() == 9;
+		i = 1;
+		for (TipoContacto t : tipos) {
+			assert t.getIdTipoContacto() == i;
+			i++;
+		}
 
 	}
 
