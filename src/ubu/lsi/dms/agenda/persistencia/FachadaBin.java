@@ -12,7 +12,9 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.sun.javafx.accessible.utils.ControlTypeIds;
 
@@ -26,20 +28,21 @@ import ubu.lsi.dms.agenda.modelo.TipoContacto;
  */
 public class FachadaBin implements FachadaPersistente {
 
+	public static FachadaPersistente getInstance() {
+		return fachadaBin;
+
+	}
+
 	private static String fileContactos = "." + File.separator + "res"
 			+ File.separator + "contactos.dat";
 	private static String fileLlamadas = "." + File.separator + "res"
 			+ File.separator + "llamadas.dat";
 	private String fileTipoContacto = "." + File.separator + "res"
 			+ File.separator + "tipos.dat";
+
 	private static final FachadaPersistente fachadaBin = new FachadaBin();
 
 	public FachadaBin() {
-
-	}
-
-	public static FachadaPersistente getInstance() {
-		return fachadaBin;
 
 	}
 
@@ -53,7 +56,7 @@ public class FachadaBin implements FachadaPersistente {
 			in = new ObjectInputStream(new FileInputStream(fileContactos));
 
 			contactos = (ArrayList<Contacto>) in.readObject();
-
+			in.close();
 			for (Contacto c : contactos) {
 				if (c.getApellidos().equals(apellido))
 					contactosFiltrado.add(c);
@@ -61,16 +64,9 @@ public class FachadaBin implements FachadaPersistente {
 
 		} catch (IOException | ClassNotFoundException E) {
 			E.printStackTrace();
-		} finally {
-			if (in != null)
-				try {
-					in.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			return contactosFiltrado;
 
 		}
+		return contactosFiltrado;
 	}
 
 	@Override
@@ -82,10 +78,9 @@ public class FachadaBin implements FachadaPersistente {
 		try {
 			in = new ObjectInputStream(new FileInputStream(fileLlamadas));
 			llamadas = (ArrayList<Llamada>) in.readObject();
-			System.out.println(llamadas.size());
+			in.close();
 			for (Llamada l : llamadas) {
-				System.out.println(l.toString());
-				if (l.getContacto().equals(contacto))
+				if (l.getContacto().getNombre().equals(contacto.getNombre()))
 					llamadasFiltrado.add(l);
 
 			}
@@ -99,7 +94,22 @@ public class FachadaBin implements FachadaPersistente {
 
 	@Override
 	public Collection<TipoContacto> getTipoContacto() {
-		return null;
+		Set<TipoContacto> tiposFiltrado = new HashSet<TipoContacto>();
+		List<TipoContacto> tipos = null;
+		ObjectInputStream in = null;
+		try {
+			in = new ObjectInputStream(new FileInputStream(fileTipoContacto));
+			tipos = (ArrayList<TipoContacto>) in.readObject();
+			in.close();
+			for (TipoContacto t : tipos) {
+				tiposFiltrado.add(t);
+			}
+
+		} finally {
+			if (tipos == null)
+				System.err.println("No existen tipos de Contacto");
+			return tipos;
+		}
 	}
 
 	@Override
@@ -109,7 +119,6 @@ public class FachadaBin implements FachadaPersistente {
 		try {
 
 			if (!new File(fileContactos).exists()) {
-				System.out.println("No existe");
 				out = new ObjectOutputStream(new FileOutputStream(
 						fileContactos, true));
 				contactos = new ArrayList<Contacto>();
@@ -119,6 +128,7 @@ public class FachadaBin implements FachadaPersistente {
 			} else {
 				contactos = leerContactos();
 				new File(fileContactos).delete();
+				esperar();
 				out = new ObjectOutputStream(new FileOutputStream(
 						fileContactos, true));
 				contactos.add(contacto);
@@ -137,6 +147,96 @@ public class FachadaBin implements FachadaPersistente {
 			}
 		}
 
+	}
+
+	@Override
+	public void insertLlamada(Llamada llamada) {
+		ObjectOutputStream out = null;
+		ArrayList<Llamada> llamadas = null;
+		try {
+
+			if (!new File(fileLlamadas).exists()) {
+				out = new ObjectOutputStream(new FileOutputStream(fileLlamadas,
+						true));
+				llamadas = new ArrayList<Llamada>();
+				llamadas.add(llamada);
+				out.writeObject(llamadas);
+				out.close();
+			} else {
+				llamadas = leerLlamadas();
+				new File(fileLlamadas).delete();
+				esperar();
+				out = new ObjectOutputStream(new FileOutputStream(fileLlamadas,
+						true));
+				llamadas.add(llamada);
+				out.writeObject(llamadas);
+				out.close();
+			}
+
+		} catch (IOException E) {
+			E.printStackTrace();
+		} finally {
+			try {
+				out.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+	}
+
+	@Override
+	public void insertTipoContacto(String tipoContacto) {
+		ObjectOutputStream out = null;
+		Collection<TipoContacto> tipos = null;
+		try {
+
+			if (!new File(fileTipoContacto).exists()) {
+				out = new ObjectOutputStream(new FileOutputStream(
+						fileTipoContacto, true));
+				tipos = new ArrayList<TipoContacto>();
+				tipos.add(new TipoContacto(1, tipoContacto));
+				out.writeObject(tipos);
+				out.close();
+			} else {
+				tipos = getTipoContacto();
+				new File(fileTipoContacto).delete();
+				esperar();
+				out = new ObjectOutputStream(new FileOutputStream(
+						fileTipoContacto, true));
+				tipos.add(new TipoContacto(tipos.size() + 1, tipoContacto));
+				out.writeObject(tipos);
+				out.close();
+			}
+
+		} catch (IOException E) {
+			E.printStackTrace();
+		} finally {
+			try {
+				out.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+	}
+
+	private ArrayList<TipoContacto> leerTiposContacto() {
+		ArrayList<TipoContacto> tipos = null;
+		ObjectInputStream in = null;
+		try {
+			in = new ObjectInputStream(new FileInputStream(fileTipoContacto));
+			tipos = (ArrayList<TipoContacto>) in.readObject();
+			for (TipoContacto t : tipos)
+			in.close();
+
+		} finally {
+			if (tipos == null)
+				System.err.println("No existen tipos de Contacto");
+			return tipos;
+		}
 	}
 
 	private ArrayList<Contacto> leerContactos() {
@@ -158,42 +258,6 @@ public class FachadaBin implements FachadaPersistente {
 		return null;
 	}
 
-	@Override
-	public void insertLlamada(Llamada llamada) {
-		ObjectOutputStream out = null;
-		ArrayList<Llamada> llamadas = null;
-		try {
-
-			if (!new File(fileLlamadas).exists()) {
-				out = new ObjectOutputStream(new FileOutputStream(fileLlamadas,
-						true));
-				llamadas = new ArrayList<Llamada>();
-				llamadas.add(llamada);
-				out.writeObject(llamadas);
-				out.close();
-			} else {
-				llamadas = leerLlamadas();
-				new File(fileLlamadas).delete();
-				out = new ObjectOutputStream(new FileOutputStream(
-						fileLlamadas, true));
-				llamadas.add(llamada);
-				out.writeObject(llamadas);
-				out.close();
-			}
-
-		} catch (IOException E) {
-			E.printStackTrace();
-		} finally {
-			try {
-				out.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
-	}
-
 	private ArrayList<Llamada> leerLlamadas() {
 
 		try {
@@ -209,11 +273,6 @@ public class FachadaBin implements FachadaPersistente {
 			e.printStackTrace();
 		}
 		return null;
-	}
-
-	@Override
-	public void insertTipoContacto(String TipoContacto) {
-
 	}
 
 	@Override
@@ -296,6 +355,14 @@ public class FachadaBin implements FachadaPersistente {
 			e.printStackTrace();
 		}
 
+	}
+	
+	protected void esperar(){
+		try {
+			Thread.sleep(1); // 1000 milliseconds is one second.
+		} catch (InterruptedException ex) {
+			Thread.currentThread().interrupt();
+		}
 	}
 
 }
