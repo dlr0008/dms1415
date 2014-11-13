@@ -1,6 +1,3 @@
-/**
- * 
- */
 package ubu.lsi.dms.agenda.persistencia;
 
 import java.io.File;
@@ -23,8 +20,14 @@ import ubu.lsi.dms.agenda.modelo.Llamada;
 import ubu.lsi.dms.agenda.modelo.TipoContacto;
 
 /**
- * @author Roberto Miranda PÃ©rez.
- *
+ * Fachada sobre la que se aplica el patron fachada para realizar operaciones
+ * sobre distintos ficheros binarios
+ * 
+ * @author <A HREF="mailto:jld0016@alu.ubu.es">Jorge Laguna</A>
+ * @author <A HREF="mailto:rmp0046@alu.ubu.es">Roberto Miranda</A>
+ * @author <A HREF="mailto:aam0093@alu.ubu.es">Asier Alonso</A>
+ * @author <A HREF="mailto:dlr0008@alu.ubu.es">Daniel Lozano</A>
+ * @version 1.0
  */
 public class FachadaBin implements FachadaPersistente {
 
@@ -41,16 +44,23 @@ public class FachadaBin implements FachadaPersistente {
 
 	}
 
+	/**
+	 * Aplicado el patron singleton para obtener una única instacia de la
+	 * fachada
+	 * 
+	 * 
+	 * @return fachadaBin encargada de el manejo de las operaciones sobre los
+	 *         ficheros
+	 */
 	public static FachadaPersistente getInstance() {
-		if (fachadaBin == null) {
+		if (fachadaBin == null)
 			fachadaBin = new FachadaBin();
 
-		}
 		return fachadaBin;
 
 	}
 
-	protected void esperar() {
+	private void esperar() {
 		try {
 			Thread.sleep(10);
 		} catch (InterruptedException ex) {
@@ -58,17 +68,27 @@ public class FachadaBin implements FachadaPersistente {
 		}
 	}
 
+	/**
+	 * Se consulta el fichero buscando los contactos que contengan el apellido
+	 * pasado por parametro
+	 * 
+	 * 
+	 * @param apellido
+	 *            Apellido para localizar el contacto
+	 * @return Collection<Contacto> Contactos que se apelliden igual que el
+	 *         apellido pasado por parametro
+	 * 
+	 */
 	@Override
 	public Collection<Contacto> getContacto(String apellido) {
-		// in = new ObjectInputStream(new FileInputStream(fileContactos));
 		ArrayList<Contacto> contactos = new ArrayList<Contacto>();
-		ArrayList<Contacto> contactosFiltrado = new ArrayList<Contacto>();
+		ArrayList<Contacto> contactosFiltrado = null;
 		ObjectInputStream in = null;
 		try {
 			in = new ObjectInputStream(new FileInputStream(fileContactos));
 
 			contactos = (ArrayList<Contacto>) in.readObject();
-			in.close();
+			contactosFiltrado = new ArrayList<Contacto>();
 			for (Contacto c : contactos) {
 				if (c.getApellidos().equals(apellido))
 					contactosFiltrado.add(c);
@@ -76,11 +96,29 @@ public class FachadaBin implements FachadaPersistente {
 
 		} catch (IOException | ClassNotFoundException E) {
 			E.printStackTrace();
-
+		} finally {
+			try {
+				if (in != null)
+					in.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			if (contactosFiltrado == null)
+				System.err.println("No existen contactos con el apellido: "
+						+ apellido);
+			return contactosFiltrado;
 		}
-		return contactosFiltrado;
 	}
 
+	/**
+	 * Se consulta el fichero buscando las llamadas realizadas de ese contacto
+	 * 
+	 * 
+	 * @param contacto
+	 *            contactacto del que se desea conocer la llamadas
+	 * @return Collection<Llamada> llamadas realizadas por ese contactos
+	 * 
+	 */
 	@Override
 	public Collection<Llamada> getLlamadas(Contacto contacto) {
 
@@ -96,7 +134,15 @@ public class FachadaBin implements FachadaPersistente {
 					llamadasFiltrado.add(l);
 
 			}
+		} catch (IOException | ClassNotFoundException E) {
+			E.printStackTrace();
 		} finally {
+			try {
+				if (in != null)
+					in.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			if (llamadasFiltrado == null)
 				System.err.println("No existen llamadas del contacto "
 						+ contacto.getNombre());
@@ -104,6 +150,13 @@ public class FachadaBin implements FachadaPersistente {
 		}
 	}
 
+	/**
+	 * Se consulta el fichero buscando todos los tipos de contacto
+	 * 
+	 * @return Collection<TipoContacto> Todos los tipos de contacto guardados en
+	 *         el fichero
+	 * 
+	 */
 	@Override
 	public Collection<TipoContacto> getTipoContacto() {
 		List<TipoContacto> tipos = null;
@@ -114,12 +167,26 @@ public class FachadaBin implements FachadaPersistente {
 			in.close();
 
 		} finally {
+			try {
+				if (in != null)
+					in.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			if (tipos == null)
 				System.err.println("No existen tipos de Contacto");
 			return tipos;
 		}
 	}
 
+	/**
+	 * Inserta un contacto en el fichero de contactos
+	 * 
+	 * @param contacto
+	 *            contacto a insertar en el fichero
+	 * 
+	 */
 	@Override
 	public void insertContacto(Contacto contacto) {
 		ObjectOutputStream out = null;
@@ -130,33 +197,36 @@ public class FachadaBin implements FachadaPersistente {
 				out = new ObjectOutputStream(new FileOutputStream(
 						fileContactos, true));
 				contactos = new ArrayList<Contacto>();
-				contactos.add(contacto);
-				out.writeObject(contactos);
-				out.close();
+
 			} else {
 				contactos = leerContactos();
 				new File(fileContactos).delete();
 				esperar();
 				out = new ObjectOutputStream(new FileOutputStream(
 						fileContactos, true));
-				contactos.add(contacto);
-				out.writeObject(contactos);
-				out.close();
 			}
+			contactos.add(contacto);
+			out.writeObject(contactos);
 
 		} catch (IOException E) {
 			E.printStackTrace();
 		} finally {
 			try {
-				out.close();
+				if (out != null)
+					out.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-
 	}
 
+	/**
+	 * Inserta una llamada en el fichero de llamadas
+	 * 
+	 * @param llamada
+	 *            llamada a insertar en el fichero
+	 * 
+	 */
 	@Override
 	public void insertLlamada(Llamada llamada) {
 		ObjectOutputStream out = null;
@@ -167,33 +237,34 @@ public class FachadaBin implements FachadaPersistente {
 				out = new ObjectOutputStream(new FileOutputStream(fileLlamadas,
 						true));
 				llamadas = new ArrayList<Llamada>();
-				llamadas.add(llamada);
-				out.writeObject(llamadas);
-				out.close();
 			} else {
 				llamadas = leerLlamadas();
 				new File(fileLlamadas).delete();
 				esperar();
 				out = new ObjectOutputStream(new FileOutputStream(fileLlamadas,
 						true));
-				llamadas.add(llamada);
-				out.writeObject(llamadas);
-				out.close();
 			}
+			llamadas.add(llamada);
+			out.writeObject(llamadas);
 
 		} catch (IOException E) {
 			E.printStackTrace();
 		} finally {
 			try {
-				out.close();
+				if (out != null)
+					out.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-
 	}
 
+	/**
+	 * Inserta un tipo de contacto, generando el Id automaticamente.
+	 * 
+	 * @param tipoContacto
+	 *            Cadena que contiene el nombre del tipode contacto a introducir
+	 */
 	@Override
 	public void insertTipoContacto(String tipoContacto) {
 		ObjectOutputStream out = null;
@@ -204,69 +275,90 @@ public class FachadaBin implements FachadaPersistente {
 				out = new ObjectOutputStream(new FileOutputStream(
 						fileTipoContacto, true));
 				tipos = new ArrayList<TipoContacto>();
-				tipos.add(new TipoContacto(1, tipoContacto));
-				out.writeObject(tipos);
-				out.close();
 			} else {
 				tipos = getTipoContacto();
 				new File(fileTipoContacto).delete();
 				esperar();
 				out = new ObjectOutputStream(new FileOutputStream(
 						fileTipoContacto, true));
-				tipos.add(new TipoContacto(tipos.size() + 1, tipoContacto));
-				out.writeObject(tipos);
-				out.close();
+
 			}
+			tipos.add(new TipoContacto(tipos.size() + 1, tipoContacto));
+			out.writeObject(tipos);
 
 		} catch (IOException E) {
 			E.printStackTrace();
 		} finally {
 			try {
-				out.close();
+				if (out != null)
+					out.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 
 	}
 
+	/**
+	 * Devuelve todos los contactos del fichero
+	 * 
+	 * @return ArrayList<Contacto> Colecion con todos los contactos del fichero
+	 */
 	private ArrayList<Contacto> leerContactos() {
-
+		ArrayList<Contacto> contactos = null;
+		ObjectInputStream in = null;
 		try {
-			ObjectInputStream in = new ObjectInputStream(new FileInputStream(
-					fileContactos));
-			ArrayList<Contacto> contactos = (ArrayList<Contacto>) in
-					.readObject();
+			in = new ObjectInputStream(new FileInputStream(fileContactos));
+			contactos = (ArrayList<Contacto>) in.readObject();
 
-			in.close();
-
+		} catch (IOException | ClassNotFoundException e) {
+			e.printStackTrace();
+		} finally {
+			if (in != null)
+				try {
+					in.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			if (contactos == null)
+				System.err.println("No hay contactos en el fichero");
 			return contactos;
-
-		} catch (IOException | ClassNotFoundException e) {
-			e.printStackTrace();
 		}
-
-		return null;
 	}
 
+	/**
+	 * Devuelve todas las llamadas
+	 * 
+	 * @return ArrayList<Llamadas> Colecion con todas las llamadas
+	 */
 	private ArrayList<Llamada> leerLlamadas() {
-
+		ArrayList<Llamada> llamadas = null;
+		ObjectInputStream in = null;
 		try {
-			ObjectInputStream in = new ObjectInputStream(new FileInputStream(
-					fileLlamadas));
-			ArrayList<Llamada> llamadas = (ArrayList<Llamada>) in.readObject();
-
-			in.close();
-
-			return llamadas;
+			in = new ObjectInputStream(new FileInputStream(fileLlamadas));
+			llamadas = (ArrayList<Llamada>) in.readObject();
 
 		} catch (IOException | ClassNotFoundException e) {
 			e.printStackTrace();
+		} finally {
+			if (in != null)
+				try {
+					in.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			if (llamadas == null)
+				System.err.println("No hay llamadas en el fichero");
+			return llamadas;
 		}
-		return null;
 	}
 
+	/**
+	 * Metodo que actualiza un contacto del fichero, manteniendo su id
+	 * 
+	 * @param contacto
+	 *            contacto actualizado a sobrescribir en el fichero
+	 */
 	@Override
 	public void updateContacto(Contacto contacto) {
 		Collection<Contacto> contactosViejos = leerContactos();
@@ -287,6 +379,12 @@ public class FachadaBin implements FachadaPersistente {
 			insertContacto(c);
 	}
 
+	/**
+	 * Metodo que actualiza una llamada del fichero, manteniendo su id
+	 * 
+	 * @param llamada
+	 *            llamada a sobrescrribir en el fichero
+	 */
 	@Override
 	public void updateLlamada(Llamada llamada) {
 		Collection<Llamada> llamadasViejas = leerLlamadas();
@@ -307,6 +405,12 @@ public class FachadaBin implements FachadaPersistente {
 			insertLlamada(l);
 	}
 
+	/**
+	 * Metodo que actualiza un tipo de contacto, manteniendo su id
+	 * 
+	 * @param tipoContato
+	 *            tipo de contacto que se actualiza
+	 */
 	@Override
 	public void updateTipoContacto(TipoContacto tipoContacto) {
 		Collection<TipoContacto> tiposViejos = getTipoContacto();

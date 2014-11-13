@@ -1,19 +1,33 @@
 package ubu.lsi.dms.agenda.test;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
-
 import ubu.lsi.dms.agenda.modelo.Contacto;
 import ubu.lsi.dms.agenda.modelo.Llamada;
 import ubu.lsi.dms.agenda.modelo.TipoContacto;
 import ubu.lsi.dms.agenda.persistencia.FabricaBin;
-import ubu.lsi.dms.agenda.persistencia.FachadaBin;
 import ubu.lsi.dms.agenda.persistencia.FachadaPersistente;
 
-public class TestBin {
+/**
+ * Clase Que realiza una serie de pruebas sobre los metodos de la Fachada
+ * Binaria y los distintos archivos
+ * 
+ * @author <A HREF="mailto:jld0016@alu.ubu.es">Jorge Laguna</A>
+ * @author <A HREF="mailto:rmp0046@alu.ubu.es">Roberto Miranda</A>
+ * @author <A HREF="mailto:aam0093@alu.ubu.es">Asier Alonso</A>
+ * @author <A HREF="mailto:dlr0008@alu.ubu.es">Daniel Lozano</A>
+ * @version 1.0
+ */
 
+public class TestBin {
+	/**
+	 * Inicializa una coleción con los contactos que se emplean para las
+	 * pruebas.
+	 * 
+	 * @param contactos
+	 *            lista donde se guardan los contactos
+	 */
 	private static void iniContactos(Collection<Contacto> contactos) {
 		TipoContacto tipoContacto = new TipoContacto(1, "Tipo001");
 		for (int i = 1; i <= 9; i++)
@@ -28,6 +42,12 @@ public class TestBin {
 
 	}
 
+	/**
+	 * Inicializa una coleción con las llamadas que se emplean para las pruebas.
+	 * 
+	 * @param contactos
+	 *            lista donde se guardan las llamadas
+	 */
 	private static void iniLlamadas(Collection<Llamada> llamadas,
 			FachadaPersistente fachadaBinaria) {
 		// int i = 1;
@@ -47,6 +67,12 @@ public class TestBin {
 		}
 	}
 
+	/**
+	 * Inicilizaliza los tipos de contacto y los guarda en su fichero.
+	 * 
+	 * @param fachadaBinaria
+	 *            Fachada que controla las operaciones sobre los ficheros
+	 */
 	private static void iniTipos(FachadaPersistente fachadaBinaria) {
 
 		for (int i = 1; i <= 9; i++)
@@ -54,6 +80,10 @@ public class TestBin {
 
 	}
 
+	/**
+	 * Metodo que borra los ficheros para poder realiar las pruebas desde 0
+	 * 
+	 */
 	private static void limpiarFicheros() {
 		File contactos = new File("." + File.separator + "res" + File.separator
 				+ "contactos.dat");
@@ -73,12 +103,15 @@ public class TestBin {
 
 	}
 
-	public static void main(String[] args) throws IOException,
-			ClassNotFoundException {
+	/**
+	 * 
+	 * Metodo main
+	 * 
+	 * @param args
+	 */
+	public static void main(String[] args) {
 		Collection<Contacto> contactos = new ArrayList<Contacto>();
 		Collection<Llamada> llamadas = new ArrayList<Llamada>();
-		Collection<TipoContacto> tipos = new ArrayList<TipoContacto>();
-
 		FabricaBin fabricabinaria = new FabricaBin();
 		FachadaPersistente fachadaBinaria = fabricabinaria
 				.createFachadaPersistente();
@@ -87,12 +120,11 @@ public class TestBin {
 		iniContactos(contactos);
 		iniLlamadas(llamadas, fachadaBinaria);
 		iniTipos(fachadaBinaria);
+
 		for (Contacto c : contactos) {
-			// System.out.println(c.toString());
 			fachadaBinaria.insertContacto(c);
 		}
 		for (Llamada l : llamadas) {
-			// System.out.println(l.toString());
 			fachadaBinaria.insertLlamada(l);
 		}
 
@@ -100,11 +132,20 @@ public class TestBin {
 
 		testContactos(contactos, fachadaBinaria);
 		testLlamadas(contactos, fachadaBinaria);
-
 		testTipos(fachadaBinaria);
+
 		System.out.println("OK");
 	}
 
+	/**
+	 * Pruebas sobre el fichero de contactos que obtiene todos los contactos y
+	 * realiza updates comprobando que los datos quedan guardados correctamente
+	 * 
+	 * @param contactos
+	 *            colección de contactos
+	 * @param fachadabinaria
+	 *            fachada que controla las operaciones sobre los ficheros.
+	 */
 	private static void testContactos(Collection<Contacto> contactos,
 			FachadaPersistente fachadabinaria) {
 		System.out.println("TEST CONTACTOS");
@@ -143,6 +184,15 @@ public class TestBin {
 		assert fachadabinaria.getContacto("Apellidos002").size() == 0;
 	}
 
+	/**
+	 * Pruebas sobre el fichero de llamadas que obtiene todas las llamadas y
+	 * realiza updates comprobando que los datos quedan guardados correctamente
+	 * 
+	 * @param contactos
+	 *            Colección de contactos para obtener las llamadas
+	 * @param fachadabinaria
+	 *            fachada que controla las operaciones sobre los ficheros.
+	 */
 	private static void testLlamadas(Collection<Contacto> contactos,
 			FachadaPersistente fachadabinaria) {
 		System.out.println("TEST LLAMADAS");
@@ -192,6 +242,14 @@ public class TestBin {
 		}
 	}
 
+	/**
+	 * Pruebas sobre el fichero de tipos de contacto que obtiene todos los tipos
+	 * de contacto y realiz updates comprobando que los datos quedan guardados
+	 * correctamente
+	 * 
+	 * @param fachadabinaria
+	 *            fachada que controla las operaciones sobre los ficheros.
+	 */
 	private static void testTipos(FachadaPersistente fachadaBinaria) {
 		System.out.println("TEST TIPOS");
 		ArrayList<TipoContacto> tipos = (ArrayList<TipoContacto>) fachadaBinaria
