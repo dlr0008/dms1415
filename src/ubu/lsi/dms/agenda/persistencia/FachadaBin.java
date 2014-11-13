@@ -28,11 +28,6 @@ import ubu.lsi.dms.agenda.modelo.TipoContacto;
  */
 public class FachadaBin implements FachadaPersistente {
 
-	public static FachadaPersistente getInstance() {
-		return fachadaBin;
-
-	}
-
 	private static String fileContactos = "." + File.separator + "res"
 			+ File.separator + "contactos.dat";
 	private static String fileLlamadas = "." + File.separator + "res"
@@ -40,10 +35,27 @@ public class FachadaBin implements FachadaPersistente {
 	private String fileTipoContacto = "." + File.separator + "res"
 			+ File.separator + "tipos.dat";
 
-	private static final FachadaPersistente fachadaBin = new FachadaBin();
+	private static FachadaPersistente fachadaBin = null;
 
 	public FachadaBin() {
 
+	}
+
+	public static FachadaPersistente getInstance() {
+		if (fachadaBin == null) {
+			fachadaBin = new FachadaBin();
+
+		}
+		return fachadaBin;
+
+	}
+
+	protected void esperar() {
+		try {
+			Thread.sleep(10);
+		} catch (InterruptedException ex) {
+			Thread.currentThread().interrupt();
+		}
 	}
 
 	@Override
@@ -94,16 +106,12 @@ public class FachadaBin implements FachadaPersistente {
 
 	@Override
 	public Collection<TipoContacto> getTipoContacto() {
-		Set<TipoContacto> tiposFiltrado = new HashSet<TipoContacto>();
 		List<TipoContacto> tipos = null;
 		ObjectInputStream in = null;
 		try {
 			in = new ObjectInputStream(new FileInputStream(fileTipoContacto));
 			tipos = (ArrayList<TipoContacto>) in.readObject();
 			in.close();
-			for (TipoContacto t : tipos) {
-				tiposFiltrado.add(t);
-			}
 
 		} finally {
 			if (tipos == null)
@@ -223,22 +231,6 @@ public class FachadaBin implements FachadaPersistente {
 
 	}
 
-	private ArrayList<TipoContacto> leerTiposContacto() {
-		ArrayList<TipoContacto> tipos = null;
-		ObjectInputStream in = null;
-		try {
-			in = new ObjectInputStream(new FileInputStream(fileTipoContacto));
-			tipos = (ArrayList<TipoContacto>) in.readObject();
-			for (TipoContacto t : tipos)
-			in.close();
-
-		} finally {
-			if (tipos == null)
-				System.err.println("No existen tipos de Contacto");
-			return tipos;
-		}
-	}
-
 	private ArrayList<Contacto> leerContactos() {
 
 		try {
@@ -277,92 +269,60 @@ public class FachadaBin implements FachadaPersistente {
 
 	@Override
 	public void updateContacto(Contacto contacto) {
-		Collection<Contacto> contactos;
-		try {
-			ObjectInputStream in = new ObjectInputStream(new FileInputStream(
-					fileContactos.toString()));
-			contactos = (Collection<Contacto>) in.readObject();
-			in.close();
+		Collection<Contacto> contactosViejos = leerContactos();
+		Collection<Contacto> contactosNuevos = new ArrayList<Contacto>();
 
-			for (Contacto c : contactos) {
-				if (c.getIdContacto() == contacto.getIdContacto()) {
-					contactos.remove(c);
-					contactos.add(contacto);
-				}
-
-				ObjectOutputStream out = new ObjectOutputStream(
-						new FileOutputStream(fileContactos.toString()));
-				out.writeObject(contactos);
-				out.close();
+		int contador = 1;
+		for (Contacto c : contactosViejos) {
+			if (contador != contacto.getIdContacto()) {
+				contactosNuevos.add(c);
+			} else {
+				contactosNuevos.add(contacto);
 			}
-
-		} catch (ClassNotFoundException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			contador++;
 		}
+		new File(fileContactos).delete();
+		esperar();
+		for (Contacto c : contactosNuevos)
+			insertContacto(c);
 	}
 
 	@Override
 	public void updateLlamada(Llamada llamada) {
-		Collection<Llamada> llamadas;
-		try {
-			ObjectInputStream in = new ObjectInputStream(new FileInputStream(
-					fileLlamadas.toString()));
-			llamadas = (Collection<Llamada>) in.readObject();
-			in.close();
+		Collection<Llamada> llamadasViejas = leerLlamadas();
+		Collection<Llamada> llamadasNuevas = new ArrayList<Llamada>();
 
-			for (Llamada l : llamadas) {
-				if (l.getIdLlamada() == llamada.getIdLlamada()) {
-					llamadas.remove(l);
-					llamadas.add(llamada);
-				}
-
-				ObjectOutputStream out = new ObjectOutputStream(
-						new FileOutputStream(fileLlamadas.toString()));
-				out.writeObject(llamadas);
-				out.close();
+		int contador = 1;
+		for (Llamada l : llamadasViejas) {
+			if (contador != llamada.getIdLlamada()) {
+				llamadasNuevas.add(l);
+			} else {
+				llamadasNuevas.add(llamada);
 			}
-
-		} catch (ClassNotFoundException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			contador++;
 		}
+		new File(fileLlamadas).delete();
+		esperar();
+		for (Llamada l : llamadasNuevas)
+			insertLlamada(l);
 	}
 
 	@Override
 	public void updateTipoContacto(TipoContacto tipoContacto) {
-		Collection<TipoContacto> tipos;
-		try {
-			ObjectInputStream in = new ObjectInputStream(new FileInputStream(
-					fileTipoContacto.toString()));
-			tipos = (Collection<TipoContacto>) in.readObject();
-			in.close();
-
-			for (TipoContacto t : tipos) {
-				if (t.getIdTipoContacto() == tipoContacto.getIdTipoContacto()) {
-					tipos.remove(t);
-					tipos.add(tipoContacto);
-				}
-
-				ObjectOutputStream out = new ObjectOutputStream(
-						new FileOutputStream(fileTipoContacto.toString()));
-				out.writeObject(tipos);
-				out.close();
+		Collection<TipoContacto> tiposViejos = getTipoContacto();
+		Collection<TipoContacto> tiposNuevos = new ArrayList<TipoContacto>();
+		int contador = 1;
+		for (TipoContacto t : tiposViejos) {
+			if (contador != tipoContacto.getIdTipoContacto()) {
+				tiposNuevos.add(t);
+			} else {
+				tiposNuevos.add(tipoContacto);
 			}
-
-		} catch (ClassNotFoundException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			contador++;
 		}
-
+		new File(fileTipoContacto).delete();
+		esperar();
+		for (TipoContacto t : tiposNuevos)
+			insertTipoContacto(t.getTipoContacto());
 	}
-	
-	protected void esperar(){
-		try {
-			Thread.sleep(1); // 1000 milliseconds is one second.
-		} catch (InterruptedException ex) {
-			Thread.currentThread().interrupt();
-		}
-	}
-
 }
