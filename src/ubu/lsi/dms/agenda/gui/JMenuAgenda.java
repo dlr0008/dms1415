@@ -3,7 +3,6 @@ package ubu.lsi.dms.agenda.gui;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -13,15 +12,15 @@ import ubu.lsi.dms.agenda.test.TestGui;
 public class JMenuAgenda extends JPanel {
 
 	private JFramePrincipal frame = null;
-	private TestGui testGui = null;
-
 	private static final long serialVersionUID = 1L;
+	private JPanelConsulta panelConsultas = null;
+	private JPanelNuevoTipo panelTipos = null;
 
 	public JMenuAgenda(JFramePrincipal jFramePrincipal, TestGui testGui) {
 		setLayout(null);
 		frame = jFramePrincipal;
-		this.testGui = testGui;
-
+		panelConsultas = new JPanelConsulta(testGui);
+		panelTipos = new JPanelNuevoTipo();
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setBounds(0, 0, 950, 25);
 		add(menuBar);
@@ -37,8 +36,7 @@ public class JMenuAgenda extends JPanel {
 
 		JMenuItem mntmNuevoTipocontacto = new JMenuItem(
 				"Nuevo Tipo de Contacto");
-		mntmNuevoTipocontacto.addActionListener(new menuChange(
-				new JPanelNuevoTipo()));
+		mntmNuevoTipocontacto.addActionListener(new menuChange(panelTipos));
 		mnInsertar.add(mntmNuevoTipocontacto);
 
 		javax.swing.JMenu mnModificar = new javax.swing.JMenu("Modificar");
@@ -57,8 +55,7 @@ public class JMenuAgenda extends JPanel {
 		menuBar.add(mnConsultar);
 
 		JMenuItem mntmNuevaConsulta = new JMenuItem("Nueva Consulta");
-		mntmNuevaConsulta.addActionListener(new menuChange(new JPanelConsulta(
-				testGui)));
+		mntmNuevaConsulta.addActionListener(new menuChange(panelConsultas));
 		mnConsultar.add(mntmNuevaConsulta);
 
 		javax.swing.JMenu mnAyuda = new javax.swing.JMenu("Ayuda");
@@ -76,10 +73,8 @@ public class JMenuAgenda extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 
 			JPanel viejoPanel = frame.getPanel();
-			System.out.println(viejoPanel);
 			panel.setBounds(viejoPanel.getX(), viejoPanel.getY(),
 					viejoPanel.getWidth(), viejoPanel.getHeight());
-			viejoPanel.removeAll();
 			frame.remove(viejoPanel);
 			frame.setPanel(panel);
 			frame.add(panel);
