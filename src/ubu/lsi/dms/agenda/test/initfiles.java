@@ -91,7 +91,6 @@ public class initfiles {
 				assert ("Notas00" + i).equals(c.getNotas());
 			}
 		}
-
 	}
 
 	private static void testLlamadas(Collection<Contacto> contactos,

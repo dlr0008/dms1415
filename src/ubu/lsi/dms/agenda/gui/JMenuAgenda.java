@@ -30,9 +30,13 @@ public class JMenuAgenda extends JPanel {
 		menuBar.add(mnInsertar);
 
 		JMenuItem mntmNewMenuItem = new JMenuItem("Nuevo Contacto");
+		mntmNewMenuItem.addActionListener(new menuChange(
+				new JPanelNuevoContacto()));
 		mnInsertar.add(mntmNewMenuItem);
 
 		JMenuItem menuItem = new JMenuItem("Nueva Llamada");
+		menuItem.addActionListener(new menuChange(
+				new JPanelNuevaLlamada()));
 		mnInsertar.add(menuItem);
 
 		JMenuItem mntmNuevoTipocontacto = new JMenuItem(
