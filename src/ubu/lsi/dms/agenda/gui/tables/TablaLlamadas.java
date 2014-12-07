@@ -14,6 +14,8 @@ public class TablaLlamadas extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
 
 	public List<Llamada> listaLlamadas;
+	private String[] cabecera = new String[] { "ID", "Contacto",
+			"Fecha", "Asunto", "Notas" };
 
 	public TablaLlamadas(Collection<Llamada> llamadas) {
 		listaLlamadas = Collections
@@ -53,5 +55,8 @@ public class TablaLlamadas extends AbstractTableModel {
 
 		}
 		return "";
+	}
+	public String[] getCabecera(){
+		return cabecera;
 	}
 }

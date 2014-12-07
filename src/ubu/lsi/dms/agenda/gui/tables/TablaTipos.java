@@ -14,6 +14,7 @@ public class TablaTipos extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
 
 	public List<TipoContacto> listaTipos;
+	private String[] cabecera = new String[] { "ID", "Nombre" };
 
 	public TablaTipos(Collection<TipoContacto> tipos) {
 		listaTipos = Collections
@@ -22,8 +23,7 @@ public class TablaTipos extends AbstractTableModel {
 
 	public void add(TipoContacto contacto) {
 		listaTipos.add(contacto);
-		fireTableRowsInserted(listaTipos.size() - 1,
-				listaTipos.size() - 1);
+		fireTableRowsInserted(listaTipos.size() - 1, listaTipos.size() - 1);
 	}
 
 	@Override
@@ -48,4 +48,9 @@ public class TablaTipos extends AbstractTableModel {
 		}
 		return "";
 	}
+
+	public String[] getCabecera() {
+		return cabecera;
+	}
+
 }

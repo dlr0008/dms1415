@@ -14,6 +14,11 @@ public class TablaContactos extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
 
 	public List<Contacto> listaContactos;
+	private String[] cabecera = new String[] { "Id", "Nombre", "Apellidos",
+			"Estimado", "Direccion", "Ciudad", "Prov", "CodPostal", "Region",
+			"Páis", "NombreCompañia", "Cargo", "telefonoTrabajo",
+			"ExtensionTrabajo", "TelefonoMovil", "NumFax",
+			"NomCorreoElectronico", "Notas" };
 
 	public TablaContactos(Collection<Contacto> contactos) {
 		listaContactos = Collections
@@ -78,5 +83,9 @@ public class TablaContactos extends AbstractTableModel {
 			return c.getNotas();
 		}
 		return "";
+	}
+
+	public String[] getCabecera() {
+		return cabecera;
 	}
 }
