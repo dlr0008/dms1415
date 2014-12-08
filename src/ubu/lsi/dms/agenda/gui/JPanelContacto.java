@@ -13,7 +13,7 @@ import javax.swing.JTextPane;
 import ubu.lsi.dms.agenda.modelo.TipoContacto;
 import ubu.lsi.dms.agenda.test.TestGui;
 
-public class JPanelNuevoContacto extends JPanel {
+public class JPanelContacto extends JPanel {
 	/**
 	 * 
 	 */
@@ -28,7 +28,7 @@ public class JPanelNuevoContacto extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public JPanelNuevoContacto(JFramePrincipal jFramePrincipal) {
+	public JPanelContacto(JFramePrincipal jFramePrincipal) {
 		frame = jFramePrincipal;
 		setLayout(null);
 		
@@ -94,6 +94,7 @@ public class JPanelNuevoContacto extends JPanel {
 		JTextPane textPane = new JTextPane();
 		textPane.setBounds(250, 69, 501, 89);
 		add(textPane);
+
 		
 		final JButton btnOtrosCampos = new JButton("Otros Campos");
 		btnOtrosCampos.addMouseListener(new MouseAdapter() {
@@ -105,7 +106,7 @@ public class JPanelNuevoContacto extends JPanel {
 						viejoPanel.getWidth(), viejoPanel.getHeight());
 				frame.remove(viejoPanel);
 				frame.setPanel(panel);
-				frame.add(panel);
+				frame.getContentPane().add(panel);
 				frame.validate();
 				frame.repaint();
 			}
@@ -120,5 +121,7 @@ public class JPanelNuevoContacto extends JPanel {
 		JButton btnGuardar = new JButton("Guardar");
 		btnGuardar.setBounds(845, 536, 89, 23);
 		add(btnGuardar);		
+		
+
 	}
 }

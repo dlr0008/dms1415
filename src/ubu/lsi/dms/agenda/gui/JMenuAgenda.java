@@ -14,13 +14,13 @@ public class JMenuAgenda extends JPanel {
 	private JFramePrincipal frame = null;
 	private static final long serialVersionUID = 1L;
 	private JPanelConsulta panelConsultas = null;
-	private JPanelNuevoTipo panelTipos = null;
+	private JPanelTipo panelTipos = null;
 
 	public JMenuAgenda(JFramePrincipal jFramePrincipal, TestGui testGui) {
 		setLayout(null);
 		frame = jFramePrincipal;
 		panelConsultas = new JPanelConsulta(testGui);
-		panelTipos = new JPanelNuevoTipo();
+		panelTipos = new JPanelTipo();
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setBounds(0, 0, 950, 25);
 		add(menuBar);
@@ -30,12 +30,12 @@ public class JMenuAgenda extends JPanel {
 
 		JMenuItem mntmNewMenuItem = new JMenuItem("Nuevo Contacto");
 		mntmNewMenuItem.addActionListener(new menuChange(
-				new JPanelNuevoContacto(frame)));
+				new JPanelContacto(frame)));
 		mnInsertar.add(mntmNewMenuItem);
 
 		JMenuItem menuItem = new JMenuItem("Nueva Llamada");
 		menuItem.addActionListener(new menuChange(
-				new JPanelNuevaLlamada()));
+				new JPanelLlamada()));
 		mnInsertar.add(menuItem);
 
 		JMenuItem mntmNuevoTipocontacto = new JMenuItem(
@@ -47,12 +47,17 @@ public class JMenuAgenda extends JPanel {
 		menuBar.add(mnModificar);
 
 		JMenuItem mntmContacto = new JMenuItem("Contacto");
+		mntmContacto.addActionListener(new menuChange(
+				new JPanelContacto(frame)));
 		mnModificar.add(mntmContacto);
 
 		JMenuItem mntmLlamada = new JMenuItem("Llamada");
+		mntmLlamada.addActionListener(new menuChange(
+				new JPanelLlamada()));
 		mnModificar.add(mntmLlamada);
 
 		JMenuItem mntmTipoDeContacto = new JMenuItem("Tipo de Contacto");
+		mntmTipoDeContacto.addActionListener(new menuChange(panelTipos));
 		mnModificar.add(mntmTipoDeContacto);
 
 		javax.swing.JMenu mnConsultar = new javax.swing.JMenu("Consultar");
@@ -64,6 +69,12 @@ public class JMenuAgenda extends JPanel {
 
 		javax.swing.JMenu mnAyuda = new javax.swing.JMenu("Ayuda");
 		menuBar.add(mnAyuda);
+		
+		JMenuItem mntmAyuda = new JMenuItem("Manual");
+		mntmAyuda.addActionListener(new menuChange(new JPanelAyuda()));
+		mnAyuda.add(mntmAyuda);
+		
+		
 	}
 
 	class menuChange implements ActionListener {

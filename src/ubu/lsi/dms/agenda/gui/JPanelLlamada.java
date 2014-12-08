@@ -6,7 +6,7 @@ import javax.swing.JTextPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
-public class JPanelNuevaLlamada extends JPanel {
+public class JPanelLlamada extends JPanel {
 	/**
 	 * 
 	 */
@@ -18,7 +18,7 @@ public class JPanelNuevaLlamada extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public JPanelNuevaLlamada() {
+	public JPanelLlamada() {
 		setLayout(null);
 		
 		JLabel lblFechaDeLlamada = new JLabel("Fecha de llamada");

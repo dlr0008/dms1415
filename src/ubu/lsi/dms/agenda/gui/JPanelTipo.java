@@ -7,7 +7,7 @@ import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class JPanelNuevoTipo extends JPanel {
+public class JPanelTipo extends JPanel {
 	/**
 	 * 
 	 */
@@ -17,7 +17,7 @@ public class JPanelNuevoTipo extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public JPanelNuevoTipo() {
+	public JPanelTipo() {
 		setLayout(null);
 		
 		JButton btnNewButton = new JButton("Descartar");
