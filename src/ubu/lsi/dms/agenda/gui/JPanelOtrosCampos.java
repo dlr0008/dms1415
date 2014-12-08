@@ -37,7 +37,7 @@ public class JPanelOtrosCampos extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				JPanel viejoPanel = frame.getPanel();
-				JPanel panel=new JPanelContacto(frame);
+				JPanel panel=new JPanelContacto();
 				panel.setBounds(viejoPanel.getX(), viejoPanel.getY(),
 						viejoPanel.getWidth(), viejoPanel.getHeight());
 				frame.remove(viejoPanel);
@@ -55,7 +55,7 @@ public class JPanelOtrosCampos extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				JPanel viejoPanel = frame.getPanel();
-				JPanel panel=new JPanelContacto(frame);
+				JPanel panel=new JPanelContacto();
 				panel.setBounds(viejoPanel.getX(), viejoPanel.getY(),
 						viejoPanel.getWidth(), viejoPanel.getHeight());
 				frame.remove(viejoPanel);
