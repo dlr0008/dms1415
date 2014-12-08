@@ -7,6 +7,10 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 
 public class JPanelNuevaLlamada extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
@@ -18,45 +22,45 @@ public class JPanelNuevaLlamada extends JPanel {
 		setLayout(null);
 		
 		JLabel lblFechaDeLlamada = new JLabel("Fecha de llamada");
-		lblFechaDeLlamada.setBounds(10, 56, 98, 14);
+		lblFechaDeLlamada.setBounds(10, 56, 127, 14);
 		add(lblFechaDeLlamada);
 		
 		JLabel lblAsunto = new JLabel("Asunto");
-		lblAsunto.setBounds(10, 92, 46, 14);
+		lblAsunto.setBounds(10, 92, 86, 14);
 		add(lblAsunto);
 		
 		JLabel lblNotas = new JLabel("Notas");
-		lblNotas.setBounds(10, 130, 46, 14);
+		lblNotas.setBounds(10, 130, 86, 14);
 		add(lblNotas);
 		
 		JTextPane textPane = new JTextPane();
-		textPane.setBounds(10, 148, 430, 73);
+		textPane.setBounds(10, 148, 430, 106);
 		add(textPane);
 		
 		textField = new JTextField();
-		textField.setBounds(118, 18, 86, 20);
+		textField.setBounds(157, 18, 86, 20);
 		add(textField);
 		textField.setColumns(10);
 		
 		textField_1 = new JTextField();
-		textField_1.setBounds(118, 89, 86, 20);
+		textField_1.setBounds(157, 89, 86, 20);
 		add(textField_1);
 		textField_1.setColumns(10);
 		
 		JButton btnDescartar = new JButton("Descartar");
-		btnDescartar.setBounds(177, 232, 89, 23);
+		btnDescartar.setBounds(733, 536, 102, 23);
 		add(btnDescartar);
 		
 		JButton btnGuardar = new JButton("Guardar");
-		btnGuardar.setBounds(326, 232, 89, 23);
+		btnGuardar.setBounds(845, 536, 89, 23);
 		add(btnGuardar);
 		
 		JLabel lblContacto = new JLabel("Contacto");
-		lblContacto.setBounds(10, 21, 46, 14);
+		lblContacto.setBounds(10, 21, 86, 14);
 		add(lblContacto);
 		
 		textField_2 = new JTextField();
-		textField_2.setBounds(118, 53, 86, 20);
+		textField_2.setBounds(157, 53, 86, 20);
 		add(textField_2);
 		textField_2.setColumns(10);
 

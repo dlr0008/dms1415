@@ -30,7 +30,7 @@ public class JMenuAgenda extends JPanel {
 
 		JMenuItem mntmNewMenuItem = new JMenuItem("Nuevo Contacto");
 		mntmNewMenuItem.addActionListener(new menuChange(
-				new JPanelNuevoContacto()));
+				new JPanelNuevoContacto(frame)));
 		mnInsertar.add(mntmNewMenuItem);
 
 		JMenuItem menuItem = new JMenuItem("Nueva Llamada");
@@ -66,7 +66,7 @@ public class JMenuAgenda extends JPanel {
 		menuBar.add(mnAyuda);
 	}
 
-	private class menuChange implements ActionListener {
+	class menuChange implements ActionListener {
 		JPanel panel = null;
 
 		public menuChange(JPanel panel) {

@@ -1,14 +1,17 @@
 package ubu.lsi.dms.agenda.gui;
 
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollBar;
+import javax.swing.JTextField;
 
 public class Consulta extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JTextField textField;
 
 	/**
@@ -38,6 +41,7 @@ public class Consulta extends JPanel {
 		btnConsultar.setBounds(351, 45, 89, 23);
 		add(btnConsultar);
 		
+		@SuppressWarnings("rawtypes")
 		JList list = new JList();
 		list.setBounds(16, 101, 397, 157);
 		add(list);

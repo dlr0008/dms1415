@@ -12,7 +12,7 @@ public class TestGui {
 	private static Collection<Contacto> contactos = new ArrayList<Contacto>();
 
 	private static Collection<Llamada> llamadas = new ArrayList<Llamada>();
-	private static Collection<TipoContacto> tipos = new ArrayList<TipoContacto>();
+	public static Collection<TipoContacto> tipos = new ArrayList<TipoContacto>();
 
 	public static void main(String[] args) {
 		iniContactos();
@@ -57,7 +57,6 @@ public class TestGui {
 	private static void iniTipos() {
 		for (int i = 1; i <= 30; i++)
 			tipos.add(new TipoContacto(i, "Tipo00" + i));
-
 	}
 
 	public Collection<Llamada> filtrarLLamadas(String Apellido) {

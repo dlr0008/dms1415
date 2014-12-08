@@ -8,6 +8,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class JPanelNuevoTipo extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JTextField textField;
 
 	/**
@@ -21,11 +25,11 @@ public class JPanelNuevoTipo extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		btnNewButton.setBounds(173, 228, 89, 23);
+		btnNewButton.setBounds(734, 536, 101, 23);
 		add(btnNewButton);
 		
 		JButton btnNewButton_2 = new JButton("Guardar");
-		btnNewButton_2.setBounds(321, 228, 89, 23);
+		btnNewButton_2.setBounds(845, 536, 89, 23);
 		add(btnNewButton_2);
 		
 		JLabel lblTipoDeContacto = new JLabel("Tipo de Contacto");

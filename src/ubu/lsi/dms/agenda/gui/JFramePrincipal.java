@@ -33,7 +33,7 @@ public class JFramePrincipal extends JFrame {
 				"." + File.separator + "images" + File.separator + "ubu.jpg"));
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 950, 660);
+		setBounds(100, 100, 954, 620);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
