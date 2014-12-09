@@ -1,25 +1,22 @@
 package ubu.lsi.dms.agenda.controlador;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
 import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.ScrollPaneConstants;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.TableColumn;
 
 import ubu.lsi.dms.agenda.gui.JFramePrincipal;
 import ubu.lsi.dms.agenda.gui.JPanelConsulta;
+import ubu.lsi.dms.agenda.gui.TablaContactos;
+import ubu.lsi.dms.agenda.gui.TablaLlamadas;
+import ubu.lsi.dms.agenda.gui.TablaTipos;
 import ubu.lsi.dms.agenda.modelo.ModelTemporal;
-import ubu.lsi.dms.agenda.modelo.TablaContactos;
-import ubu.lsi.dms.agenda.modelo.TablaLlamadas;
-import ubu.lsi.dms.agenda.modelo.TablaTipos;
 
 /**
  * 
@@ -36,19 +33,17 @@ public class ControladorConsultas {
 
 	public ControladorConsultas(JFramePrincipal frame, ModelTemporal modelo) {
 		this.modelo = modelo;
-		this.frame=frame;
+		this.frame = frame;
 		panelConsulta = (JPanelConsulta) frame.getPanel();
-		panelConsulta.getBtnMostrar().addActionListener(mostrar());
-		panelConsulta.getRdbtnContactos().addItemListener(activarElementos());
-		panelConsulta.getRdbtnLlamadas().addItemListener(activarElementos());
-		panelConsulta.getRdbtnTiposDeContacto().addItemListener(
-				desActivarElementos());
-		panelConsulta.getBtnTodos().addActionListener(mostrarTodos());
+		panelConsulta.añadirListernerMostrar(mostrar());
+		panelConsulta.añadirListenerActivar(activarElementos());
+		panelConsulta.añadirListenerDesactivar(desActivarElementos());
+		panelConsulta.añadirListenerMostrarTodos(mostrarTodos());
 
 		TablaContactos contactosEnTabla = new TablaContactos(
 				modelo.getContactos());
 
-		crearListaConsultas(crearTabla(contactosEnTabla,
+		panelConsulta.crearListaConsultas(crearTabla(contactosEnTabla,
 				contactosEnTabla.getCabecera()));
 
 	}
@@ -60,25 +55,34 @@ public class ControladorConsultas {
 			public void actionPerformed(ActionEvent e) {
 				AbstractTableModel modeloTabla = null;
 				String[] cabecera = null;
-				if (panelConsulta.getCampo().getText().equals("")
-						&& panelConsulta.getCampo().isEnabled()) {
+				if (panelConsulta.getCampo().equals("")
+						&& panelConsulta.isCampoEnabled()) {
 					JOptionPane.showMessageDialog(null,
 							"Introduce un criterio de Busqueda");
 				} else {
-					if (panelConsulta.getRdbtnLlamadas().isSelected()) {
-						modeloTabla = new TablaLlamadas(
-								modelo.filtrarLLamadas(panelConsulta.getCampo()
-										.getText()));
-						cabecera = ((TablaLlamadas) modeloTabla).getCabecera();
-					}
-					if (panelConsulta.getRdbtnContactos().isSelected()) {
+					int boton = panelConsulta.getSelected();
+					switch (boton) {
+					case 1:
 						modeloTabla = new TablaContactos(
 								modelo.filtrarContactos(panelConsulta
-										.getCampo().getText()));
+										.getCampo()));
 						cabecera = ((TablaContactos) modeloTabla).getCabecera();
+						break;
+					case 2:
+						modeloTabla = new TablaLlamadas(
+								modelo.filtrarLLamadas(panelConsulta.getCampo()));
+						cabecera = ((TablaLlamadas) modeloTabla).getCabecera();
+						break;
+					case 3:
+						modeloTabla = new TablaTipos(modelo.getTipos());
+						cabecera = ((TablaTipos) modeloTabla).getCabecera();
+						break;
+					default:
+						break;
 					}
 
-					crearListaConsultas(crearTabla(modeloTabla, cabecera));
+					panelConsulta.crearListaConsultas(crearTabla(modeloTabla,
+							cabecera));
 				}
 			}
 		};
@@ -91,20 +95,26 @@ public class ControladorConsultas {
 			public void actionPerformed(ActionEvent e) {
 				AbstractTableModel modeloTabla = null;
 				String[] cabecera = null;
-				if (panelConsulta.getRdbtnLlamadas().isSelected()) {
-					modeloTabla = new TablaLlamadas(modelo.getLlamadas());
-					cabecera = ((TablaLlamadas) modeloTabla).getCabecera();
-				}
-				if (panelConsulta.getRdbtnContactos().isSelected()) {
+				int boton = panelConsulta.getSelected();
+				switch (boton) {
+				case 1:
 					modeloTabla = new TablaContactos(modelo.getContactos());
 					cabecera = ((TablaContactos) modeloTabla).getCabecera();
-				}
-				if (panelConsulta.getRdbtnTiposDeContacto().isSelected()) {
+					break;
+				case 2:
+					modeloTabla = new TablaLlamadas(modelo.getLlamadas());
+					cabecera = ((TablaLlamadas) modeloTabla).getCabecera();
+					break;
+				case 3:
 					modeloTabla = new TablaTipos(modelo.getTipos());
 					cabecera = ((TablaTipos) modeloTabla).getCabecera();
+					break;
+				default:
+					break;
 				}
 
-				crearListaConsultas(crearTabla(modeloTabla, cabecera));
+				panelConsulta.crearListaConsultas(crearTabla(modeloTabla,
+						cabecera));
 
 			}
 		};
@@ -117,10 +127,7 @@ public class ControladorConsultas {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
-					panelConsulta.getCampo().setEnabled(true);
-					panelConsulta.getCampo().setBackground(Color.WHITE);
-					panelConsulta.getBtnMostrar().setEnabled(true);
-					panelConsulta.getLblIntroduce().setEnabled(true);
+					panelConsulta.activar(true);
 				}
 
 			}
@@ -134,36 +141,11 @@ public class ControladorConsultas {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
-					panelConsulta.getCampo().setEnabled(false);
-					panelConsulta.getCampo().setBackground(
-							panelConsulta.getBackground());
-					panelConsulta.getBtnMostrar().setEnabled(false);
-					panelConsulta.getLblIntroduce().setEnabled(false);
+					panelConsulta.activar(false);
 				}
 
 			}
 		};
-	}
-
-	private void crearListaConsultas(JTable tabla) {
-		System.out.println(panelConsulta);
-		if (panelConsulta.getListScroller() != null)
-			panelConsulta.remove(panelConsulta.getListScroller());
-		JScrollPane nuevaLista = new JScrollPane(tabla);
-
-		nuevaLista.setBounds(6, 87, 929, 467);
-
-		if (tabla.getRowCount() == 0)
-			JOptionPane.showMessageDialog(null, "Lista Vacia");
-
-		nuevaLista
-				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		nuevaLista
-				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-		panelConsulta.setListScroller(nuevaLista);
-		panelConsulta.add(nuevaLista);
-		panelConsulta.validate();
-		panelConsulta.repaint();
 	}
 
 	private JTable crearTabla(AbstractTableModel datos, String[] cabecera) {

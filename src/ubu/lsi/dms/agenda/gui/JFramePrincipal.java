@@ -2,11 +2,7 @@ package ubu.lsi.dms.agenda.gui;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
-
-import ubu.lsi.dms.agenda.test.TestGui;
-
 import java.awt.Toolkit;
 import java.io.File;
 import java.util.ArrayList;
@@ -29,7 +25,7 @@ public class JFramePrincipal extends JFrame {
 		this.menuAgenda = menu;
 	}
 
-	public JFramePrincipal(TestGui testGui) {
+	public JFramePrincipal() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
 				"." + File.separator + "images" + File.separator + "ubu.jpg"));
 		setResizable(false);
@@ -42,9 +38,7 @@ public class JFramePrincipal extends JFrame {
 		menuAgenda = new JMenuAgenda();
 		menuAgenda.setBounds(0, 0, 950, 25);
 		contentPane.add(menuAgenda);
-		panel = new JPanelConsulta();
-		panel.setBounds(0, 25, 950, 925);
-		contentPane.add(panel);
+		// panel = new JPanelConsulta();
 	}
 
 	public JPanel getPanel() {
@@ -53,6 +47,8 @@ public class JFramePrincipal extends JFrame {
 
 	public void setPanel(JPanel nuevoPanel) {
 		panel = nuevoPanel;
+		panel.setBounds(0, 25, 950, 925);
+		contentPane.add(panel);
 	}
 
 	public ArrayList<JPanel> getPaneles() {

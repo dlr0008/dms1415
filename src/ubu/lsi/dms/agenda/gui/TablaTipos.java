@@ -1,4 +1,4 @@
-package ubu.lsi.dms.agenda.modelo;
+package ubu.lsi.dms.agenda.gui;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -6,6 +6,8 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
+
+import ubu.lsi.dms.agenda.modelo.TipoContacto;
 
 public class TablaTipos extends AbstractTableModel {
 

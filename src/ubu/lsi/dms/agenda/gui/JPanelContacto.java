@@ -1,6 +1,7 @@
 package ubu.lsi.dms.agenda.gui;
 
 import java.awt.Choice;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -9,7 +10,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
-
 
 public class JPanelContacto extends JPanel {
 	/**
@@ -36,7 +36,17 @@ public class JPanelContacto extends JPanel {
 	private JLabel lblTipoDeContacto;
 	private Choice menu;
 	private JLabel lblNotas;
-	private JTextPane textPane;
+	private JTextPane notas;
+	private JButton btnGuardar;
+	private JButton btnDescartar;
+
+	public JButton getBtnDescartar() {
+		return btnDescartar;
+	}
+
+	public JButton getBtnGuardar() {
+		return btnGuardar;
+	}
 
 	public JPanelContacto() {
 		setLayout(null);
@@ -93,14 +103,14 @@ public class JPanelContacto extends JPanel {
 		menu = new Choice();
 		menu.setBounds(397, 5, 133, 20);
 		add(menu);
-		
+
 		lblNotas = new JLabel("Notas");
 		lblNotas.setBounds(247, 44, 75, 14);
 		add(lblNotas);
 
-		textPane = new JTextPane();
-		textPane.setBounds(250, 69, 501, 89);
-		add(textPane);
+		notas = new JTextPane();
+		notas.setBounds(250, 69, 501, 89);
+		add(notas);
 
 		final JButton btnOtrosCampos = new JButton("Otros Campos");
 		btnOtrosCampos.addMouseListener(new MouseAdapter() {
@@ -120,11 +130,11 @@ public class JPanelContacto extends JPanel {
 		btnOtrosCampos.setBounds(39, 205, 133, 23);
 		add(btnOtrosCampos);
 
-		JButton btnDescartar = new JButton("Descartar");
+		btnDescartar = new JButton("Descartar");
 		btnDescartar.setBounds(734, 536, 101, 23);
 		add(btnDescartar);
 
-		JButton btnGuardar = new JButton("Guardar");
+		btnGuardar = new JButton("Guardar");
 		btnGuardar.setBounds(845, 536, 89, 23);
 		add(btnGuardar);
 
@@ -138,59 +148,71 @@ public class JPanelContacto extends JPanel {
 		return frame;
 	}
 
-	public JLabel getLblNombre() {
-		return lblNombre;
+	public String getNombre() {
+		return nombre.getText();
 	}
 
-	public JTextField getNombre() {
-		return nombre;
+	public String getApellidos() {
+		return apellidos.getText();
 	}
 
-	public JLabel getLblApellidos() {
-		return lblApellidos;
+	public String getDireccion() {
+		return Direccion.toString();
 	}
 
-	public JTextField getApellidos() {
-		return apellidos;
+	public String getCiudad() {
+		return Ciudad.getText();
 	}
 
-	public JLabel getLblDireccion() {
-		return lblDireccion;
+	public String getMovil() {
+		return Movil.getText();
 	}
 
-	public JTextField getDireccion() {
-		return Direccion;
+	public void setNotas(String texto) {
+		notas.setText(texto);
+
 	}
 
-	public JLabel getLblCiudad() {
-		return lblCiudad;
+	public void setNombre(String texto) {
+		nombre.setText(texto);
 	}
 
-	public JTextField getCiudad() {
-		return Ciudad;
+	public void setApellidos(String texto) {
+		apellidos.setText(texto);
 	}
 
-	public JLabel getLblMovil() {
-		return lblMovil;
+	public void setDireccion(String texto) {
+		Direccion.setText(texto);
 	}
 
-	public JTextField getMovil() {
-		return Movil;
+	public void setCiudad(String texto) {
+		Ciudad.setText(texto);
 	}
 
-	public JLabel getLblTipoDeContacto() {
-		return lblTipoDeContacto;
+	public void setMovil(String texto) {
+		Movil.setText(texto);
 	}
 
-	public Choice getMenu() {
-		return menu;
+	public String getNotas() {
+		return notas.getText();
 	}
 
-	public JLabel getLblNotas() {
-		return lblNotas;
+	public String getTipoCotacto() {
+		return menu.getSelectedItem();
 	}
 
-	public JTextPane getTextPane() {
-		return textPane;
+	public void añadirElementoListaMenu(String item) {
+		menu.add(item);
+
+	}
+
+	public void añadirListenerGuardar(ActionListener listener) {
+		btnGuardar.addActionListener(listener);
+
+	}
+
+	public void añadirListenerDescartar(ActionListener listener) {
+		btnDescartar.addActionListener(listener);
+
 	}
 }

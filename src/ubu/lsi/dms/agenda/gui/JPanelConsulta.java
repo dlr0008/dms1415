@@ -1,13 +1,19 @@
 package ubu.lsi.dms.agenda.gui;
 
+import java.awt.Color;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemListener;
+
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
-import javax.swing.JTextField;
 import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 
 public class JPanelConsulta extends JPanel {
 	/**
@@ -58,7 +64,7 @@ public class JPanelConsulta extends JPanel {
 
 		lblIntroduce.setBounds(179, 9, 211, 14);
 		add(lblIntroduce);
-		
+
 		listScroller = new JScrollPane();
 		listScroller.setBounds(6, 87, 929, 467);
 		add(listScroller);
@@ -80,43 +86,96 @@ public class JPanelConsulta extends JPanel {
 		return rdbtnContactos;
 	}
 
-
 	public JRadioButton getRdbtnLlamadas() {
 		return rdbtnLlamadas;
 	}
-
 
 	public JButton getBtnMostrar() {
 		return btnMostrar;
 	}
 
-
 	public JButton getBtnTodos() {
 		return btnTodos;
 	}
-
 
 	public JRadioButton getRdbtnTiposDeContacto() {
 		return rdbtnTiposDeContacto;
 	}
 
-
-	public JTextField getCampo() {
-		return campo;
+	public String getCampo() {
+		return campo.getText();
 	}
 
-
-	public JLabel getLblIntroduce() {
-		return lblIntroduce;
-	}
-
-
-	public JScrollPane getListScroller() {
-		return listScroller;
+	public boolean isCampoEnabled() {
+		return campo.isEnabled();
 	}
 
 	public void setListScroller(JScrollPane nuevaLista) {
-		this.listScroller=nuevaLista;
-		
+		this.listScroller = nuevaLista;
+
 	}
+
+	public void activar(Boolean encendido) {
+
+		campo.setEnabled(encendido);
+		if (encendido)
+			campo.setBackground(Color.WHITE);
+		else
+			campo.setBackground(this.getBackground());
+		btnMostrar.setEnabled(encendido);
+		lblIntroduce.setEnabled(encendido);
+	}
+
+	public void crearListaConsultas(JTable tabla) {
+		if (listScroller != null)
+			remove(listScroller);
+		JScrollPane nuevaLista = new JScrollPane(tabla);
+
+		nuevaLista.setBounds(6, 87, 929, 467);
+
+		if (tabla.getRowCount() == 0)
+			JOptionPane.showMessageDialog(null, "Lista Vacia");
+
+		nuevaLista
+				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		nuevaLista
+				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		setListScroller(nuevaLista);
+		add(nuevaLista);
+		validate();
+		repaint();
+	}
+
+	public int getSelected() {
+		if (rdbtnContactos.isSelected())
+			return 1;
+		if (rdbtnLlamadas.isSelected())
+			return 2;
+		if (rdbtnTiposDeContacto.isSelected())
+			return 3;
+		return 0;
+	}
+
+	public void añadirListernerMostrar(ActionListener listener) {
+		btnMostrar.addActionListener(listener);
+
+	}
+
+	public void añadirListenerActivar(ItemListener listener) {
+		rdbtnContactos.addItemListener(listener);
+		rdbtnLlamadas.addItemListener(listener);
+
+	}
+
+	public void añadirListenerDesactivar(ItemListener listener) {
+		rdbtnTiposDeContacto.addItemListener(listener);
+
+	}
+
+	public void añadirListenerMostrarTodos(ActionListener listener) {
+		btnTodos.addActionListener(listener);
+		// TODO Auto-generated method stub
+
+	}
+
 }

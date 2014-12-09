@@ -13,6 +13,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.xml.ws.soap.Addressing;
+
 import ubu.lsi.dms.agenda.modelo.Contacto;
 import ubu.lsi.dms.agenda.modelo.Llamada;
 import ubu.lsi.dms.agenda.modelo.TipoContacto;
@@ -27,6 +29,7 @@ import ubu.lsi.dms.agenda.modelo.TipoContacto;
  * @author <A HREF="mailto:dlr0008@alu.ubu.es">Daniel Lozano</A>
  * @version 1.0
  */
+
 public class FachadaBin implements FachadaPersistente {
 
 	private static String fileContactos = "." + File.separator + "res"

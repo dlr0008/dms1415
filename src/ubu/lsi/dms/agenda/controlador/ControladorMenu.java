@@ -32,12 +32,12 @@ public class ControladorMenu {
 		this.modelo = modelo;
 
 		menu = frame.getMenu();
-
+		frame.setPanel(new JPanelConsulta());
+		new ControladorConsultas(frame, modelo);
 		menu.getMntmNuevoContacto().addActionListener(menuNuevoContacto());
 		menu.getMntnNuevoLlamada().addActionListener(menuNuevaLlamada());
 		menu.getMntmNuevoTipocontacto().addActionListener(menuNuevoTipo());
 		menu.getMntmNuevaConsulta().addActionListener(menuConsulta());
-
 		menu.getMntmNuevaConsulta();
 	}
 
@@ -48,6 +48,7 @@ public class ControladorMenu {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				cambiarPanel(new JPanelContacto());
+				new ControladorNuevoContacto(frame, modelo);
 
 			}
 		};
