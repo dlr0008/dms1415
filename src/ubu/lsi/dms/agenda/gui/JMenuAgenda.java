@@ -1,5 +1,7 @@
 package ubu.lsi.dms.agenda.gui;
 
+import java.awt.event.ActionListener;
+
 import javax.swing.JMenu;
 import javax.swing.JPanel;
 import javax.swing.JMenuBar;
@@ -69,61 +71,26 @@ public class JMenuAgenda extends JPanel {
 
 	}
 
-	public JMenuItem getMntnNuevoLlamada() {
-		return mntnNuevoLlamada;
+
+	public void setListenerNuevoContacto(ActionListener menuNuevoContacto) {
+		mntmNuevoContacto.addActionListener(menuNuevoContacto);
+		
 	}
 
-
-	public JMenuBar getMenuBar() {
-		return menuBar;
+	public void setListenerNuevaLLamada(ActionListener menuNuevaLlamada) {
+		mntnNuevoLlamada.addActionListener(menuNuevaLlamada);
+		
 	}
 
-	public JMenu getMnInsertar() {
-		return mnInsertar;
+	public void setListenerNuevoTipo(ActionListener menuNuevoTipo) {
+		mntmNuevoTipocontacto.addActionListener(menuNuevoTipo);
+		
 	}
 
-	public JMenuItem getMntmNuevoContacto() {
-		return mntmNuevoContacto;
+	public void setListenerNuevaConsulta(ActionListener menuConsulta) {
+		mntmNuevaConsulta.addActionListener(menuConsulta);
+		
 	}
 
-	public JMenuItem getMntnNuevoContacto() {
-		return mntnNuevoContacto;
-	}
-
-	public JMenuItem getMntmNuevoTipocontacto() {
-		return mntmNuevoTipocontacto;
-	}
-
-	public JMenu getMnModificar() {
-		return mnModificar;
-	}
-
-	public JMenuItem getMntmContacto() {
-		return mntmContacto;
-	}
-
-	public JMenuItem getMntmLlamada() {
-		return mntmLlamada;
-	}
-
-	public JMenuItem getMntmTipoDeContacto() {
-		return mntmTipoDeContacto;
-	}
-
-	public JMenu getMnConsultar() {
-		return mnConsultar;
-	}
-
-	public JMenuItem getMntmNuevaConsulta() {
-		return mntmNuevaConsulta;
-	}
-
-	public JMenu getMnAyuda() {
-		return mnAyuda;
-	}
-
-	public JMenuItem getMntmAyuda() {
-		return mntmAyuda;
-	}
 
 }

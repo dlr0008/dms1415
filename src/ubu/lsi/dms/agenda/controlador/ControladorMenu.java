@@ -34,11 +34,10 @@ public class ControladorMenu {
 		menu = frame.getMenu();
 		frame.setPanel(new JPanelConsulta());
 		new ControladorConsultas(frame, modelo);
-		menu.getMntmNuevoContacto().addActionListener(menuNuevoContacto());
-		menu.getMntnNuevoLlamada().addActionListener(menuNuevaLlamada());
-		menu.getMntmNuevoTipocontacto().addActionListener(menuNuevoTipo());
-		menu.getMntmNuevaConsulta().addActionListener(menuConsulta());
-		menu.getMntmNuevaConsulta();
+		menu.setListenerNuevoContacto(menuNuevoContacto());
+		menu.setListenerNuevaLLamada(menuNuevaLlamada());
+		menu.setListenerNuevoTipo(menuNuevoTipo());
+		menu.setListenerNuevaConsulta(menuConsulta());
 	}
 
 	public ActionListener menuNuevoContacto() {

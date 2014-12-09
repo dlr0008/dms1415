@@ -38,7 +38,6 @@ public class JFramePrincipal extends JFrame {
 		menuAgenda = new JMenuAgenda();
 		menuAgenda.setBounds(0, 0, 950, 25);
 		contentPane.add(menuAgenda);
-		// panel = new JPanelConsulta();
 	}
 
 	public JPanel getPanel() {

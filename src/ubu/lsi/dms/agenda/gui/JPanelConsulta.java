@@ -174,7 +174,6 @@ public class JPanelConsulta extends JPanel {
 
 	public void añadirListenerMostrarTodos(ActionListener listener) {
 		btnTodos.addActionListener(listener);
-		// TODO Auto-generated method stub
 
 	}
 
