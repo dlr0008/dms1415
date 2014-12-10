@@ -11,20 +11,19 @@ import ubu.lsi.dms.agenda.gui.JPanelLlamada;
 import ubu.lsi.dms.agenda.modelo.Contacto;
 import ubu.lsi.dms.agenda.modelo.ModelTemporal;
 
-public class MediadorNuevaLLamada {
-	
-	private JPanelLlamada panelModificaLlamada;
+public class MediadorModificaLlamada {
+
+	private JPanelLlamada panelNuevaLlamada;
 	private ModelTemporal modelo;
 
-	public MediadorNuevaLLamada(JFramePrincipal frame, ModelTemporal modelo) {
+	public MediadorModificaLlamada(JFramePrincipal frame, ModelTemporal modelo) {
 
 		this.modelo = modelo;
-		panelModificaLlamada = (JPanelLlamada) frame.getPanel();
-		panelModificaLlamada.setFrame(frame);
+		panelNuevaLlamada = (JPanelLlamada) frame.getPanel();
+		panelNuevaLlamada.setFrame(frame);
 
-		Collection<Contacto> contactos = this.modelo.getContactos();
-		panelModificaLlamada.añadirListenerGuardar(guardarLlamada());
-		panelModificaLlamada.añadirListenerDescartarContacto(descartarCampos());
+		panelNuevaLlamada.añadirListenerGuardar(guardarLlamada());
+		panelNuevaLlamada.añadirListenerDescartarContacto(descartarCampos());
 
 	}
 
@@ -46,11 +45,10 @@ public class MediadorNuevaLLamada {
 	}
 
 	private void resetCampos() {
-
-		panelModificaLlamada.setTextField("");
-		panelModificaLlamada.setTextField_1("");
-		panelModificaLlamada.setTextField_2("");
-		panelModificaLlamada.setTextPane("");
+		panelNuevaLlamada.setTextField("");
+		panelNuevaLlamada.setTextField_1("");
+		panelNuevaLlamada.setTextField_2("");
+		panelNuevaLlamada.setTextPane("");
 	}
 
 	private ActionListener descartarCampos() {
@@ -62,5 +60,5 @@ public class MediadorNuevaLLamada {
 
 			}
 		};
-	}
+	}	
 }

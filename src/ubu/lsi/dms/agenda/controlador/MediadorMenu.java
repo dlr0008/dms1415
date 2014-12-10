@@ -37,6 +37,9 @@ public class MediadorMenu {
 		menu.setListenerNuevoContacto(menuNuevoContacto());
 		menu.setListenerNuevaLLamada(menuNuevaLlamada());
 		menu.setListenerNuevoTipo(menuNuevoTipo());
+		menu.setListenerModificaContacto(menuModificaContacto());
+		menu.setListenerModificaLlamada(menuModificaLlamada());
+		menu.setListenerModificaTipo(menuModificaTipo());
 		menu.setListenerNuevaConsulta(menuConsulta());
 	}
 
@@ -75,7 +78,39 @@ public class MediadorMenu {
 				new MediadorNuevoTipo(frame, modelo);
 			}
 		};
+	}
+	
+	public ActionListener menuModificaContacto() {
+		return new ActionListener() {
 
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cambiarPanel(new JPanelContacto());
+				new MediadorModificaContacto(frame, modelo);
+			}
+		};
+	}
+	
+	public ActionListener menuModificaLlamada() {
+		return new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cambiarPanel(new JPanelLlamada());
+				new MediadorModificaLlamada(frame, modelo);
+			}
+		};
+	}
+	
+	public ActionListener menuModificaTipo() {
+		return new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cambiarPanel(new JPanelTipo());
+				new MediadorModificaTipo(frame, modelo);
+			}
+		};
 	}
 
 	public ActionListener menuConsulta() {

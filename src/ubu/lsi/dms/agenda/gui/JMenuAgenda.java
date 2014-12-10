@@ -15,8 +15,8 @@ public class JMenuAgenda extends JPanel {
 	private JMenuBar menuBar;
 	private JMenu mnInsertar;
 	private JMenuItem mntmNuevoContacto;
-	private JMenuItem mntnNuevoContacto;
-	private JMenuItem mntmNuevoTipocontacto;
+	private JMenuItem mntnNuevoLlamada;
+	private JMenuItem mntmNuevoTipocontacto;	
 	private JMenu mnModificar;
 	private JMenuItem mntmContacto;
 	private JMenuItem mntmLlamada;
@@ -25,7 +25,7 @@ public class JMenuAgenda extends JPanel {
 	private JMenuItem mntmNuevaConsulta;
 	private JMenu mnAyuda;
 	private JMenuItem mntmAyuda;
-	private JMenuItem mntnNuevoLlamada;
+	
 
 	public JMenuAgenda() {
 		setLayout(null);
@@ -85,12 +85,33 @@ public class JMenuAgenda extends JPanel {
 	public void setListenerNuevoTipo(ActionListener menuNuevoTipo) {
 		mntmNuevoTipocontacto.addActionListener(menuNuevoTipo);
 		
-	}
+	}	
 
+	public void setListenerModificaContacto(ActionListener menuModificaContacto) {
+		mntmContacto.addActionListener(menuModificaContacto);	
+		
+	}	
+
+	public void setListenerModificaLlamada(ActionListener menuModificaLlamada) {
+		mntmLlamada.addActionListener(menuModificaLlamada);		
+		
+	}	
+	
+	public void setListenerModificaTipo(ActionListener menuModificaTipo) {
+		mntmTipoDeContacto.addActionListener(menuModificaTipo);	
+		
+	}
+	
 	public void setListenerNuevaConsulta(ActionListener menuConsulta) {
 		mntmNuevaConsulta.addActionListener(menuConsulta);
 		
 	}
-
+	
+	public void setListenerAyuda(ActionListener menuAyuda) {
+		mntmAyuda.addActionListener(menuAyuda);
+		
+	}
+	
+	
 
 }

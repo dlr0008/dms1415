@@ -23,6 +23,8 @@ public class JPanelLlamada extends JPanel {
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private JTextPane textPane;
+	
+	private JFramePrincipal frame = null;
 
 	/**
 	 * Create the panel.
@@ -106,12 +108,14 @@ public class JPanelLlamada extends JPanel {
 	public void setTextPane(String string) {
 		this.textPane.setText(string);
 	}
-
-	public void setFrame(JFramePrincipal frame) {
-		// TODO Auto-generated method stub
-		
+	
+	public JFramePrincipal getFrame() {
+		return frame;
 	}
 
+	public void setFrame(JFramePrincipal frame) {
+		this.frame=frame;		
+	}
 
 	
 	public void añadirListenerGuardar(ActionListener listener) {
