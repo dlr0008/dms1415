@@ -55,22 +55,22 @@ public class MediadorConsultas {
 			public void actionPerformed(ActionEvent e) {
 				AbstractTableModel modeloTabla = null;
 				String[] cabecera = null;
-				if (panelConsulta.getCampo().equals("")
+				if (panelConsulta.getApellido().equals("")
 						&& panelConsulta.isCampoEnabled()) {
 					JOptionPane.showMessageDialog(null,
 							"Introduce un criterio de Busqueda");
 				} else {
-					int boton = panelConsulta.getSelected();
+					int boton = panelConsulta.getSelectedRadio();
 					switch (boton) {
 					case 1:
 						modeloTabla = new TablaContactos(
 								modelo.filtrarContactos(panelConsulta
-										.getCampo()));
+										.getApellido()));
 						cabecera = ((TablaContactos) modeloTabla).getCabecera();
 						break;
 					case 2:
 						modeloTabla = new TablaLlamadas(
-								modelo.filtrarLLamadas(panelConsulta.getCampo()));
+								modelo.filtrarLLamadas(panelConsulta.getApellido()));
 						cabecera = ((TablaLlamadas) modeloTabla).getCabecera();
 						break;
 					case 3:
@@ -95,7 +95,7 @@ public class MediadorConsultas {
 			public void actionPerformed(ActionEvent e) {
 				AbstractTableModel modeloTabla = null;
 				String[] cabecera = null;
-				int boton = panelConsulta.getSelected();
+				int boton = panelConsulta.getSelectedRadio();
 				switch (boton) {
 				case 1:
 					modeloTabla = new TablaContactos(modelo.getContactos());

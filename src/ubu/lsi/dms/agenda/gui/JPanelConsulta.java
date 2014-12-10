@@ -14,6 +14,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableColumnModel;
+import javax.swing.table.TableColumn;
 
 public class JPanelConsulta extends JPanel {
 	/**
@@ -26,6 +29,8 @@ public class JPanelConsulta extends JPanel {
 	private ButtonGroup botones = new ButtonGroup();
 	private JRadioButton rdbtnContactos = new JRadioButton("Contactos");
 	private JRadioButton rdbtnLlamadas = new JRadioButton("Llamadas");
+	private JRadioButton rdbtnTiposDeContacto = new JRadioButton(
+			"Tipos de Contacto");
 	private JButton btnMostrar = new JButton("Mostrar");
 	private JButton btnTodos = new JButton("Mostrar Todos");
 	private JTextField campo = new JTextField();
@@ -71,38 +76,7 @@ public class JPanelConsulta extends JPanel {
 
 	}
 
-	private JRadioButton rdbtnTiposDeContacto = new JRadioButton(
-			"Tipos de Contacto");
-
-	public ButtonGroup getBotones() {
-		return botones;
-	}
-
-	public void setBotones(ButtonGroup botones) {
-		this.botones = botones;
-	}
-
-	public JRadioButton getRdbtnContactos() {
-		return rdbtnContactos;
-	}
-
-	public JRadioButton getRdbtnLlamadas() {
-		return rdbtnLlamadas;
-	}
-
-	public JButton getBtnMostrar() {
-		return btnMostrar;
-	}
-
-	public JButton getBtnTodos() {
-		return btnTodos;
-	}
-
-	public JRadioButton getRdbtnTiposDeContacto() {
-		return rdbtnTiposDeContacto;
-	}
-
-	public String getCampo() {
+	public String getApellido() {
 		return campo.getText();
 	}
 
@@ -146,7 +120,7 @@ public class JPanelConsulta extends JPanel {
 		repaint();
 	}
 
-	public int getSelected() {
+	public int getSelectedRadio() {
 		if (rdbtnContactos.isSelected())
 			return 1;
 		if (rdbtnLlamadas.isSelected())
@@ -175,6 +149,25 @@ public class JPanelConsulta extends JPanel {
 	public void añadirListenerMostrarTodos(ActionListener listener) {
 		btnTodos.addActionListener(listener);
 
+	}
+	
+	public JTable crearTabla(AbstractTableModel datos, String[] cabecera) {
+		DefaultTableColumnModel columnModel = new DefaultTableColumnModel();
+		int i = 0;
+		TableColumn columna = null;
+		for (String cadena : cabecera) {
+			columna = new TableColumn(i++);
+			columna.setHeaderValue(cadena);
+			columna.setMinWidth(100);
+			columnModel.addColumn(columna);
+		}
+		JTable table = new JTable(datos, columnModel);
+		if (cabecera.length >= 6)
+			table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		else
+			table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+		table.setRowHeight(20);
+		return table;
 	}
 
 }
