@@ -3,7 +3,7 @@ package ubu.lsi.dms.agenda.test;
 
 import javax.swing.SwingUtilities;
 
-import ubu.lsi.dms.agenda.controlador.ControladorMenu;
+import ubu.lsi.dms.agenda.controlador.MediadorMenu;
 import ubu.lsi.dms.agenda.gui.JFramePrincipal;
 import ubu.lsi.dms.agenda.modelo.ModelTemporal;
 
@@ -17,7 +17,7 @@ public class TestGui {
 		modelo.iniTipos();
 
 		frame = new JFramePrincipal();
-		new ControladorMenu(frame, modelo);
+		new MediadorMenu(frame, modelo);
 		startApplication();
 
 	}
