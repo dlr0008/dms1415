@@ -60,7 +60,7 @@ public class MediadorMenu {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				cambiarPanel(new JPanelLlamada());
-
+				new MediadorNuevaLLamada(frame, modelo);
 			}
 		};
 
@@ -72,7 +72,7 @@ public class MediadorMenu {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				cambiarPanel(new JPanelTipo());
-
+				new MediadorNuevoTipo(frame, modelo);
 			}
 		};
 

@@ -1,5 +1,7 @@
 package ubu.lsi.dms.agenda.gui;
 
+import java.awt.event.ActionListener;
+
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JTextPane;
@@ -11,9 +13,16 @@ public class JPanelLlamada extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	JLabel lblFechaDeLlamada;
+	JLabel lblAsunto;
+	JLabel lblNotas;
+	JButton btnDescartar;
+	JButton btnGuardar;
+	JLabel lblContacto;
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
+	private JTextPane textPane;
 
 	/**
 	 * Create the panel.
@@ -21,19 +30,19 @@ public class JPanelLlamada extends JPanel {
 	public JPanelLlamada() {
 		setLayout(null);
 		
-		JLabel lblFechaDeLlamada = new JLabel("Fecha de llamada");
+		lblFechaDeLlamada = new JLabel("Fecha de llamada");
 		lblFechaDeLlamada.setBounds(10, 56, 127, 14);
 		add(lblFechaDeLlamada);
 		
-		JLabel lblAsunto = new JLabel("Asunto");
+		lblAsunto = new JLabel("Asunto");
 		lblAsunto.setBounds(10, 92, 86, 14);
 		add(lblAsunto);
 		
-		JLabel lblNotas = new JLabel("Notas");
+		lblNotas = new JLabel("Notas");
 		lblNotas.setBounds(10, 130, 86, 14);
 		add(lblNotas);
 		
-		JTextPane textPane = new JTextPane();
+		textPane = new JTextPane();
 		textPane.setBounds(10, 148, 430, 106);
 		add(textPane);
 		
@@ -47,15 +56,15 @@ public class JPanelLlamada extends JPanel {
 		add(textField_1);
 		textField_1.setColumns(10);
 		
-		JButton btnDescartar = new JButton("Descartar");
+		btnDescartar = new JButton("Descartar");
 		btnDescartar.setBounds(733, 536, 102, 23);
 		add(btnDescartar);
 		
-		JButton btnGuardar = new JButton("Guardar");
+		btnGuardar = new JButton("Guardar");
 		btnGuardar.setBounds(845, 536, 89, 23);
 		add(btnGuardar);
 		
-		JLabel lblContacto = new JLabel("Contacto");
+		lblContacto = new JLabel("Contacto");
 		lblContacto.setBounds(10, 21, 86, 14);
 		add(lblContacto);
 		
@@ -66,4 +75,52 @@ public class JPanelLlamada extends JPanel {
 
 	}
 
+	public JTextField getTextField() {
+		return textField;
+	}
+
+	public void setTextField(String string) {
+		this.textField.setText(string);
+	}
+
+	public JTextField getTextField_1() {
+		return textField_1;
+	}
+
+	public void setTextField_1(String string) {
+		this.textField_1.setText(string);
+	}
+
+	public JTextField getTextField_2() {
+		return textField_2;
+	}
+
+	public void setTextField_2(String string) {
+		this.textField_2.setText(string);
+	}
+
+	public JTextPane getTextPane() {
+		return textPane;
+	}
+
+	public void setTextPane(String string) {
+		this.textPane.setText(string);
+	}
+
+	public void setFrame(JFramePrincipal frame) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	
+	public void añadirListenerGuardar(ActionListener listener) {
+		btnGuardar.addActionListener(listener);
+
+	}
+
+	public void añadirListenerDescartarContacto(ActionListener listener) {
+		btnDescartar.addActionListener(listener);
+
+	}
 }

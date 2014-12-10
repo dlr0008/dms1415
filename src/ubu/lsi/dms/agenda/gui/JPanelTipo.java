@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -13,24 +14,22 @@ public class JPanelTipo extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JTextField textField;
-
+	JButton btnDescartar;
+	JButton btnGuardar;
+	
 	/**
 	 * Create the panel.
 	 */
 	public JPanelTipo() {
 		setLayout(null);
 		
-		JButton btnNewButton = new JButton("Descartar");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		btnNewButton.setBounds(734, 536, 101, 23);
-		add(btnNewButton);
+		btnDescartar = new JButton("Descartar");
+		btnDescartar.setBounds(734, 536, 101, 23);
+		add(btnDescartar);
 		
-		JButton btnNewButton_2 = new JButton("Guardar");
-		btnNewButton_2.setBounds(845, 536, 89, 23);
-		add(btnNewButton_2);
+		btnGuardar = new JButton("Guardar");
+		btnGuardar.setBounds(845, 536, 89, 23);
+		add(btnGuardar);
 		
 		JLabel lblTipoDeContacto = new JLabel("Tipo de Contacto");
 		lblTipoDeContacto.setBounds(10, 11, 101, 14);
@@ -40,6 +39,28 @@ public class JPanelTipo extends JPanel {
 		textField.setBounds(135, 8, 86, 20);
 		add(textField);
 		textField.setColumns(10);
+	}
+	
+	public JTextField getTextField() {
+		return textField;
+	}
 
+	public void setTextField(String string) {
+		this.textField.setText(string);
+	}
+
+	public void añadirListenerGuardar(ActionListener listener) {
+		btnGuardar.addActionListener(listener);
+
+	}
+
+	public void añadirListenerDescartarContacto(ActionListener listener) {
+		btnDescartar.addActionListener(listener);
+
+	}
+
+	public void setFrame(JFramePrincipal frame) {
+		// TODO Auto-generated method stub
+		
 	}
 }

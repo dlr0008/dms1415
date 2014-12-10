@@ -2,19 +2,12 @@ package ubu.lsi.dms.agenda.gui;
 
 import java.awt.Choice;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
-
-import ubu.lsi.dms.agenda.modelo.Contacto;
-
-import com.sun.corba.se.spi.orbutil.fsm.Action;
 
 public class JPanelContacto extends JPanel {
 	/**
