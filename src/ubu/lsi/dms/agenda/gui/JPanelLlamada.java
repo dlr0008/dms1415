@@ -66,7 +66,6 @@ public class JPanelLlamada extends JPanel {
 		nombre.setColumns(10);
 
 		asunto = new JTextField();
-		asunto.setForeground(Color.CYAN);
 		asunto.setBounds(157, 109, 155, 20);
 		add(asunto);
 		asunto.setColumns(10);
@@ -208,7 +207,7 @@ public class JPanelLlamada extends JPanel {
 		asunto.setBackground(Color.WHITE);
 		notas.setEnabled(true);
 		notas.setBackground(Color.WHITE);
-		btnGuardar.setEnabled(false);
+		btnGuardar.setEnabled(true);
 		
 		
 	}
