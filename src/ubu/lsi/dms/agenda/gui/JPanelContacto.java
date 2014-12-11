@@ -9,6 +9,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 
+import ubu.lsi.dms.agenda.modelo.TipoContacto;
+
 public class JPanelContacto extends JPanel {
 	/**
 	 * 
@@ -22,31 +24,30 @@ public class JPanelContacto extends JPanel {
 	 */
 
 	private JLabel lblNombre;
-	private JTextField nombre;
+	private static JTextField nombre;
 	private JLabel lblApellidos;
-	private JTextField apellidos;
+	private static JTextField apellidos;
 	private JLabel lblDireccion;
-	private JTextField Direccion;
+	private static JTextField Direccion;
 	private JLabel lblCiudad;
-	private JTextField Ciudad;
+	private static JTextField Ciudad;
 	private JLabel lblMovil;
-	private JTextField Movil;
+	private static JTextField Movil;
 	private JLabel lblTipoDeContacto;
-	private Choice menu;
+	private static Choice menu;
 	private JLabel lblNotas;
-	private JTextPane notas;
+	private static JTextPane notas;
 	private JButton btnGuardar;
 	private JButton btnDescartar;
 	private JButton btnOtrosCampos;
-	private JPanelOtrosCampos otrosCampos ;	
+	private JPanelOtrosCampos otrosCampos;
 
 	public JPanelContacto() {
 		setLayout(null);
 
-		otrosCampos=new JPanelOtrosCampos(this);
-		otrosCampos.setBounds(this.getX(), this.getY(),
-				this.getWidth(), this.getHeight());
-		
+		otrosCampos = new JPanelOtrosCampos(this);
+		otrosCampos.setBounds(this.getX(), this.getY(), this.getWidth(), this.getHeight());
+
 		lblNombre = new JLabel("Nombre");
 		lblNombre.setBounds(10, 11, 75, 14);
 		add(lblNombre);
@@ -130,23 +131,23 @@ public class JPanelContacto extends JPanel {
 		return frame;
 	}
 
-	public String getNombre() {
+	public static String getNombre() {
 		return nombre.getText();
 	}
 
-	public String getApellidos() {
+	public static String getApellidos() {
 		return apellidos.getText();
 	}
 
-	public String getDireccion() {
+	public static String getDireccion() {
 		return Direccion.toString();
 	}
 
-	public String getCiudad() {
+	public static String getCiudad() {
 		return Ciudad.getText();
 	}
 
-	public String getMovil() {
+	public static String getMovil() {
 		return Movil.getText();
 	}
 
@@ -175,11 +176,11 @@ public class JPanelContacto extends JPanel {
 		Movil.setText(texto);
 	}
 
-	public String getNotas() {
+	public static String getNotas() {
 		return notas.getText();
 	}
 
-	public String getTipoCotacto() {
+	public static String getTipoContacto() {
 		return menu.getSelectedItem();
 	}
 
@@ -197,22 +198,22 @@ public class JPanelContacto extends JPanel {
 		btnDescartar.addActionListener(listener);
 
 	}
-	
+
 	public void añadirListenerOtrosCampos(ActionListener listener) {
 		btnOtrosCampos.addActionListener(listener);
 
 	}
-	
-	public void añadirListenerDescartarOtrosCampos(ActionListener listener){
+
+	public void añadirListenerDescartarOtrosCampos(ActionListener listener) {
 		otrosCampos.getBtnDescartar().addActionListener(listener);
 	}
-	
-	public void añadirListenerGuardarOtrosCampos(ActionListener listener){
+
+	public void añadirListenerGuardarOtrosCampos(ActionListener listener) {
 		otrosCampos.getBtnGuardar().addActionListener(listener);
 	}
-	
-	public void setFrame(JFramePrincipal frame){
-		this.frame=frame;
+
+	public void setFrame(JFramePrincipal frame) {
+		this.frame = frame;
 	}
 
 	public void abrirOtrosCampos() {
@@ -222,155 +223,241 @@ public class JPanelContacto extends JPanel {
 		frame.validate();
 		frame.repaint();
 	}
-	
-	public void cerrarOtrosCampos(){
+
+	public void cerrarOtrosCampos() {
 		otrosCampos.setVisible(false);
 		setVisible(true);
 		frame.setPanel(this);
 		frame.validate();
 		frame.repaint();
 	}
-	
-	public void resetMenu(){
+
+	public void resetMenu() {
 		menu.select(0);
 	}
-	
-	public class JPanelOtrosCampos extends JPanel {
+
+	public static class JPanelOtrosCampos extends JPanel {
 		/**
 		 * 
 		 */
 		private static final long serialVersionUID = 1L;
-		private JTextField textField;
-		private JTextField textField_1;
-		private JTextField textField_2;
-		private JTextField textField_3;
-		private JTextField textField_4;
-		private JTextField textField_5;
-		private JTextField textField_6;
-		private JTextField textField_7;
-		private JTextField textField_8;
-		private JTextField textField_9;
-		private JTextField textField_10;
-		private JButton btnDescartar;
-		private JButton btnGuardar;
-		
+		private static JTextField estimado;
+		private static JTextField prov;
+		private static JTextField codPostal;
+		private static JTextField region;
+		private static JTextField pais;
+		private static JTextField nombreCompania;
+		private static JTextField cargo;
+		private static JTextField telefonoTrabajo;
+		private static JTextField extensionTrabajo;
+		private static JTextField fax;
+		private static JTextField nomCorreoElectronico;
+		private static JButton btnDescartar;
+		private static JButton btnGuardar;
+
 		/**
 		 * Create the panel.
-		 */		
+		 */
 		public JPanelOtrosCampos(final JPanelContacto contacto) {
 			setLayout(null);
 			setVisible(false);
-			
+
 			btnGuardar = new JButton("Guardar");
 			btnGuardar.setBounds(845, 536, 89, 23);
 			add(btnGuardar);
-			
+
 			btnDescartar = new JButton("Descartar");
 			btnDescartar.setBounds(738, 536, 97, 23);
 			add(btnDescartar);
-			
-			
-			
+
 			JLabel lblNewLabel = new JLabel("Estimado");
 			lblNewLabel.setBounds(10, 11, 74, 14);
 			add(lblNewLabel);
-			
+
 			JLabel lblNewLabel_1 = new JLabel("Provincia");
 			lblNewLabel_1.setBounds(10, 46, 74, 14);
 			add(lblNewLabel_1);
-			
+
 			JLabel label = new JLabel("Cod. Postal");
 			label.setBounds(10, 83, 74, 14);
 			add(label);
-			
+
 			JLabel lblNewLabel_2 = new JLabel("Region");
 			lblNewLabel_2.setBounds(10, 121, 74, 14);
 			add(lblNewLabel_2);
-			
-			textField = new JTextField();
-			textField.setBounds(105, 8, 86, 20);
-			add(textField);
-			textField.setColumns(10);
-			
-			textField_1 = new JTextField();
-			textField_1.setBounds(105, 43, 86, 20);
-			add(textField_1);
-			textField_1.setColumns(10);
-			
-			textField_2 = new JTextField();
-			textField_2.setBounds(105, 80, 86, 20);
-			add(textField_2);
-			textField_2.setColumns(10);
-			
-			textField_3 = new JTextField();
-			textField_3.setBounds(105, 118, 86, 20);
-			add(textField_3);
-			textField_3.setColumns(10);
-			
+
+			estimado = new JTextField();
+			estimado.setBounds(105, 8, 86, 20);
+			add(estimado);
+			estimado.setColumns(10);
+
+			prov = new JTextField();
+			prov.setBounds(105, 43, 86, 20);
+			add(prov);
+			prov.setColumns(10);
+
+			codPostal = new JTextField();
+			codPostal.setBounds(105, 80, 86, 20);
+			add(codPostal);
+			codPostal.setColumns(10);
+
+			region = new JTextField();
+			region.setBounds(105, 118, 86, 20);
+			add(region);
+			region.setColumns(10);
+
 			JLabel lblNewLabel_3 = new JLabel("Pais");
 			lblNewLabel_3.setBounds(10, 163, 46, 14);
 			add(lblNewLabel_3);
-			
-			textField_4 = new JTextField();
-			textField_4.setBounds(105, 160, 86, 20);
-			add(textField_4);
-			textField_4.setColumns(10);
-			
+
+			pais = new JTextField();
+			pais.setBounds(105, 160, 86, 20);
+			add(pais);
+			pais.setColumns(10);
+
 			JLabel lblNewLabel_4 = new JLabel("Nombre Compañia");
 			lblNewLabel_4.setBounds(282, 11, 105, 14);
 			add(lblNewLabel_4);
-			
+
 			JLabel lblNewLabel_5 = new JLabel("Cargo");
 			lblNewLabel_5.setBounds(282, 46, 74, 14);
 			add(lblNewLabel_5);
-			
+
 			JLabel lblNewLabel_6 = new JLabel("Tfn. Trabajo");
 			lblNewLabel_6.setBounds(282, 83, 97, 14);
 			add(lblNewLabel_6);
-			
+
 			JLabel lblNewLabel_7 = new JLabel("Extension Trabajo");
 			lblNewLabel_7.setBounds(282, 121, 97, 14);
 			add(lblNewLabel_7);
-			
+
 			JLabel lblNewLabel_8 = new JLabel("Num. Fax");
 			lblNewLabel_8.setBounds(282, 163, 74, 14);
 			add(lblNewLabel_8);
-			
-			textField_5 = new JTextField();
-			textField_5.setBounds(397, 8, 86, 20);
-			add(textField_5);
-			textField_5.setColumns(10);
-			
-			textField_6 = new JTextField();
-			textField_6.setBounds(397, 43, 86, 20);
-			add(textField_6);
-			textField_6.setColumns(10);
-			
-			textField_7 = new JTextField();
-			textField_7.setBounds(397, 80, 86, 20);
-			add(textField_7);
-			textField_7.setColumns(10);
-			
-			textField_8 = new JTextField();
-			textField_8.setBounds(397, 118, 86, 20);
-			add(textField_8);
-			textField_8.setColumns(10);
-			
-			textField_9 = new JTextField();
-			textField_9.setBounds(397, 160, 86, 20);
-			add(textField_9);
-			textField_9.setColumns(10);
-			
+
+			nombreCompania = new JTextField();
+			nombreCompania.setBounds(397, 8, 86, 20);
+			add(nombreCompania);
+			nombreCompania.setColumns(10);
+
+			cargo = new JTextField();
+			cargo.setBounds(397, 43, 86, 20);
+			add(cargo);
+			cargo.setColumns(10);
+
+			telefonoTrabajo = new JTextField();
+			telefonoTrabajo.setBounds(397, 80, 86, 20);
+			add(telefonoTrabajo);
+			telefonoTrabajo.setColumns(10);
+
+			extensionTrabajo = new JTextField();
+			extensionTrabajo.setBounds(397, 118, 86, 20);
+			add(extensionTrabajo);
+			extensionTrabajo.setColumns(10);
+
+			fax = new JTextField();
+			fax.setBounds(397, 160, 86, 20);
+			add(fax);
+			fax.setColumns(10);
+
 			JLabel lblNewLabel_9 = new JLabel("Correo Electronico");
 			lblNewLabel_9.setBounds(566, 11, 105, 14);
 			add(lblNewLabel_9);
 
-			textField_10 = new JTextField();
-			textField_10.setBounds(681, 8, 177, 20);
-			add(textField_10);
-			textField_10.setColumns(10);
+			nomCorreoElectronico = new JTextField();
+			nomCorreoElectronico.setBounds(681, 8, 177, 20);
+			add(nomCorreoElectronico);
+			nomCorreoElectronico.setColumns(10);
 		}
-		
+
+		public static String getEstimado() {
+			return estimado.getText();
+		}
+
+		public void setEstimado(JTextField estimado) {
+			this.estimado = estimado;
+		}
+
+		public static String getProv() {
+			return prov.getText();
+		}
+
+		public void setProv(JTextField prov) {
+			this.prov = prov;
+		}
+
+		public static String getCodPostal() {
+			return codPostal.getText();
+		}
+
+		public void setCodPostal(JTextField codPostal) {
+			this.codPostal = codPostal;
+		}
+
+		public static String getRegion() {
+			return region.getText();
+		}
+
+		public void setRegion(JTextField region) {
+			this.region = region;
+		}
+
+		public static String getPais() {
+			return pais.getText();
+		}
+
+		public void setPais(JTextField pais) {
+			this.pais = pais;
+		}
+
+		public static String getNombreCompania() {
+			return nombreCompania.getText();
+		}
+
+		public void setNombreCompania(JTextField nombreCompania) {
+			this.nombreCompania = nombreCompania;
+		}
+
+		public static String getCargo() {
+			return cargo.getText();
+		}
+
+		public void setCargo(JTextField cargo) {
+			this.cargo = cargo;
+		}
+
+		public static String getTelefonoTrabajo() {
+			return telefonoTrabajo.getText();
+		}
+
+		public void setTelefonoTrabajo(JTextField telefonoTrabajo) {
+			this.telefonoTrabajo = telefonoTrabajo;
+		}
+
+		public static String getExtensionTrabajo() {
+			return extensionTrabajo.getText();
+		}
+
+		public void setExtensionTrabajo(JTextField extensionTrabajo) {
+			this.extensionTrabajo = extensionTrabajo;
+		}
+
+		public static String getFax() {
+			return fax.getText();
+		}
+
+		public void setFax(JTextField fax) {
+			this.fax = fax;
+		}
+
+		public static String getNomCorreoElectronico() {
+			return nomCorreoElectronico.getText();
+		}
+
+		public void setNomCorreoElectronico(JTextField nomCorreoElectronico) {
+			this.nomCorreoElectronico = nomCorreoElectronico;
+		}
+
 		public JButton getBtnGuardar() {
 			return btnGuardar;
 		}
