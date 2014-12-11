@@ -60,12 +60,17 @@ public class JPanelConsulta extends JPanel {
 		campo.setEnabled(true);
 		add(campo);
 		campo.setColumns(10);
+		campo.setToolTipText("Apellido del contacto del cual se "
+				+ "desean conocer sus datos, o llamadas");
 
 		btnMostrar.setBounds(400, 31, 107, 23);
 		add(btnMostrar);
+		btnMostrar
+				.setToolTipText("Muestra todos los elementos que se han selecionado que contengan el apellido introducido en el campo de texto");
 
 		btnTodos.setBounds(517, 31, 126, 23);
 		add(btnTodos);
+		btnTodos.setToolTipText("Muestra todos los elementos que se han selecionado");
 
 		lblIntroduce.setBounds(179, 9, 211, 14);
 		add(lblIntroduce);
@@ -73,6 +78,7 @@ public class JPanelConsulta extends JPanel {
 		listScroller = new JScrollPane();
 		listScroller.setBounds(6, 87, 929, 467);
 		add(listScroller);
+		listScroller.setToolTipText("Lista en la que se muestran los elementos selecionados");
 
 	}
 
@@ -150,7 +156,7 @@ public class JPanelConsulta extends JPanel {
 		btnTodos.addActionListener(listener);
 
 	}
-	
+
 	public JTable crearTabla(AbstractTableModel datos, String[] cabecera) {
 		DefaultTableColumnModel columnModel = new DefaultTableColumnModel();
 		int i = 0;
