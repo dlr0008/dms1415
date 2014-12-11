@@ -1,6 +1,8 @@
 package ubu.lsi.dms.agenda.gui;
 
+import java.awt.Color;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -9,9 +11,9 @@ import javax.swing.JTable;
 import javax.swing.JTextPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.TableColumn;
@@ -30,8 +32,9 @@ public class JPanelLlamada extends JPanel {
 	private JTextField nombre;
 	private JTextField fecha;
 	private JTextField asunto;
-	private JTextPane textPane;
+	private JTextPane notas;
 	private JScrollPane scrollPane;
+	private JTable table;
 
 	private JFramePrincipal frame = null;
 
@@ -53,9 +56,9 @@ public class JPanelLlamada extends JPanel {
 		lblNotas.setBounds(10, 160, 86, 14);
 		add(lblNotas);
 
-		textPane = new JTextPane();
-		textPane.setBounds(10, 200, 430, 118);
-		add(textPane);
+		notas = new JTextPane();
+		notas.setBounds(10, 200, 430, 118);
+		add(notas);
 
 		nombre = new JTextField();
 		nombre.setBounds(157, 18, 155, 20);
@@ -63,6 +66,7 @@ public class JPanelLlamada extends JPanel {
 		nombre.setColumns(10);
 
 		asunto = new JTextField();
+		asunto.setForeground(Color.CYAN);
 		asunto.setBounds(157, 109, 155, 20);
 		add(asunto);
 		asunto.setColumns(10);
@@ -87,43 +91,33 @@ public class JPanelLlamada extends JPanel {
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(462, 18, 394, 300);
 		add(scrollPane);
+		
+		fecha.setEnabled(false);
+		fecha.setBackground(this.getBackground());
+		asunto.setEnabled(false);
+		asunto.setBackground(this.getBackground());
+		notas.setEnabled(false);
+		notas.setBackground(this.getBackground());
+		btnGuardar.setEnabled(false);
 
 	}
 
-	public JTextField getTextField() {
-		return nombre;
-	}
+	public void setNombre(String nombre) {
 
-	public void setTextField(String string) {
-		this.nombre.setText(string);
-	}
+		this.nombre.setText(nombre);
 
-	public JTextField getfecha() {
-		return fecha;
 	}
 
 	public void setfecha(String string) {
 		this.fecha.setText(string);
 	}
 
-	public JTextField getasunto() {
-		return asunto;
-	}
-
 	public void setasunto(String string) {
 		this.asunto.setText(string);
 	}
 
-	public JTextPane getTextPane() {
-		return textPane;
-	}
-
 	public void setTextPane(String string) {
-		this.textPane.setText(string);
-	}
-
-	public JFramePrincipal getFrame() {
-		return frame;
+		this.notas.setText(string);
 	}
 
 	public void setFrame(JFramePrincipal frame) {
@@ -163,10 +157,10 @@ public class JPanelLlamada extends JPanel {
 	public JTable crearTabla(AbstractTableModel datos, String[] cabecera) {
 		DefaultTableColumnModel columnModel = new DefaultTableColumnModel();
 		int i = 0;
-		
+
 		TableColumn columna = null;
 		for (String cadena : cabecera) {
-			if (i < 3 || i==14 || i==12) {
+			if (i < 3 || i == 14 || i == 12) {
 				columna = new TableColumn(i);
 				columna.setHeaderValue(cadena);
 				columna.setMinWidth(40);
@@ -176,12 +170,46 @@ public class JPanelLlamada extends JPanel {
 			}
 			i++;
 		}
-		JTable table = new JTable(datos, columnModel);
+		table = new JTable(datos, columnModel);
 		if (cabecera.length >= 6)
 			table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		else
 			table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		table.setRowHeight(20);
 		return table;
+	}
+
+	public void añadirListeterTabla(MouseListener listener) {
+		table.addMouseListener(listener);
+
+	}
+
+	public int getFilaSeleccionada() {
+		return table.getSelectedRow();
+
+	}
+
+	public String getFecha() {
+		return fecha.getText();
+	}
+
+	public String getNotas() {
+		return notas.getText();
+	}
+
+	public String getAsunto() {
+		return asunto.getText();
+	}
+
+	public void activarCampos() {
+		fecha.setEnabled(true);
+		fecha.setBackground(Color.WHITE);
+		asunto.setEnabled(true);
+		asunto.setBackground(Color.WHITE);
+		notas.setEnabled(true);
+		notas.setBackground(Color.WHITE);
+		btnGuardar.setEnabled(false);
+		
+		
 	}
 }
