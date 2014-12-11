@@ -13,7 +13,7 @@ public class JPanelTipo extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JTextField textField;
+	private static JTextField textField;
 	JButton btnDescartar;
 	JButton btnGuardar;
 	
@@ -41,8 +41,8 @@ public class JPanelTipo extends JPanel {
 		textField.setColumns(10);
 	}
 	
-	public JTextField getTextField() {
-		return textField;
+	public static String getTextField() {
+		return textField.getText();
 	}
 
 	public void setTextField(String string) {

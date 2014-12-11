@@ -62,7 +62,6 @@ public class MediadorNuevoContacto {
 		String ciudad=JPanelContacto.getCiudad();
 		String telefonoMovil=JPanelContacto.getMovil();
 		String notas=JPanelContacto.getNotas();
-		String tContacto=JPanelContacto.getTipoContacto();
 		String estimado=JPanelOtrosCampos.getEstimado();
 		String prov=JPanelOtrosCampos.getProv();
 		String codPostal=JPanelOtrosCampos.getCodPostal();
@@ -74,6 +73,7 @@ public class MediadorNuevoContacto {
 		String extensionTrabajo=JPanelOtrosCampos.getExtensionTrabajo();
 		String numFax=JPanelOtrosCampos.getFax();
 		String nomCorreoElectronico=JPanelOtrosCampos.getNomCorreoElectronico();
+		String tContacto=JPanelContacto.getTipoContacto();
 		TipoContacto tipoContacto=buscaTipoContacto(tContacto);
 		
 		Contacto contacto=new Contacto(idContacto, nombre, apellidos,

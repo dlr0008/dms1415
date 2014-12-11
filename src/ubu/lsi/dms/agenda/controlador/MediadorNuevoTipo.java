@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 import ubu.lsi.dms.agenda.gui.JFramePrincipal;
 import ubu.lsi.dms.agenda.gui.JPanelTipo;
 import ubu.lsi.dms.agenda.modelo.ModelTemporal;
+import ubu.lsi.dms.agenda.modelo.TipoContacto;
 
 public class MediadorNuevoTipo {
 
@@ -31,10 +32,17 @@ public class MediadorNuevoTipo {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(null, "Tipo Guardado");
-				//Añadir aqui la funcion para guardar los campos del contacto y otros
+				creaNuevoTipo();
 				resetCampos();
 			}
 		};
+	}
+	
+	private void creaNuevoTipo(){
+		String tContacto = JPanelTipo.getTextField();
+		int idContacto = modelo.getTipos().size()+1;
+		TipoContacto tipoContacto = new TipoContacto(idContacto, tContacto);
+		modelo.addTiposContacto(tipoContacto);
 	}
 
 	private boolean comprobarTipos() {
