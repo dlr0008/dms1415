@@ -46,8 +46,8 @@ public class MediadorModificaLlamada {
 
 	private void resetCampos() {
 		panelNuevaLlamada.setTextField("");
-		panelNuevaLlamada.setTextField_1("");
-		panelNuevaLlamada.setTextField_2("");
+		panelNuevaLlamada.setfecha("");
+		panelNuevaLlamada.setasunto("");
 		panelNuevaLlamada.setTextPane("");
 	}
 
