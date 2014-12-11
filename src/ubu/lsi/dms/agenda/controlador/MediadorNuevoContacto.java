@@ -41,9 +41,13 @@ public class MediadorNuevoContacto {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				panelNuevoContacto.cerrarOtrosCampos();
-				JOptionPane.showMessageDialog(null, "Contacto Guardado");
-				creaNuevoContacto();
-				resetCampos();
+				if(!JPanelContacto.compruebaVacios()){
+					JOptionPane.showMessageDialog(null, "Rellene todos los campos");
+				}else{
+					creaNuevoContacto();			
+					resetCampos();
+					JOptionPane.showMessageDialog(null, "Contacto Guardado");
+				}	
 			}
 		};
 	}

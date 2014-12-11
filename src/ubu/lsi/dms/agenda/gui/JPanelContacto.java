@@ -235,6 +235,16 @@ public class JPanelContacto extends JPanel {
 	public void resetMenu() {
 		menu.select(0);
 	}
+	
+	public static boolean compruebaVacios(){
+		if((nombre.getText().equals("")) || apellidos.getText().equals("") || 
+				Direccion.getText().equals("") || Ciudad.getText().equals("") ||
+				Movil.getText().equals("") || notas.getText().equals("")){
+			return false;
+		}else{
+			return true;
+		}
+	}
 
 	public static class JPanelOtrosCampos extends JPanel {
 		/**
