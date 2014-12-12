@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 
 import ubu.lsi.dms.agenda.gui.JFramePrincipal;
 import ubu.lsi.dms.agenda.gui.JMenuAgenda;
+import ubu.lsi.dms.agenda.gui.JPanelAyuda;
 import ubu.lsi.dms.agenda.gui.JPanelConsulta;
 import ubu.lsi.dms.agenda.gui.JPanelContacto;
 import ubu.lsi.dms.agenda.gui.JPanelLlamada;
@@ -41,6 +42,7 @@ public class MediadorMenu {
 		menu.setListenerModificaLlamada(menuModificaLlamada());
 		menu.setListenerModificaTipo(menuModificaTipo());
 		menu.setListenerNuevaConsulta(menuConsulta());
+		menu.setListenerAyuda(menuAyuda());
 	}
 
 	public ActionListener menuNuevoContacto() {
@@ -120,6 +122,19 @@ public class MediadorMenu {
 			public void actionPerformed(ActionEvent e) {
 				cambiarPanel(new JPanelConsulta());
 				new MediadorConsultas(frame, modelo);
+
+			}
+		};
+
+	}
+	
+	public ActionListener menuAyuda() {
+		return new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cambiarPanel(new JPanelAyuda());
+				new MediadorAyuda(frame, modelo);
 
 			}
 		};

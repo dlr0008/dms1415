@@ -10,6 +10,7 @@ public class JPanelAyuda extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private JFramePrincipal frame;
 
 	/**
 	 * Create the panel.
@@ -25,5 +26,10 @@ public class JPanelAyuda extends JPanel {
 		textPane.setBounds(10, 36, 924, 523);
 		add(textPane);
 
+	}
+
+	public void setFrame(JFramePrincipal frame) {
+		this.frame=frame;
+		
 	}
 }
