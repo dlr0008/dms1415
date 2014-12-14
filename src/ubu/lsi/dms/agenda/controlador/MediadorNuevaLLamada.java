@@ -23,6 +23,9 @@ public class MediadorNuevaLLamada {
 	private Collection<Contacto> contactos;
 	private Contacto contactoLlamada;
 
+	/**
+	 * @wbp.parser.entryPoint
+	 */
 	public MediadorNuevaLLamada(JFramePrincipal frame, ModelTemporal modelo) {
 
 		this.modelo = modelo;
