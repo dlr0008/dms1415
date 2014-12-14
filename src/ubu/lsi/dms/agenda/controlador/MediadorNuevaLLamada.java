@@ -106,6 +106,7 @@ public class MediadorNuevaLLamada {
 				panelModificaLlamada.getNotas());
 		System.out.println(llamada.toString());
 		modelo.addLlamada(llamada);
+		
 
 	}
 

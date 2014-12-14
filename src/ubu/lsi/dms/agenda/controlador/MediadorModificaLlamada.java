@@ -20,7 +20,6 @@ public class MediadorModificaLlamada {
 	private JPanelLlamada panelModificarLlamada;
 	private ModelTemporal modelo;
 	private Llamada llamada  ;
-	private Contacto contactoLlamada;
 	private Collection<Llamada> llamadas;
 	
 	public MediadorModificaLlamada(JFramePrincipal frame, ModelTemporal modelo) {
@@ -54,7 +53,6 @@ public class MediadorModificaLlamada {
 			}
 
 			private void añadirLlamada() {
-				int id = 2; //valor temporal hasta arreglar tablas
 				Llamada llam = new Llamada(llamada.getIdLlamada(),llamada.getContacto(),llamada.getFechaLlamada(),
 						llamada.getNotas(), llamada.getAsunto() );
 				modelo.addLlamada(llam);		
