@@ -1,17 +1,18 @@
 package ubu.lsi.dms.agenda.modelo;
 
-public class ModelTemporal {
+public class ModelTemporalObservador {
 
-	private ListaContactos contactos;
-	private ListaLlamadas llamadas;
-	private ListaTiposContacto tipos;
-
-	public ModelTemporal() {
-
+	ListaContactos contactos;
+	ListaLlamadas llamadas;
+	ListaTiposContacto tipos;
+	
+	public ModelTemporalObservador(){
+		
 		contactos = new ListaContactos();
 		llamadas = new ListaLlamadas();
 		tipos = new ListaTiposContacto();
-
+		
+		
 	}
 
 	public ListaContactos getContactos() {
@@ -25,4 +26,5 @@ public class ModelTemporal {
 	public ListaTiposContacto getTipos() {
 		return tipos;
 	}
+	
 }

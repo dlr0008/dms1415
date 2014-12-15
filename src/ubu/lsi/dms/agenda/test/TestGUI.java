@@ -1,23 +1,23 @@
 package ubu.lsi.dms.agenda.test;
 
-
 import javax.swing.SwingUtilities;
 
 import ubu.lsi.dms.agenda.controlador.MediadorMenu;
 import ubu.lsi.dms.agenda.gui.JFramePrincipal;
 import ubu.lsi.dms.agenda.modelo.ModelTemporal;
 
-public class TestGui {
+public class TestGUI {
 	private static JFramePrincipal frame = null;
-	@SuppressWarnings("static-access")
+
 	public static void main(String[] args) {
-		ModelTemporal modelo = new ModelTemporal();
-		modelo.iniContactos();
-		modelo.iniLlamadas();
-		modelo.iniTipos();
 
 		frame = new JFramePrincipal();
+		ModelTemporal modelo = new ModelTemporal();
+		frame.setTablaContactos(modelo.getContactos().obtenerTodosContactos());
+		frame.setTablaLLamadas(modelo.getLlamadas().obtenerTodasLLamadas());
+		frame.setTablaTipos(modelo.getTipos().obtenerTodosTipos());
 		new MediadorMenu(frame, modelo);
+
 		startApplication();
 
 	}

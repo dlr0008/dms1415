@@ -2,6 +2,8 @@ package ubu.lsi.dms.agenda.gui;
 
 import java.awt.Choice;
 import java.awt.event.ActionListener;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -9,13 +11,14 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 
+import ubu.lsi.dms.agenda.modelo.Contacto;
 import ubu.lsi.dms.agenda.modelo.TipoContacto;
 
-public class JPanelContacto extends JPanel {
+public class JPanelContacto extends JPanel implements Observer {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 9166276019426152339L;
 
 	private JFramePrincipal frame = null;
 
@@ -24,29 +27,30 @@ public class JPanelContacto extends JPanel {
 	 */
 
 	private JLabel lblNombre;
-	private static JTextField nombre;
+	private JTextField nombre;
 	private JLabel lblApellidos;
-	private static JTextField apellidos;
+	private JTextField apellidos;
 	private JLabel lblDireccion;
-	private static JTextField Direccion;
+	private JTextField Direccion;
 	private JLabel lblCiudad;
-	private static JTextField Ciudad;
+	private JTextField Ciudad;
 	private JLabel lblMovil;
-	private static JTextField Movil;
+	private JTextField Movil;
 	private JLabel lblTipoDeContacto;
-	private static Choice menu;
+	private Choice menu;
 	private JLabel lblNotas;
-	private static JTextPane notas;
+	private JTextPane notas;
 	private JButton btnGuardar;
 	private JButton btnDescartar;
 	private JButton btnOtrosCampos;
-	private JPanelOtrosCampos otrosCampos;
+	public JPanelOtrosCampos otrosCampos;
 
-	public JPanelContacto() {
+	public JPanelContacto(JFramePrincipal frame) {
 		setLayout(null);
-
-		otrosCampos = new JPanelOtrosCampos(this);
-		otrosCampos.setBounds(this.getX(), this.getY(), this.getWidth(), this.getHeight());
+		this.frame = frame;
+		otrosCampos = new JPanelOtrosCampos();
+		otrosCampos.setBounds(this.getX(), this.getY(), this.getWidth(),
+				this.getHeight());
 
 		lblNombre = new JLabel("Nombre");
 		lblNombre.setBounds(10, 11, 75, 14);
@@ -123,31 +127,27 @@ public class JPanelContacto extends JPanel {
 
 	}
 
-	public static long getSerialversionuid() {
+	public long getSerialversionuid() {
 		return serialVersionUID;
 	}
 
-	public JFramePrincipal getFrame() {
-		return frame;
-	}
-
-	public static String getNombre() {
+	public String getNombre() {
 		return nombre.getText();
 	}
 
-	public static String getApellidos() {
+	public String getApellidos() {
 		return apellidos.getText();
 	}
 
-	public static String getDireccion() {
-		return Direccion.toString();
+	public String getDireccion() {
+		return Direccion.getText();
 	}
 
-	public static String getCiudad() {
+	public String getCiudad() {
 		return Ciudad.getText();
 	}
 
-	public static String getMovil() {
+	public String getMovil() {
 		return Movil.getText();
 	}
 
@@ -176,11 +176,11 @@ public class JPanelContacto extends JPanel {
 		Movil.setText(texto);
 	}
 
-	public static String getNotas() {
+	public String getNotas() {
 		return notas.getText();
 	}
 
-	public static String getTipoContacto() {
+	public String getTipoContacto() {
 		return menu.getSelectedItem();
 	}
 
@@ -212,10 +212,6 @@ public class JPanelContacto extends JPanel {
 		otrosCampos.getBtnGuardar().addActionListener(listener);
 	}
 
-	public void setFrame(JFramePrincipal frame) {
-		this.frame = frame;
-	}
-
 	public void abrirOtrosCampos() {
 		otrosCampos.setVisible(true);
 		this.setVisible(false);
@@ -235,40 +231,45 @@ public class JPanelContacto extends JPanel {
 	public void resetMenu() {
 		menu.select(0);
 	}
-	
-	public static boolean compruebaVacios(){
-		if((nombre.getText().equals("")) || apellidos.getText().equals("") || 
-				Direccion.getText().equals("") || Ciudad.getText().equals("") ||
-				Movil.getText().equals("") || notas.getText().equals("")){
+
+	public JPanelOtrosCampos otrosCampos() {
+		return otrosCampos;
+	}
+
+	public boolean compruebaVacios() {
+		if ((nombre.getText().equals("")) || apellidos.getText().equals("")
+				|| Direccion.getText().equals("")
+				|| Ciudad.getText().equals("") || Movil.getText().equals("")
+				|| notas.getText().equals("")) {
 			return false;
-		}else{
+		} else {
 			return true;
 		}
 	}
 
-	public static class JPanelOtrosCampos extends JPanel {
+	public class JPanelOtrosCampos extends JPanel {
 		/**
 		 * 
 		 */
-		private static final long serialVersionUID = 1L;
-		private static JTextField estimado;
-		private static JTextField prov;
-		private static JTextField codPostal;
-		private static JTextField region;
-		private static JTextField pais;
-		private static JTextField nombreCompania;
-		private static JTextField cargo;
-		private static JTextField telefonoTrabajo;
-		private static JTextField extensionTrabajo;
-		private static JTextField fax;
-		private static JTextField nomCorreoElectronico;
-		private static JButton btnDescartar;
-		private static JButton btnGuardar;
+		private static final long serialVersionUID = -5872441684715554417L;
+		private JTextField estimado;
+		private JTextField prov;
+		private JTextField codPostal;
+		private JTextField region;
+		private JTextField pais;
+		private JTextField nombreCompania;
+		private JTextField cargo;
+		private JTextField telefonoTrabajo;
+		private JTextField extensionTrabajo;
+		private JTextField fax;
+		private JTextField nomCorreoElectronico;
+		private JButton btnDescartar;
+		private JButton btnGuardar;
 
 		/**
 		 * Create the panel.
 		 */
-		public JPanelOtrosCampos(final JPanelContacto contacto) {
+		public JPanelOtrosCampos() {
 			setLayout(null);
 			setVisible(false);
 
@@ -380,92 +381,40 @@ public class JPanelContacto extends JPanel {
 			nomCorreoElectronico.setColumns(10);
 		}
 
-		public static String getEstimado() {
+		public String getEstimado() {
 			return estimado.getText();
 		}
 
-		public void setEstimado(JTextField estimado) {
-			this.estimado = estimado;
-		}
-
-		public static String getProv() {
+		public String getProv() {
 			return prov.getText();
 		}
 
-		public void setProv(JTextField prov) {
-			this.prov = prov;
-		}
-
-		public static String getCodPostal() {
+		public String getCodPostal() {
 			return codPostal.getText();
 		}
 
-		public void setCodPostal(JTextField codPostal) {
-			this.codPostal = codPostal;
-		}
-
-		public static String getRegion() {
+		public String getRegion() {
 			return region.getText();
 		}
 
-		public void setRegion(JTextField region) {
-			this.region = region;
-		}
-
-		public static String getPais() {
+		public String getPais() {
 			return pais.getText();
 		}
 
-		public void setPais(JTextField pais) {
-			this.pais = pais;
-		}
-
-		public static String getNombreCompania() {
+		public String getNombreCompania() {
 			return nombreCompania.getText();
 		}
 
-		public void setNombreCompania(JTextField nombreCompania) {
-			this.nombreCompania = nombreCompania;
-		}
-
-		public static String getCargo() {
+		public String getCargo() {
 			return cargo.getText();
 		}
 
-		public void setCargo(JTextField cargo) {
-			this.cargo = cargo;
-		}
-
-		public static String getTelefonoTrabajo() {
+		public String getTelefonoTrabajo() {
 			return telefonoTrabajo.getText();
 		}
 
-		public void setTelefonoTrabajo(JTextField telefonoTrabajo) {
-			this.telefonoTrabajo = telefonoTrabajo;
-		}
-
-		public static String getExtensionTrabajo() {
+		public String getExtensionTrabajo() {
 			return extensionTrabajo.getText();
-		}
-
-		public void setExtensionTrabajo(JTextField extensionTrabajo) {
-			this.extensionTrabajo = extensionTrabajo;
-		}
-
-		public static String getFax() {
-			return fax.getText();
-		}
-
-		public void setFax(JTextField fax) {
-			this.fax = fax;
-		}
-
-		public static String getNomCorreoElectronico() {
-			return nomCorreoElectronico.getText();
-		}
-
-		public void setNomCorreoElectronico(JTextField nomCorreoElectronico) {
-			this.nomCorreoElectronico = nomCorreoElectronico;
 		}
 
 		public JButton getBtnGuardar() {
@@ -475,5 +424,22 @@ public class JPanelContacto extends JPanel {
 		public JButton getBtnDescartar() {
 			return btnDescartar;
 		}
+
+		public String getFax() {
+			return fax.getText();
+		}
+
+		public String getNomCorreoElectronico() {
+			return nomCorreoElectronico.getText();
+		}
+	}
+
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		if (arg1 instanceof Contacto)
+			frame.añadirContacto(arg1);
+
+		if (arg1 instanceof TipoContacto)
+			añadirElementoListaMenu(((TipoContacto) arg1).getTipoContacto());
 	}
 }

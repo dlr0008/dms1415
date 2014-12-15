@@ -5,39 +5,34 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Collection;
+import java.util.Observable;
 
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 
 import ubu.lsi.dms.agenda.gui.JFramePrincipal;
 import ubu.lsi.dms.agenda.gui.JPanelLlamada;
-import ubu.lsi.dms.agenda.gui.TablaContactos;
 import ubu.lsi.dms.agenda.modelo.Contacto;
 import ubu.lsi.dms.agenda.modelo.Llamada;
 import ubu.lsi.dms.agenda.modelo.ModelTemporal;
 
-public class MediadorNuevaLLamada {
+public class MediadorNuevaLLamada extends Observable {
 
 	private JPanelLlamada panelModificaLlamada;
-	private ModelTemporal modelo;
 	private Collection<Contacto> contactos;
 	private Contacto contactoLlamada;
+	private ModelTemporal modelo;
 
-	/**
-	 * @wbp.parser.entryPoint
-	 */
-	public MediadorNuevaLLamada(JFramePrincipal frame, ModelTemporal modelo) {
+	public MediadorNuevaLLamada(JFramePrincipal frame,
+			ModelTemporal modelo) {
 
 		this.modelo = modelo;
-		panelModificaLlamada = (JPanelLlamada) frame.getPanel();
-		panelModificaLlamada.setFrame(frame);
-		TablaContactos tabla = new TablaContactos(modelo.getContactos());
-		panelModificaLlamada.crearListaConsultas(panelModificaLlamada
-				.crearTabla(tabla, tabla.getCabecera()));
-		contactos = this.modelo.getContactos();
+		panelModificaLlamada = new JPanelLlamada(frame);
+		panelModificaLlamada.recargarTabla(frame.tablaContactos());
+		panelModificaLlamada.setTable(frame.tablaContactos());
 		panelModificaLlamada.añadirListenerGuardar(guardarLlamada());
 		panelModificaLlamada.añadirListenerDescartarContacto(descartarCampos());
 		panelModificaLlamada.añadirListeterTabla(elementoSelecionado());
+		modelo.getLlamadas().addObserver(panelModificaLlamada);
 
 	}
 
@@ -83,6 +78,7 @@ public class MediadorNuevaLLamada {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				panelModificaLlamada.activarCampos();
+				contactos = modelo.getContactos().obtenerTodosContactos();
 				int fila = panelModificaLlamada.getFilaSeleccionada();
 				int i = 0;
 				for (Contacto c : contactos) {
@@ -99,14 +95,12 @@ public class MediadorNuevaLLamada {
 	}
 
 	private void añadirLlamada() {
-
-		Llamada llamada = new Llamada(3, contactoLlamada,
+		Llamada llamada = new Llamada(modelo.getLlamadas()
+				.obtenerTodasLLamadas().size() + 1, contactoLlamada,
 				panelModificaLlamada.getFecha(),
 				panelModificaLlamada.getAsunto(),
 				panelModificaLlamada.getNotas());
-		System.out.println(llamada.toString());
-		modelo.addLlamada(llamada);
-		
+		modelo.getLlamadas().addLLamada(llamada);
 
 	}
 
@@ -132,5 +126,9 @@ public class MediadorNuevaLLamada {
 
 			}
 		};
+	}
+
+	public JPanelLlamada getPanelAsociado() {
+		return panelModificaLlamada;
 	}
 }

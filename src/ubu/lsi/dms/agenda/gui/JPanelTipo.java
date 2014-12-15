@@ -5,48 +5,48 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import ubu.lsi.dms.agenda.modelo.TipoContacto;
 
-public class JPanelTipo extends JPanel {
+import java.awt.event.ActionListener;
+import java.util.Observable;
+import java.util.Observer;
+
+public class JPanelTipo extends JPanel implements Observer {
 	/**
 	 * 
 	 */
+	private JFramePrincipal frame;
 	private static final long serialVersionUID = 1L;
-	private static JTextField textField;
+	private static JTextField tipo;
 	JButton btnDescartar;
 	JButton btnGuardar;
-	
+
 	/**
 	 * Create the panel.
 	 */
-	public JPanelTipo() {
+	public JPanelTipo(JFramePrincipal frame) {
 		setLayout(null);
-		
+		this.frame = frame;
 		btnDescartar = new JButton("Descartar");
 		btnDescartar.setBounds(734, 536, 101, 23);
 		add(btnDescartar);
-		
+
 		btnGuardar = new JButton("Guardar");
 		btnGuardar.setBounds(845, 536, 89, 23);
 		add(btnGuardar);
-		
+
 		JLabel lblTipoDeContacto = new JLabel("Tipo de Contacto");
 		lblTipoDeContacto.setBounds(10, 11, 101, 14);
 		add(lblTipoDeContacto);
-		
-		textField = new JTextField();
-		textField.setBounds(135, 8, 86, 20);
-		add(textField);
-		textField.setColumns(10);
-	}
-	
-	public static String getTextField() {
-		return textField.getText();
+
+		tipo = new JTextField();
+		tipo.setBounds(135, 8, 86, 20);
+		add(tipo);
+		tipo.setColumns(10);
 	}
 
-	public void setTextField(String string) {
-		this.textField.setText(string);
+	public static String getTextField() {
+		return tipo.getText();
 	}
 
 	public void añadirListenerGuardar(ActionListener listener) {
@@ -59,8 +59,15 @@ public class JPanelTipo extends JPanel {
 
 	}
 
-	public void setFrame(JFramePrincipal frame) {
-		// TODO Auto-generated method stub
-		
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		frame.añadirTipoContacto((TipoContacto) arg1);
+
 	}
+
+	public void setTipoContacto(String string) {
+		tipo.setText(string);
+
+	}
+
 }

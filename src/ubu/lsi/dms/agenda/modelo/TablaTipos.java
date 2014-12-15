@@ -1,8 +1,7 @@
-package ubu.lsi.dms.agenda.gui;
+package ubu.lsi.dms.agenda.modelo;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
@@ -17,18 +16,17 @@ public class TablaTipos extends AbstractTableModel {
 	private String[] cabecera = new String[] { "ID", "Nombre" };
 
 	public TablaTipos(Collection<TipoContacto> tipos) {
-		listaTipos = Collections
-				.synchronizedList((ArrayList<TipoContacto>) tipos);
+		listaTipos = new ArrayList<TipoContacto>();
 	}
 
 	public void add(TipoContacto contacto) {
 		listaTipos.add(contacto);
-		fireTableRowsInserted(listaTipos.size() - 1, listaTipos.size() - 1);
+	
 	}
 
 	@Override
 	public int getColumnCount() {
-		return 18;
+		return 2;
 	}
 
 	@Override

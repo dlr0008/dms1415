@@ -7,11 +7,7 @@ import javax.swing.JPanel;
 
 import ubu.lsi.dms.agenda.gui.JFramePrincipal;
 import ubu.lsi.dms.agenda.gui.JMenuAgenda;
-import ubu.lsi.dms.agenda.gui.JPanelAyuda;
-import ubu.lsi.dms.agenda.gui.JPanelConsulta;
-import ubu.lsi.dms.agenda.gui.JPanelContacto;
 import ubu.lsi.dms.agenda.gui.JPanelLlamada;
-import ubu.lsi.dms.agenda.gui.JPanelTipo;
 import ubu.lsi.dms.agenda.modelo.ModelTemporal;
 
 /**
@@ -25,16 +21,27 @@ public class MediadorMenu {
 
 	private JFramePrincipal frame;
 	private JMenuAgenda menu;
-	private ModelTemporal modelo;
 
-	public MediadorMenu(JFramePrincipal frame, ModelTemporal modelo) {
+	private JPanel panelNuevaLlamada, panelConsultas, panelNuevoContacto, panelNuevoTipo;
+
+	public MediadorMenu(JFramePrincipal frame,
+			ModelTemporal modelo) {
 
 		this.frame = frame;
-		this.modelo = modelo;
-
-		menu = frame.getMenu();
-		frame.setPanel(new JPanelConsulta());
-		new MediadorConsultas(frame, modelo);
+		// crear todos los paneles y Mediadores
+		menu = frame.getMenuAgenda();
+		panelConsultas = new MediadorConsultas(frame, modelo)
+				.getPanelAsociado();
+		frame.setPanel(panelConsultas);
+		panelNuevaLlamada = new MediadorNuevaLLamada(frame, modelo)
+				.getPanelAsociado();
+		panelNuevaLlamada.setVisible(false);
+		panelNuevoContacto = new MediadorNuevoContacto(frame, modelo)
+				.getPanelAsociado();
+		panelNuevoContacto.setVisible(false);
+		panelNuevoTipo = new MediadorNuevoTipo(frame, modelo).getPanelAsociado();
+		panelNuevoTipo.setVisible(false);
+		
 		menu.setListenerNuevoContacto(menuNuevoContacto());
 		menu.setListenerNuevaLLamada(menuNuevaLlamada());
 		menu.setListenerNuevoTipo(menuNuevoTipo());
@@ -42,7 +49,6 @@ public class MediadorMenu {
 		menu.setListenerModificaLlamada(menuModificaLlamada());
 		menu.setListenerModificaTipo(menuModificaTipo());
 		menu.setListenerNuevaConsulta(menuConsulta());
-		menu.setListenerAyuda(menuAyuda());
 	}
 
 	public ActionListener menuNuevoContacto() {
@@ -51,9 +57,7 @@ public class MediadorMenu {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				cambiarPanel(new JPanelContacto());
-				new MediadorNuevoContacto(frame, modelo);
-
+				cambiarPanel(panelNuevoContacto);
 			}
 		};
 
@@ -64,8 +68,9 @@ public class MediadorMenu {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				cambiarPanel(new JPanelLlamada());
-				new MediadorNuevaLLamada(frame, modelo);
+				((JPanelLlamada) panelNuevaLlamada)
+						.recargarTabla(frame.tablaContactos());
+				cambiarPanel(panelNuevaLlamada);
 			}
 		};
 
@@ -76,41 +81,34 @@ public class MediadorMenu {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				cambiarPanel(new JPanelTipo());
-				new MediadorNuevoTipo(frame, modelo);
+				cambiarPanel(panelNuevoTipo);
 			}
 		};
 	}
-	
+
 	public ActionListener menuModificaContacto() {
 		return new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				cambiarPanel(new JPanelContacto());
-				new MediadorModificaContacto(frame, modelo);
 			}
 		};
 	}
-	
+
 	public ActionListener menuModificaLlamada() {
 		return new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				cambiarPanel(new JPanelLlamada());
-				new MediadorModificaLlamada(frame, modelo);
 			}
 		};
 	}
-	
+
 	public ActionListener menuModificaTipo() {
 		return new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				cambiarPanel(new JPanelTipo());
-				new MediadorModificaTipo(frame, modelo);
 			}
 		};
 	}
@@ -120,21 +118,7 @@ public class MediadorMenu {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				cambiarPanel(new JPanelConsulta());
-				new MediadorConsultas(frame, modelo);
-
-			}
-		};
-
-	}
-	
-	public ActionListener menuAyuda() {
-		return new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				cambiarPanel(new JPanelAyuda());
-				new MediadorAyuda(frame, modelo);
+				cambiarPanel(panelConsultas);
 
 			}
 		};
@@ -145,9 +129,10 @@ public class MediadorMenu {
 		JPanel viejoPanel = frame.getPanel();
 		panel.setBounds(viejoPanel.getX(), viejoPanel.getY(),
 				viejoPanel.getWidth(), viejoPanel.getHeight());
-		frame.remove(viejoPanel);
+		viejoPanel.setVisible(false);
+		panel.setVisible(true);
+		panel.repaint();
 		frame.setPanel(panel);
-		frame.add(panel);
 		frame.validate();
 		frame.repaint();
 	}

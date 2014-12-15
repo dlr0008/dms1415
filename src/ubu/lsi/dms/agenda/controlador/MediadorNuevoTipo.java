@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 import ubu.lsi.dms.agenda.gui.JFramePrincipal;
 import ubu.lsi.dms.agenda.gui.JPanelTipo;
@@ -15,14 +16,14 @@ public class MediadorNuevoTipo {
 	private JPanelTipo panelNuevoTipo;
 	private ModelTemporal modelo;
 
-	public MediadorNuevoTipo(JFramePrincipal frame, ModelTemporal modelo) {
+	public MediadorNuevoTipo(JFramePrincipal frame,
+			ModelTemporal modelo) {
 
 		this.modelo = modelo;
-		panelNuevoTipo = (JPanelTipo) frame.getPanel();
-		panelNuevoTipo.setFrame(frame);
-
+		panelNuevoTipo = new JPanelTipo(frame);
 		panelNuevoTipo.añadirListenerGuardar(guardarTipo());
 		panelNuevoTipo.añadirListenerDescartarContacto(descartarCampos());
+		modelo.getTipos().addObserver(panelNuevoTipo);
 
 	}
 
@@ -37,22 +38,18 @@ public class MediadorNuevoTipo {
 			}
 		};
 	}
-	
-	private void creaNuevoTipo(){
+
+	private void creaNuevoTipo() {
 		String tContacto = JPanelTipo.getTextField();
-		int idContacto = modelo.getTipos().size()+1;
+		int idContacto = modelo.getTipos().size() + 1;
 		TipoContacto tipoContacto = new TipoContacto(idContacto, tContacto);
-		modelo.addTiposContacto(tipoContacto);
+		modelo.getTipos().addTipo(tipoContacto);
 	}
 
-	private boolean comprobarTipos() {
-		return false;
-
-	}
 
 	private void resetCampos() {
 
-		panelNuevoTipo.setTextField("");
+		panelNuevoTipo.setTipoContacto("");
 	}
 
 	private ActionListener descartarCampos() {
@@ -65,9 +62,8 @@ public class MediadorNuevoTipo {
 			}
 		};
 	}
-	
-
-	
-
+	public JPanel getPanelAsociado(){
+		return panelNuevoTipo;
+	}
 
 }

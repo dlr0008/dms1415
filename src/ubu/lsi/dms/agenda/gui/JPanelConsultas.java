@@ -3,6 +3,9 @@ package ubu.lsi.dms.agenda.gui;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
+import java.util.Observer;
+
+import java.util.Observable;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -14,11 +17,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableColumnModel;
-import javax.swing.table.TableColumn;
 
-public class JPanelConsulta extends JPanel {
+public class JPanelConsultas extends JPanel implements Observer{
 	/**
 	 * 
 	 */
@@ -38,7 +38,7 @@ public class JPanelConsulta extends JPanel {
 			"Introduce el apellido a consultar");
 	private JScrollPane listScroller = null;
 
-	public JPanelConsulta() {
+	public JPanelConsultas() {
 
 		rdbtnContactos.setBounds(6, 5, 113, 23);
 		rdbtnContactos.setSelected(true);
@@ -157,23 +157,11 @@ public class JPanelConsulta extends JPanel {
 
 	}
 
-	public JTable crearTabla(AbstractTableModel datos, String[] cabecera) {
-		DefaultTableColumnModel columnModel = new DefaultTableColumnModel();
-		int i = 0;
-		TableColumn columna = null;
-		for (String cadena : cabecera) {
-			columna = new TableColumn(i++);
-			columna.setHeaderValue(cadena);
-			columna.setMinWidth(100);
-			columnModel.addColumn(columna);
-		}
-		JTable table = new JTable(datos, columnModel);
-		if (cabecera.length >= 6)
-			table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		else
-			table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-		table.setRowHeight(20);
-		return table;
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		// TODO Auto-generated method stub
+		
 	}
+
 
 }

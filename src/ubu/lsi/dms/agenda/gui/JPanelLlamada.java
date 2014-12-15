@@ -3,6 +3,8 @@ package ubu.lsi.dms.agenda.gui;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -13,37 +15,32 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableColumnModel;
-import javax.swing.table.TableColumn;
 
-public class JPanelLlamada extends JPanel {
+public class JPanelLlamada extends JPanel implements Observer {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	JLabel lblFechaDeLlamada;
-	JLabel lblAsunto;
-	JLabel lblNotas;
-	JButton btnDescartar;
-	JButton btnGuardar;
-	JLabel lblContacto;
+	private JLabel lblFechaDeLlamada;
+	private JLabel lblAsunto;
+	private JLabel lblNotas;
+	private JButton btnDescartar;
+	private JButton btnGuardar;
+	private JLabel lblContacto;
 	private JTextField nombre;
 	private JTextField fecha;
 	private JTextField asunto;
 	private JTextPane notas;
 	private JScrollPane scrollPane;
 	private JTable table;
-
-	private JFramePrincipal frame = null;
+	private JFramePrincipal frame;
 
 	/**
 	 * Create the panel.
 	 */
-	public JPanelLlamada() {
+	public JPanelLlamada(JFramePrincipal frame) {
 		setLayout(null);
-
+		this.frame = frame;
 		lblFechaDeLlamada = new JLabel("Fecha de llamada");
 		lblFechaDeLlamada.setBounds(10, 66, 127, 14);
 		add(lblFechaDeLlamada);
@@ -90,7 +87,7 @@ public class JPanelLlamada extends JPanel {
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(462, 18, 394, 300);
 		add(scrollPane);
-		
+
 		fecha.setEnabled(false);
 		fecha.setBackground(this.getBackground());
 		asunto.setEnabled(false);
@@ -99,6 +96,10 @@ public class JPanelLlamada extends JPanel {
 		notas.setBackground(this.getBackground());
 		btnGuardar.setEnabled(false);
 
+	}
+
+	public void setTable(JTable table) {
+		this.table = table;
 	}
 
 	public void setNombre(String nombre) {
@@ -119,10 +120,6 @@ public class JPanelLlamada extends JPanel {
 		this.notas.setText(string);
 	}
 
-	public void setFrame(JFramePrincipal frame) {
-		this.frame = frame;
-	}
-
 	public void añadirListenerGuardar(ActionListener listener) {
 		btnGuardar.addActionListener(listener);
 
@@ -133,11 +130,11 @@ public class JPanelLlamada extends JPanel {
 
 	}
 
-	public void crearListaConsultas(JTable tabla) {
+	public void recargarTabla(JTable tabla) {
+		table = tabla;
 		if (scrollPane != null)
 			remove(scrollPane);
 		JScrollPane nuevaLista = new JScrollPane(tabla);
-
 		nuevaLista.setBounds(462, 18, 394, 300);
 
 		if (tabla.getRowCount() == 0)
@@ -151,31 +148,6 @@ public class JPanelLlamada extends JPanel {
 		add(nuevaLista);
 		validate();
 		repaint();
-	}
-
-	public JTable crearTabla(AbstractTableModel datos, String[] cabecera) {
-		DefaultTableColumnModel columnModel = new DefaultTableColumnModel();
-		int i = 0;
-
-		TableColumn columna = null;
-		for (String cadena : cabecera) {
-			if (i < 3 || i == 14 || i == 12) {
-				columna = new TableColumn(i);
-				columna.setHeaderValue(cadena);
-				columna.setMinWidth(40);
-				columna.setMaxWidth(100);
-				columna.setWidth(80);
-				columnModel.addColumn(columna);
-			}
-			i++;
-		}
-		table = new JTable(datos, columnModel);
-		if (cabecera.length >= 6)
-			table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		else
-			table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-		table.setRowHeight(20);
-		return table;
 	}
 
 	public void añadirListeterTabla(MouseListener listener) {
@@ -208,7 +180,19 @@ public class JPanelLlamada extends JPanel {
 		notas.setEnabled(true);
 		notas.setBackground(Color.WHITE);
 		btnGuardar.setEnabled(true);
-		
-		
+
 	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+
+		frame.añadirLamada(arg);
+	}
+
+	@Override
+	public void setVisible(boolean aFlag) {
+		frame.filtrarContactos(null);
+		super.setVisible(aFlag);
+	}
+
 }

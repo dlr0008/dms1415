@@ -1,5 +1,5 @@
 /**
- * Contiene las clases que permiten al usuario interactuar la agenda (consultar, insertar, actualizar) 
+ * Contiene las clases de tipo entidad (entity class) del contexto de la aplicación de agenda
  */
 /**
  * @author clopezno

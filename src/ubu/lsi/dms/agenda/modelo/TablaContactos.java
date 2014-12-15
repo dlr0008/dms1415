@@ -1,10 +1,7 @@
-package ubu.lsi.dms.agenda.gui;
+package ubu.lsi.dms.agenda.modelo;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
-
 import javax.swing.table.AbstractTableModel;
 
 import ubu.lsi.dms.agenda.modelo.Contacto;
@@ -20,15 +17,12 @@ public class TablaContactos extends AbstractTableModel {
 			"ExtensionTrabajo", "TelefonoMovil", "NumFax",
 			"NomCorreoElectronico", "Notas" };
 
-	public TablaContactos(Collection<Contacto> contactos) {
-		listaContactos = Collections
-				.synchronizedList((ArrayList<Contacto>) contactos);
+	public TablaContactos() {
+		listaContactos = new ArrayList<Contacto>();
 	}
 
 	public void add(Contacto contacto) {
 		listaContactos.add(contacto);
-		fireTableRowsInserted(listaContactos.size() - 1,
-				listaContactos.size() - 1);
 	}
 
 	@Override
