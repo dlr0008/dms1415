@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import ubu.lsi.dms.agenda.gui.JFramePrincipal;
 import ubu.lsi.dms.agenda.gui.JMenuAgenda;
 import ubu.lsi.dms.agenda.gui.JPanelLlamada;
+import ubu.lsi.dms.agenda.gui.JPanelTipo;
 import ubu.lsi.dms.agenda.modelo.ModelTemporal;
 
 /**
@@ -110,7 +111,7 @@ public class MediadorMenu {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				panelModificaLlamada.recargarTabla(frame.tablaLLamadas());
+				((JPanelLlamada) panelModificaLlamada).recargarTabla(frame.tablaLLamadas());
 				cambiarPanel(panelModificaLlamada);
 			}
 		};
@@ -121,7 +122,7 @@ public class MediadorMenu {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				panelModificaTipo.recargarTabla(frame.tablaTipos());
+				((JPanelTipo) panelModificaTipo).recargarTabla(frame.tablaTipos());
 				cambiarPanel(panelModificaTipo);
 			}
 		};

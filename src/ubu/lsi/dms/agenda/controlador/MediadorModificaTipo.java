@@ -26,7 +26,7 @@ public class MediadorModificaTipo {
 
 		this.modelo = modelo;
 		panelModificaTipo = new JPanelTipo(frame);
-		
+		panelModificaTipo.recargarTabla(frame.tablaTipos());
 		panelModificaTipo.añadirListenerGuardar(guardarTipo());
 		panelModificaTipo.añadirListenerDescartarContacto(descartarCampos());
 		panelModificaTipo.añadirListeterTabla(seleccionarTipo());
