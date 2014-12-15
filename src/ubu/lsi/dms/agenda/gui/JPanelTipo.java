@@ -22,11 +22,11 @@ public class JPanelTipo extends JPanel implements Observer {
 	 */
 	private JFramePrincipal frame;
 	private static final long serialVersionUID = 1L;
-	private static JTextField tipo;
-	JButton btnDescartar;
-	JButton btnGuardar;
+	private JTextField tipo;	
 	private JScrollPane scrollPane;
 	private JTable table;
+	JButton btnDescartar;
+	JButton btnGuardar;
 
 	/**
 	 * Create the panel.
@@ -49,7 +49,6 @@ public class JPanelTipo extends JPanel implements Observer {
 		tipo = new JTextField();
 		tipo.setBounds(135, 8, 86, 20);
 		add(tipo);
-		tipo.setColumns(10);
 	}
 	
 	public void recargarTabla(JTable tabla) {
@@ -71,11 +70,7 @@ public class JPanelTipo extends JPanel implements Observer {
 		validate();
 		repaint();
 	}
-
-	public static String getTextField() {
-		return tipo.getText();
-	}
-
+	
 	public void añadirListenerGuardar(ActionListener listener) {
 		btnGuardar.addActionListener(listener);
 
@@ -94,7 +89,10 @@ public class JPanelTipo extends JPanel implements Observer {
 
 	public void setTipoContacto(String string) {
 		tipo.setText(string);
-
+	}
+	
+	public String getTipoContacto() {
+		return tipo.getText();
 	}
 
 	public void añadirListeterTabla(MouseListener listener) {
@@ -108,5 +106,4 @@ public class JPanelTipo extends JPanel implements Observer {
 	public int getFilaSeleccionada() {
 		return table.getSelectedRow();
 	}
-
 }

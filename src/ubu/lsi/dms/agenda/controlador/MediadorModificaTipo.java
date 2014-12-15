@@ -11,7 +11,6 @@ import javax.swing.JPanel;
 
 import ubu.lsi.dms.agenda.gui.JFramePrincipal;
 import ubu.lsi.dms.agenda.gui.JPanelTipo;
-import ubu.lsi.dms.agenda.modelo.Llamada;
 import ubu.lsi.dms.agenda.modelo.ModelTemporal;
 import ubu.lsi.dms.agenda.modelo.TipoContacto;
 
@@ -21,6 +20,7 @@ public class MediadorModificaTipo {
 	private ModelTemporal modelo;
 	private TipoContacto tipo  ;
 	private Collection<TipoContacto> tipos;
+	int fila;
 
 	public MediadorModificaTipo(JFramePrincipal frame, ModelTemporal modelo) {
 
@@ -32,6 +32,25 @@ public class MediadorModificaTipo {
 		panelModificaTipo.añadirListeterTabla(seleccionarTipo());
 
 	}
+	
+	private ActionListener guardarTipo() {
+		return new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "Tipo Guardado");
+				modificarTipo();
+				resetCampos();
+			}
+		};
+	}	
+	
+	private void modificarTipo() {
+		int idContacto = fila;
+		String tContacto = panelModificaTipo.getTipoContacto();		
+		TipoContacto tipoContacto = new TipoContacto(idContacto, tContacto);
+		modelo.getTipos().addTipo(tipoContacto);
+	}
 
 	private MouseListener seleccionarTipo() {
 		return new MouseListener() {
@@ -39,7 +58,8 @@ public class MediadorModificaTipo {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				panelModificaTipo.activarCampos();
-				int fila = panelModificaTipo.getFilaSeleccionada();
+				tipos = modelo.getTipos().obtenerTodosTipos();
+				fila = panelModificaTipo.getFilaSeleccionada();
 				int i = 0;
 				for (TipoContacto t : tipos) {
 					if (fila == i) {
@@ -47,58 +67,36 @@ public class MediadorModificaTipo {
 						cambiarNombre(tipo.getTipoContacto());						
 					}
 					i++;
-				}
-				
+				}				
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 			
-		};
-		
-	
-	}
+		};	
+	}	
+
 
 	private void cambiarNombre(String tipoContacto) {
-		panelModificaTipo.setName(tipoContacto);
+		panelModificaTipo.setTipoContacto(tipoContacto);
 		
-	}
-
-	private ActionListener guardarTipo() {
-		return new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, "Tipo Guardado");
-				resetCampos();
-			}
-		};
-	}
-
-	private boolean comprobarTipos() {
-		return false;
-
 	}
 
 	private void resetCampos() {

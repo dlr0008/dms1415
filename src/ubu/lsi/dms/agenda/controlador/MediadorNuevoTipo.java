@@ -40,15 +40,14 @@ public class MediadorNuevoTipo {
 	}
 
 	private void creaNuevoTipo() {
-		String tContacto = JPanelTipo.getTextField();
 		int idContacto = modelo.getTipos().size() + 1;
+		String tContacto = panelNuevoTipo.getTipoContacto();		
 		TipoContacto tipoContacto = new TipoContacto(idContacto, tContacto);
 		modelo.getTipos().addTipo(tipoContacto);
 	}
 
 
 	private void resetCampos() {
-
 		panelNuevoTipo.setTipoContacto("");
 	}
 
@@ -58,7 +57,6 @@ public class MediadorNuevoTipo {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				resetCampos();
-
 			}
 		};
 	}

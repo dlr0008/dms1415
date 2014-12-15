@@ -10,7 +10,6 @@ import javax.swing.JOptionPane;
 
 import ubu.lsi.dms.agenda.gui.JFramePrincipal;
 import ubu.lsi.dms.agenda.gui.JPanelLlamada;
-import ubu.lsi.dms.agenda.modelo.Contacto;
 import ubu.lsi.dms.agenda.modelo.Llamada;
 import ubu.lsi.dms.agenda.modelo.ModelTemporal;
 
@@ -28,8 +27,7 @@ public class MediadorModificaLlamada {
 		panelModificarLlamada.recargarTabla(frame.tablaLLamadas());
 		panelModificarLlamada.añadirListenerGuardar(guardarLlamada());
 		panelModificarLlamada.añadirListeterTabla(seleccionarContacto());
-		panelModificarLlamada
-				.añadirListenerDescartarContacto(descartarCampos());
+		panelModificarLlamada.añadirListenerDescartarContacto(descartarCampos());
 
 	}
 
@@ -84,25 +82,21 @@ public class MediadorModificaLlamada {
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
@@ -127,11 +121,6 @@ public class MediadorModificaLlamada {
 
 	private void cambiarNotas(String notas) {
 		panelModificarLlamada.setTextPane(notas);
-
-	}
-
-	private boolean comprobarTipos() {
-		return false;
 
 	}
 
