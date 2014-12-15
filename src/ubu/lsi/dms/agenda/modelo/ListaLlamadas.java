@@ -2,6 +2,7 @@ package ubu.lsi.dms.agenda.modelo;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Observable;
 import java.util.Random;
 
@@ -41,10 +42,18 @@ public class ListaLlamadas extends Observable {
 	 * @param llamada
 	 */
 	public void addLLamada(Llamada llamada) {
+		Llamada eliminar = null;
+		for (Llamada l : listaLlamadas) {
+			if (llamada.getIdLlamada() == l.getIdLlamada())
+				eliminar = l;
+		}
+		if (eliminar != null) {
+			listaLlamadas.remove(eliminar);
+		}
 		listaLlamadas.add(llamada);
 		setChanged();
 		notifyObservers(llamada);
-	
+
 	}
 
 	/**

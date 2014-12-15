@@ -12,11 +12,18 @@ public class TablaLlamadas extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
 
 	public List<Llamada> listaLlamadas = new ArrayList<Llamada>();
-	private String[] cabecera = new String[] { "ID", "Contacto",
-			"Fecha", "Asunto", "Notas" };
-
+	private String[] cabecera = new String[] { "ID", "Contacto", "Fecha",
+			"Asunto", "Notas" };
 
 	public void add(Llamada llamada) {
+		Llamada eliminar = null;
+		for (Llamada l : listaLlamadas) {
+			if (llamada.getIdLlamada() == l.getIdLlamada())
+				eliminar = l;
+		}
+		if (eliminar != null) {
+			listaLlamadas.remove(eliminar);
+		}
 		listaLlamadas.add(llamada);
 	}
 
@@ -37,7 +44,8 @@ public class TablaLlamadas extends AbstractTableModel {
 		case 0:
 			return l.getIdLlamada();
 		case 1:
-			return l.getContacto().getNombre()+ " "+l.getContacto().getApellidos();
+			return l.getContacto().getNombre() + " "
+					+ l.getContacto().getApellidos();
 		case 2:
 			return l.getFechaLlamada();
 		case 3:
@@ -48,9 +56,9 @@ public class TablaLlamadas extends AbstractTableModel {
 		}
 		return "";
 	}
-	public String[] getCabecera(){
+
+	public String[] getCabecera() {
 		return cabecera;
 	}
 
-	
 }

@@ -22,7 +22,7 @@ public class MediadorMenu {
 	private JFramePrincipal frame;
 	private JMenuAgenda menu;
 
-	private JPanel panelNuevaLlamada, panelConsultas, panelNuevoContacto, panelNuevoTipo, panelAyuda;
+	private JPanel panelNuevaLlamada, panelConsultas, panelNuevoContacto, panelNuevoTipo, panelModificaLlamada, panelModificaTipo, panelAyuda;
 
 	public MediadorMenu(JFramePrincipal frame,
 			ModelTemporal modelo) {
@@ -41,6 +41,12 @@ public class MediadorMenu {
 		panelNuevoContacto.setVisible(false);
 		panelNuevoTipo = new MediadorNuevoTipo(frame, modelo).getPanelAsociado();
 		panelNuevoTipo.setVisible(false);
+		
+		panelModificaLlamada = new MediadorModificaLlamada(frame, modelo).getPanelAsociado();
+		panelModificaLlamada.setVisible(false);
+		
+		panelModificaTipo = new MediadorModificaTipo(frame, modelo).getPanelAsociado();
+		panelModificaTipo.setVisible(false);
 		
 		panelAyuda = new MediadorAyuda(frame, modelo).getPanelAsociado();
 		panelAyuda.setVisible(false);
@@ -104,6 +110,8 @@ public class MediadorMenu {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				panelModificaLlamada.recargarTabla(frame.tablaLLamadas());
+				cambiarPanel(panelModificaLlamada);
 			}
 		};
 	}
@@ -113,6 +121,8 @@ public class MediadorMenu {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				panelModificaTipo.recargarTabla(frame.tablaTipos());
+				cambiarPanel(panelModificaTipo);
 			}
 		};
 	}

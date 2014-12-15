@@ -180,7 +180,6 @@ public class JPanelLlamada extends JPanel implements Observer {
 		notas.setEnabled(true);
 		notas.setBackground(Color.WHITE);
 		btnGuardar.setEnabled(true);
-
 	}
 
 	@Override

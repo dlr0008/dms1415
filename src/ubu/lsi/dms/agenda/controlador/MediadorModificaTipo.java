@@ -7,6 +7,7 @@ import java.awt.event.MouseListener;
 import java.util.Collection;
 
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 import ubu.lsi.dms.agenda.gui.JFramePrincipal;
 import ubu.lsi.dms.agenda.gui.JPanelTipo;
@@ -24,7 +25,7 @@ public class MediadorModificaTipo {
 	public MediadorModificaTipo(JFramePrincipal frame, ModelTemporal modelo) {
 
 		this.modelo = modelo;
-		panelModificaTipo = (JPanelTipo) frame.getPanel();
+		panelModificaTipo = new JPanelTipo(frame);
 		
 		panelModificaTipo.añadirListenerGuardar(guardarTipo());
 		panelModificaTipo.añadirListenerDescartarContacto(descartarCampos());
@@ -112,6 +113,10 @@ public class MediadorModificaTipo {
 				resetCampos();
 			}
 		};
+	}
+
+	public JPanel getPanelAsociado() {
+		return panelModificaTipo;
 	}
 }
 	
