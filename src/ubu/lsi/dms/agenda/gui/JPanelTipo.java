@@ -1,13 +1,18 @@
 package ubu.lsi.dms.agenda.gui;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 
 import ubu.lsi.dms.agenda.modelo.TipoContacto;
 
 import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -20,6 +25,8 @@ public class JPanelTipo extends JPanel implements Observer {
 	private static JTextField tipo;
 	JButton btnDescartar;
 	JButton btnGuardar;
+	private JScrollPane scrollPane;
+	private JTable table;
 
 	/**
 	 * Create the panel.
@@ -43,6 +50,26 @@ public class JPanelTipo extends JPanel implements Observer {
 		tipo.setBounds(135, 8, 86, 20);
 		add(tipo);
 		tipo.setColumns(10);
+	}
+	
+	public void recargarTabla(JTable tabla) {
+		table = tabla;
+		if (scrollPane != null)
+			remove(scrollPane);
+		JScrollPane nuevaLista = new JScrollPane(tabla);
+		nuevaLista.setBounds(462, 18, 394, 300);
+
+		if (tabla.getRowCount() == 0)
+			JOptionPane.showMessageDialog(null, "Lista Vacia");
+
+		nuevaLista
+				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		nuevaLista
+				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		scrollPane = nuevaLista;
+		add(nuevaLista);
+		validate();
+		repaint();
 	}
 
 	public static String getTextField() {
@@ -68,6 +95,18 @@ public class JPanelTipo extends JPanel implements Observer {
 	public void setTipoContacto(String string) {
 		tipo.setText(string);
 
+	}
+
+	public void añadirListeterTabla(MouseListener listener) {
+		table.addMouseListener(listener);		
+	}
+
+	public void activarCampos() {
+		tipo.setEnabled(true);		
+	}
+
+	public int getFilaSeleccionada() {
+		return table.getSelectedRow();
 	}
 
 }
