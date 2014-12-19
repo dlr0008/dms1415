@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 
 import ubu.lsi.dms.agenda.gui.JFramePrincipal;
 import ubu.lsi.dms.agenda.gui.JMenuAgenda;
+import ubu.lsi.dms.agenda.gui.JPanelContacto;
 import ubu.lsi.dms.agenda.gui.JPanelLlamada;
 import ubu.lsi.dms.agenda.gui.JPanelTipo;
 import ubu.lsi.dms.agenda.modelo.ModelTemporal;
@@ -23,7 +24,7 @@ public class MediadorMenu {
 	private JFramePrincipal frame;
 	private JMenuAgenda menu;
 
-	private JPanel panelNuevaLlamada, panelConsultas, panelNuevoContacto, panelNuevoTipo, panelModificaLlamada, panelModificaTipo, panelAyuda;
+	private JPanel panelNuevaLlamada, panelConsultas, panelNuevoContacto, panelNuevoTipo, panelModificaLlamada, panelModificaTipo, panelModificaContacto, panelAyuda;
 
 	public MediadorMenu(JFramePrincipal frame,
 			ModelTemporal modelo) {
@@ -49,6 +50,9 @@ public class MediadorMenu {
 		panelModificaTipo = new MediadorModificaTipo(frame, modelo).getPanelAsociado();
 		panelModificaTipo.setVisible(false);
 		
+		panelModificaContacto= new MediadorModificaContacto(frame,modelo).getPanelAsociado();
+		panelModificaContacto.setVisible(false);
+		
 		panelAyuda = new MediadorAyuda(frame, modelo).getPanelAsociado();
 		panelAyuda.setVisible(false);
 		
@@ -59,6 +63,7 @@ public class MediadorMenu {
 		menu.setListenerModificaLlamada(menuModificaLlamada());
 		menu.setListenerModificaTipo(menuModificaTipo());
 		menu.setListenerNuevaConsulta(menuConsulta());
+		menu.setListenerModificaContacto(menuModificaContacto());
 		menu.setListenerAyuda(menuAyuda());
 	}
 
@@ -102,6 +107,8 @@ public class MediadorMenu {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				((JPanelContacto) panelModificaContacto).recargarTabla(frame.tablaContactos());
+				cambiarPanel(panelModificaContacto);
 			}
 		};
 	}

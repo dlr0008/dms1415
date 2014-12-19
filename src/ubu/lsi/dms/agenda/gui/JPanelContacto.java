@@ -1,15 +1,21 @@
 package ubu.lsi.dms.agenda.gui;
 
 import java.awt.Choice;
+import java.awt.Color;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
 import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.ScrollPaneConstants;
 
 import ubu.lsi.dms.agenda.modelo.Contacto;
 import ubu.lsi.dms.agenda.modelo.TipoContacto;
@@ -44,6 +50,8 @@ public class JPanelContacto extends JPanel implements Observer {
 	private JButton btnDescartar;
 	private JButton btnOtrosCampos;
 	public JPanelOtrosCampos otrosCampos;
+	private JTable table;
+	private JScrollPane scrollPane;
 
 	public JPanelContacto(JFramePrincipal frame) {
 		setLayout(null);
@@ -150,10 +158,13 @@ public class JPanelContacto extends JPanel implements Observer {
 	public String getMovil() {
 		return Movil.getText();
 	}
+	
+	public String getNotas() {
+		return notas.getText();
+	}
 
-	public void setNotas(String texto) {
-		notas.setText(texto);
-
+	public String getTipoContacto() {
+		return menu.getSelectedItem();
 	}
 
 	public void setNombre(String texto) {
@@ -175,13 +186,14 @@ public class JPanelContacto extends JPanel implements Observer {
 	public void setMovil(String texto) {
 		Movil.setText(texto);
 	}
+	
+	public void setNotas(String texto) {
+		notas.setText(texto);
 
-	public String getNotas() {
-		return notas.getText();
 	}
-
-	public String getTipoContacto() {
-		return menu.getSelectedItem();
+	
+	public String setTipoDeContacto() {
+		return notas.getText();
 	}
 
 	public void añadirElementoListaMenu(String item) {
@@ -210,6 +222,36 @@ public class JPanelContacto extends JPanel implements Observer {
 
 	public void añadirListenerGuardarOtrosCampos(ActionListener listener) {
 		otrosCampos.getBtnGuardar().addActionListener(listener);
+	}
+	
+	public void recargarTabla(JTable tabla) {
+		table = tabla;
+		if (scrollPane != null)
+			remove(scrollPane);
+		JScrollPane nuevaLista = new JScrollPane(tabla);
+		nuevaLista.setBounds(462, 18, 394, 300);
+
+		if (tabla.getRowCount() == 0)
+			JOptionPane.showMessageDialog(null, "Lista Vacia");
+
+		nuevaLista
+				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		nuevaLista
+				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		scrollPane = nuevaLista;
+		add(nuevaLista);
+		validate();
+		repaint();
+	}
+	
+	public void añadirListenerTabla(MouseListener listener) {
+		table.addMouseListener(listener);
+
+	}
+	
+	public int getFilaSeleccionada() {
+		return table.getSelectedRow();
+
 	}
 
 	public void abrirOtrosCampos() {
@@ -246,6 +288,23 @@ public class JPanelContacto extends JPanel implements Observer {
 			return true;
 		}
 	}
+	
+	public void activarCampos() {
+		nombre.setEnabled(true);
+		nombre.setBackground(Color.WHITE);
+		Direccion.setEnabled(true);
+		Direccion.setBackground(Color.WHITE);
+		Ciudad.setEnabled(true);
+		Ciudad.setBackground(Color.WHITE);
+		Movil.setEnabled(true);
+		Movil.setBackground(Color.WHITE);
+		notas.setEnabled(true);
+		notas.setBackground(Color.WHITE);
+		btnGuardar.setEnabled(true);
+
+	}
+	
+	
 
 	public class JPanelOtrosCampos extends JPanel {
 		/**
@@ -384,39 +443,76 @@ public class JPanelContacto extends JPanel implements Observer {
 		public String getEstimado() {
 			return estimado.getText();
 		}
+		
+		public void setEstimado(String texto){
+			estimado.setText(texto);
+		}
 
 		public String getProv() {
 			return prov.getText();
+		}
+		
+		public void setProv(String texto){
+			prov.setText(texto);
 		}
 
 		public String getCodPostal() {
 			return codPostal.getText();
 		}
+		
+		public void setCodPostal(String texto){
+			codPostal.setText(texto);
+		}
 
 		public String getRegion() {
 			return region.getText();
 		}
-
+		
+		public void setRegion(String texto){
+			region.setText(texto);
+		}
+		
 		public String getPais() {
 			return pais.getText();
+		}
+		
+		public void setPais(String texto){
+			pais.setText(texto);
 		}
 
 		public String getNombreCompania() {
 			return nombreCompania.getText();
 		}
+		
+		public void setNombreCompania(String texto){
+			nombreCompania.setText(texto);
+		}
 
 		public String getCargo() {
 			return cargo.getText();
+		}
+		
+		public void setCargo(String texto){
+			cargo.setText(texto);
 		}
 
 		public String getTelefonoTrabajo() {
 			return telefonoTrabajo.getText();
 		}
-
+		
+		public void setTelefonoTrabajo(String texto){
+			telefonoTrabajo.setText(texto);
+		}
+		
 		public String getExtensionTrabajo() {
 			return extensionTrabajo.getText();
 		}
 
+		public void setExtensionTrabajo(String texto){
+			
+			extensionTrabajo.setText(texto);
+		}
+		
 		public JButton getBtnGuardar() {
 			return btnGuardar;
 		}
@@ -428,9 +524,17 @@ public class JPanelContacto extends JPanel implements Observer {
 		public String getFax() {
 			return fax.getText();
 		}
+		
+		public void setFax(String texto){
+			fax.setText(texto);
+		}
 
 		public String getNomCorreoElectronico() {
 			return nomCorreoElectronico.getText();
+		}
+		
+		public void setNomCorreoElectronico(String texto){
+			nomCorreoElectronico.setText(texto);
 		}
 	}
 

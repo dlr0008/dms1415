@@ -30,8 +30,7 @@ public class MediadorNuevoContacto {
 		panelNuevoContacto.añadirListenerGuardar(guardarContacto());
 		panelNuevoContacto.añadirListenerDescartarContacto(descartarCampos());
 		panelNuevoContacto.añadirListenerOtrosCampos(otrosCampos());
-		panelNuevoContacto
-				.añadirListenerDescartarOtrosCampos(DescartarPanelOtrosCampos());
+		panelNuevoContacto.añadirListenerDescartarOtrosCampos(DescartarPanelOtrosCampos());
 		panelNuevoContacto.añadirListenerGuardarOtrosCampos(guardarContacto());
 
 	}
