@@ -246,7 +246,7 @@ public class JPanelContacto extends JPanel implements Observer {
 		if (scrollPane != null)
 			remove(scrollPane);
 		JScrollPane nuevaLista = new JScrollPane(tabla);
-		nuevaLista.setBounds(462, 18, 394, 300);
+		nuevaLista.setBounds(18, 250, 915, 200);
 
 		if (tabla.getRowCount() == 0)
 			JOptionPane.showMessageDialog(null, "Lista Vacia");
