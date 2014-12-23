@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.1.7" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
+  associations="true" dependencies="false" nesting-relationships="true">  
+  <class id="1" language="java" name="ubu.lsi.dms.agenda.controlador.MediadorNuevoTipo" project="dms1415" 
+    file="/dms1415/src/ubu/lsi/dms/agenda/controlador/MediadorNuevoTipo.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="207" width="278" x="214" y="-78"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="ubu.lsi.dms.agenda.controlador.MediadorMenu" project="dms1415" 
+    file="/dms1415/src/ubu/lsi/dms/agenda/controlador/MediadorMenu.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="423" width="253" x="532" y="-78"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="ubu.lsi.dms.agenda.controlador.MediadorAyuda" project="dms1415" 
+    file="/dms1415/src/ubu/lsi/dms/agenda/controlador/MediadorAyuda.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="117" width="259" x="825" y="-78"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="ubu.lsi.dms.agenda.controlador.MediadorConsultas" project="dms1415" 
+    file="/dms1415/src/ubu/lsi/dms/agenda/controlador/MediadorConsultas.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="243" width="275" x="1124" y="-78"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" name="ubu.lsi.dms.agenda.controlador.MediadorModificaTipo" project="dms1415" 
+    file="/dms1415/src/ubu/lsi/dms/agenda/controlador/MediadorModificaTipo.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="297" width="287" x="1439" y="-78"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="6" language="java" name="ubu.lsi.dms.agenda.controlador.MediadorNuevaLLamada" project="dms1415" 
+    file="/dms1415/src/ubu/lsi/dms/agenda/controlador/MediadorNuevaLLamada.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="279" width="302" x="1766" y="-78"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="7" language="java" name="ubu.lsi.dms.agenda.controlador.MediadorNuevoContacto" project="dms1415" 
+    file="/dms1415/src/ubu/lsi/dms/agenda/controlador/MediadorNuevoContacto.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="261" width="301" x="2108" y="-78"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="8" language="java" name="ubu.lsi.dms.agenda.controlador.MediadorModificaContacto" project="dms1415" 
+    file="/dms1415/src/ubu/lsi/dms/agenda/controlador/MediadorModificaContacto.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="603" width="310" x="2449" y="-78"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="9" language="java" name="ubu.lsi.dms.agenda.controlador.MediadorModificaLlamada" project="dms1415" 
+    file="/dms1415/src/ubu/lsi/dms/agenda/controlador/MediadorModificaLlamada.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="315" width="307" x="2799" y="-78"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

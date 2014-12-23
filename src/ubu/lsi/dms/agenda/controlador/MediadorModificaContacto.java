@@ -4,17 +4,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 
 import ubu.lsi.dms.agenda.gui.JFramePrincipal;
 import ubu.lsi.dms.agenda.gui.JPanelContacto;
-import ubu.lsi.dms.agenda.gui.JPanelLlamada;
 import ubu.lsi.dms.agenda.modelo.Contacto;
-import ubu.lsi.dms.agenda.modelo.Llamada;
 import ubu.lsi.dms.agenda.modelo.ModelTemporal;
 import ubu.lsi.dms.agenda.modelo.TipoContacto;
 
@@ -56,8 +52,8 @@ public class MediadorModificaContacto {
 							"Rellene todos los campos");
 				} else {
 					modificaContacto();
-					resetCampos();
 					JOptionPane.showMessageDialog(null, "Contacto Modificado");
+					resetCampos();
 				}
 				panelModificaContacto.cerrarOtrosCampos();
 			}
@@ -191,11 +187,6 @@ public class MediadorModificaContacto {
 
 	}
 	
-//	private void cambiarTipoContacto(String string) {
-//
-//		panelModificaContacto.setTipoContacto(string);
-//
-//	}
 	
 	private void cambiarNotas(String string) {
 		panelModificaContacto.setNotas(string);

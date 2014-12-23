@@ -46,10 +46,8 @@ public class MediadorModificaLlamada {
 			}
 
 			private void añadirLlamada() {
-				Llamada llam = new Llamada(llamada.getIdLlamada(),
-						llamada.getContacto(),
-						panelModificarLlamada.getFecha(),
-						panelModificarLlamada.getNotas(),
+				Llamada llam = new Llamada(llamada.getIdLlamada(), llamada.getContacto(),
+						panelModificarLlamada.getFecha(), panelModificarLlamada.getNotas(),
 						panelModificarLlamada.getAsunto());
 				modelo.getLlamadas().addLLamada(llam);
 			}
@@ -68,8 +66,7 @@ public class MediadorModificaLlamada {
 				for (Llamada l : llamadas) {
 					if (fila == i) {
 						llamada = l;
-						cambiarNombre(llamada.getContacto().getNombre() + " "
-								+ llamada.getContacto().getApellidos());
+						cambiarNombre(llamada.getContacto().getNombre() + " " + llamada.getContacto().getApellidos());
 						cambiarFecha(llamada.getFechaLlamada());
 						cambiarAsunto(llamada.getAsunto());
 						cambiarNotas(llamada.getNotas());

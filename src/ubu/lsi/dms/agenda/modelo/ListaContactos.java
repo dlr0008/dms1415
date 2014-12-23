@@ -23,12 +23,23 @@ public class ListaContactos extends Observable {
 	}
 
 	/**
-	 * Añade una llamada a la lista, y notifica a los observadores
+	 * Añade uncontacto a la lista, y notifica a los observadores
 	 * 
 	 * @param llamada
 	 */
 	public void addContacto(Contacto contacto) {
 		listaContactos.add(contacto);
+		setChanged();
+		notifyObservers(contacto);
+	}
+	
+	/**
+	 * Añade un contacto a la lista, y notifica a los observadores
+	 * 
+	 * @param llamada
+	 */
+	public void removeContacto(Contacto contacto) {
+		listaContactos.remove(contacto);
 		setChanged();
 		notifyObservers(contacto);
 	}
