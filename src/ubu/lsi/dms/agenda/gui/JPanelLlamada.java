@@ -16,6 +16,19 @@ import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
+/**
+ * @author <A HREF="mailto:jld0016@alu.ubu.es">Jorge Laguna</A>
+ * @author <A HREF="mailto:rmp0046@alu.ubu.es">Roberto Miranda</A>
+ * @author <A HREF="mailto:aam0093@alu.ubu.es">Asier Alonso</A>
+ * @author <A HREF="mailto:dlr0008@alu.ubu.es">Daniel Lozano</A>
+ * @version 1.0
+ * 
+ *          JPanel que contiene el panel para poder insertar y modificar
+ *          Llamadas , Es observador Concreto, ya que cuando se actualiza la
+ *          lista de llamadas, se debe actualizar la tabla
+ * 
+ */
+
 public class JPanelLlamada extends JPanel implements Observer {
 	/**
 	 * 
@@ -130,6 +143,11 @@ public class JPanelLlamada extends JPanel implements Observer {
 
 	}
 
+	/**
+	 * Coloca en el SrollPanel una tabla pasada por parametro
+	 * 
+	 * @param tabla
+	 */
 	public void recargarTabla(JTable tabla) {
 		table = tabla;
 		if (scrollPane != null)
@@ -172,6 +190,10 @@ public class JPanelLlamada extends JPanel implements Observer {
 		return asunto.getText();
 	}
 
+	/**
+	 * Activa los campos de el panel
+	 * 
+	 */
 	public void activarCampos() {
 		fecha.setEnabled(true);
 		fecha.setBackground(Color.WHITE);

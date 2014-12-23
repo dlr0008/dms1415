@@ -16,13 +16,23 @@ import java.awt.event.MouseListener;
 import java.util.Observable;
 import java.util.Observer;
 
+/**
+ * @author <A HREF="mailto:jld0016@alu.ubu.es">Jorge Laguna</A>
+ * @author <A HREF="mailto:rmp0046@alu.ubu.es">Roberto Miranda</A>
+ * @author <A HREF="mailto:aam0093@alu.ubu.es">Asier Alonso</A>
+ * @author <A HREF="mailto:dlr0008@alu.ubu.es">Daniel Lozano</A>
+ * @version 1.0
+ * 
+ *          JPanel que contiene el panel para poder insertar y modificar Tipos
+ *          de Contacto, Es observador Concreto, ya que cuando se actualiza la
+ *          lista de Tipos, se debe actualizar la tabla
+ * 
+ */
 public class JPanelTipo extends JPanel implements Observer {
-	/**
-	 * 
-	 */
+
 	private JFramePrincipal frame;
 	private static final long serialVersionUID = 1L;
-	private JTextField tipo;	
+	private JTextField tipo;
 	private JScrollPane scrollPane;
 	private JTable table;
 	JButton btnDescartar;
@@ -50,7 +60,12 @@ public class JPanelTipo extends JPanel implements Observer {
 		tipo.setBounds(135, 8, 86, 20);
 		add(tipo);
 	}
-	
+
+	/**
+	 * Coloca en el SrollPanel una tabla pasada por parametro
+	 * 
+	 * @param tabla
+	 */
 	public void recargarTabla(JTable tabla) {
 		table = tabla;
 		if (scrollPane != null)
@@ -70,7 +85,7 @@ public class JPanelTipo extends JPanel implements Observer {
 		validate();
 		repaint();
 	}
-	
+
 	public void añadirListenerGuardar(ActionListener listener) {
 		btnGuardar.addActionListener(listener);
 
@@ -90,17 +105,17 @@ public class JPanelTipo extends JPanel implements Observer {
 	public void setTipoContacto(String string) {
 		tipo.setText(string);
 	}
-	
+
 	public String getTipoContacto() {
 		return tipo.getText();
 	}
 
 	public void añadirListeterTabla(MouseListener listener) {
-		table.addMouseListener(listener);		
+		table.addMouseListener(listener);
 	}
 
 	public void activarCampos() {
-		tipo.setEnabled(true);		
+		tipo.setEnabled(true);
 	}
 
 	public int getFilaSeleccionada() {

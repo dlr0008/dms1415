@@ -2,19 +2,18 @@ package ubu.lsi.dms.agenda.modelo;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Observable;
 import java.util.Random;
 
 /**
+ * @author <A HREF="mailto:jld0016@alu.ubu.es">Jorge Laguna</A>
+ * @author <A HREF="mailto:rmp0046@alu.ubu.es">Roberto Miranda</A>
+ * @author <A HREF="mailto:aam0093@alu.ubu.es">Asier Alonso</A>
+ * @author <A HREF="mailto:dlr0008@alu.ubu.es">Daniel Lozano</A>
+ * @version 1.0
  * 
- * 
- * 
- * @author Roberto
- *
- *         Sujeto Concreto del patron Observador, contiene el modelo de las
- *         listas de llamadas que utiliza la Agenda
- *
+ *          Clase que implementa el Patron Observador, es el sujeto Concreto,
+ *          contiene la ista de llamadas
  */
 public class ListaLlamadas extends Observable {
 

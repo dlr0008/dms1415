@@ -12,10 +12,17 @@ import ubu.lsi.dms.agenda.gui.JPanelConsultas;
 import ubu.lsi.dms.agenda.modelo.ModelTemporal;
 
 /**
+ * @author <A HREF="mailto:jld0016@alu.ubu.es">Jorge Laguna</A>
+ * @author <A HREF="mailto:rmp0046@alu.ubu.es">Roberto Miranda</A>
+ * @author <A HREF="mailto:aam0093@alu.ubu.es">Asier Alonso</A>
+ * @author <A HREF="mailto:dlr0008@alu.ubu.es">Daniel Lozano</A>
+ * @version 1.0
  * 
+ *          Clase que implementa el Patron mediadro, se encarga del manejo del
+ *          Jpanel de Consultas, y de todos los objetos contenidos en el,
+ *          Implementa tambien el Patron Comando, asignado los distintos
+ *          listener a los objetos del panel
  * 
- * @author Roberto Miranda Pérez
- *
  */
 public class MediadorConsultas {
 
@@ -24,8 +31,7 @@ public class MediadorConsultas {
 	JFramePrincipal frame;
 	int i = 0;
 
-	public MediadorConsultas(JFramePrincipal frame,
-			ModelTemporal modelo) {
+	public MediadorConsultas(JFramePrincipal frame, ModelTemporal modelo) {
 
 		this.modelo = modelo;
 		this.frame = frame;
@@ -34,9 +40,6 @@ public class MediadorConsultas {
 		panelConsulta.añadirListenerActivar(activarElementos());
 		panelConsulta.añadirListenerDesactivar(desActivarElementos());
 		panelConsulta.añadirListenerMostrarTodos(mostrarTodos());
-		modelo.getContactos().addObserver(panelConsulta);
-		modelo.getLlamadas().addObserver(panelConsulta);
-		modelo.getTipos().addObserver(panelConsulta);
 		frame.tablaContactos();
 		frame.tablaLLamadas();
 		frame.tablaTipos();

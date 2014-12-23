@@ -5,6 +5,16 @@ import java.util.Collection;
 import java.util.Observable;
 import java.util.Random;
 
+/**
+ * @author <A HREF="mailto:jld0016@alu.ubu.es">Jorge Laguna</A>
+ * @author <A HREF="mailto:rmp0046@alu.ubu.es">Roberto Miranda</A>
+ * @author <A HREF="mailto:aam0093@alu.ubu.es">Asier Alonso</A>
+ * @author <A HREF="mailto:dlr0008@alu.ubu.es">Daniel Lozano</A>
+ * @version 1.0
+ * 
+ *          Clase que implementa el Patron Observador, es el sujeto Concreto,
+ *          contiene la ista de Contactos
+ */
 public class ListaContactos extends Observable {
 	Collection<Contacto> listaContactos = new ArrayList<Contacto>();
 
@@ -32,7 +42,7 @@ public class ListaContactos extends Observable {
 		setChanged();
 		notifyObservers(contacto);
 	}
-	
+
 	/**
 	 * Añade un contacto a la lista, y notifica a los observadores
 	 * 
@@ -68,7 +78,7 @@ public class ListaContactos extends Observable {
 		return listaContactosFiltradas;
 	}
 
-	public int size(){
+	public int size() {
 		return listaContactos.size();
 	}
 

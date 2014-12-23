@@ -7,6 +7,16 @@ import javax.swing.JPanel;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
+/**
+ * @author <A HREF="mailto:jld0016@alu.ubu.es">Jorge Laguna</A>
+ * @author <A HREF="mailto:rmp0046@alu.ubu.es">Roberto Miranda</A>
+ * @author <A HREF="mailto:aam0093@alu.ubu.es">Asier Alonso</A>
+ * @author <A HREF="mailto:dlr0008@alu.ubu.es">Daniel Lozano</A>
+ * @version 1.0
+ * 
+ *          JPanel que contiene el panel que maneja el menu de la aplicacion
+ * 
+ */
 
 public class JMenuAgenda extends JPanel {
 
@@ -16,7 +26,7 @@ public class JMenuAgenda extends JPanel {
 	private JMenu mnInsertar;
 	private JMenuItem mntmNuevoContacto;
 	private JMenuItem mntnNuevoLlamada;
-	private JMenuItem mntmNuevoTipocontacto;	
+	private JMenuItem mntmNuevoTipocontacto;
 	private JMenu mnModificar;
 	private JMenuItem mntmContacto;
 	private JMenuItem mntmLlamada;
@@ -25,7 +35,6 @@ public class JMenuAgenda extends JPanel {
 	private JMenuItem mntmNuevaConsulta;
 	private JMenu mnAyuda;
 	private JMenuItem mntmAyuda;
-	
 
 	public JMenuAgenda() {
 		setLayout(null);
@@ -71,47 +80,44 @@ public class JMenuAgenda extends JPanel {
 
 	}
 
-
 	public void setListenerNuevoContacto(ActionListener menuNuevoContacto) {
 		mntmNuevoContacto.addActionListener(menuNuevoContacto);
-		
+
 	}
 
 	public void setListenerNuevaLLamada(ActionListener menuNuevaLlamada) {
 		mntnNuevoLlamada.addActionListener(menuNuevaLlamada);
-		
+
 	}
 
 	public void setListenerNuevoTipo(ActionListener menuNuevoTipo) {
 		mntmNuevoTipocontacto.addActionListener(menuNuevoTipo);
-		
-	}	
+
+	}
 
 	public void setListenerModificaContacto(ActionListener menuModificaContacto) {
-		mntmContacto.addActionListener(menuModificaContacto);	
-		
-	}	
+		mntmContacto.addActionListener(menuModificaContacto);
+
+	}
 
 	public void setListenerModificaLlamada(ActionListener menuModificaLlamada) {
-		mntmLlamada.addActionListener(menuModificaLlamada);		
-		
-	}	
-	
-	public void setListenerModificaTipo(ActionListener menuModificaTipo) {
-		mntmTipoDeContacto.addActionListener(menuModificaTipo);	
-		
+		mntmLlamada.addActionListener(menuModificaLlamada);
+
 	}
-	
+
+	public void setListenerModificaTipo(ActionListener menuModificaTipo) {
+		mntmTipoDeContacto.addActionListener(menuModificaTipo);
+
+	}
+
 	public void setListenerNuevaConsulta(ActionListener menuConsulta) {
 		mntmNuevaConsulta.addActionListener(menuConsulta);
-		
+
 	}
-	
+
 	public void setListenerAyuda(ActionListener menuAyuda) {
 		mntmAyuda.addActionListener(menuAyuda);
-		
+
 	}
-	
-	
 
 }

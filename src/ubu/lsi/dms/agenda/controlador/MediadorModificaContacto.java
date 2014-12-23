@@ -14,6 +14,18 @@ import ubu.lsi.dms.agenda.modelo.Contacto;
 import ubu.lsi.dms.agenda.modelo.ModelTemporal;
 import ubu.lsi.dms.agenda.modelo.TipoContacto;
 
+/**
+ * @author <A HREF="mailto:jld0016@alu.ubu.es">Jorge Laguna</A>
+ * @author <A HREF="mailto:rmp0046@alu.ubu.es">Roberto Miranda</A>
+ * @author <A HREF="mailto:aam0093@alu.ubu.es">Asier Alonso</A>
+ * @author <A HREF="mailto:dlr0008@alu.ubu.es">Daniel Lozano</A>
+ * @version 1.0
+ * 
+ *          Clase que implementa el Patron mediador, se encarga del manejo de el
+ *          Jpanel de Contactos, modificandolo para el caso de uso de modificar
+ *          contactos, tambien el patron comando asignado los listener a los
+ *          distintos elementos.
+ */
 public class MediadorModificaContacto {
 
 	private JPanelContacto panelModificaContacto;
@@ -22,20 +34,22 @@ public class MediadorModificaContacto {
 	private Collection<Contacto> contactos;
 
 	public MediadorModificaContacto(JFramePrincipal frame, ModelTemporal modelo) {
-		
-		this.modelo=modelo;
-		panelModificaContacto=new JPanelContacto(frame);
+
+		this.modelo = modelo;
+		panelModificaContacto = new JPanelContacto(frame);
 		for (TipoContacto t : modelo.getTipos().obtenerTodosTipos()) {
 			panelModificaContacto.añadirElementoListaMenu(t.getTipoContacto());
 		}
 		panelModificaContacto.recargarTabla(frame.tablaContactos());
 		panelModificaContacto.añadirListenerGuardar(guardarContacto());
 		panelModificaContacto.añadirListenerTabla(seleccionarContacto());
-		panelModificaContacto.añadirListenerDescartarContacto(descartarCampos());
+		panelModificaContacto
+				.añadirListenerDescartarContacto(descartarCampos());
 		panelModificaContacto.añadirListenerOtrosCampos(otrosCampos());
-		panelModificaContacto.añadirListenerDescartarOtrosCampos(DescartarPanelOtrosCampos());
+		panelModificaContacto
+				.añadirListenerDescartarOtrosCampos(DescartarPanelOtrosCampos());
 	}
-	
+
 	public JPanelContacto getPanelAsociado() {
 		return panelModificaContacto;
 	}
@@ -45,7 +59,7 @@ public class MediadorModificaContacto {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+
 				panelModificaContacto.cerrarOtrosCampos();
 				if (!panelModificaContacto.compruebaVacios()) {
 					JOptionPane.showMessageDialog(null,
@@ -57,11 +71,12 @@ public class MediadorModificaContacto {
 				}
 				panelModificaContacto.cerrarOtrosCampos();
 			}
-			
-			private void modificaContacto(){
+
+			private void modificaContacto() {
 				String tContacto = panelModificaContacto.getTipoContacto();
 				TipoContacto tipoContacto = buscaTipoContacto(tContacto);
-				Contacto con = new Contacto(contacto.getIdContacto(),
+				Contacto con = new Contacto(
+						contacto.getIdContacto(),
 						panelModificaContacto.getNombre(),
 						panelModificaContacto.getApellidos(),
 						panelModificaContacto.otrosCampos.getEstimado(),
@@ -77,17 +92,15 @@ public class MediadorModificaContacto {
 						panelModificaContacto.otrosCampos.getExtensionTrabajo(),
 						panelModificaContacto.getMovil(),
 						panelModificaContacto.otrosCampos.getFax(),
-						panelModificaContacto.otrosCampos.getNomCorreoElectronico(),
-						panelModificaContacto.getNotas(),
-						tipoContacto
-						);
+						panelModificaContacto.otrosCampos
+								.getNomCorreoElectronico(),
+						panelModificaContacto.getNotas(), tipoContacto);
 				modelo.getContactos().addContacto(con);
 			}
-			
 
 		};
 	}
-	
+
 	private TipoContacto buscaTipoContacto(String tContacto) {
 		Collection<TipoContacto> tipos = modelo.getTipos().obtenerTodosTipos();
 		for (TipoContacto t : tipos) {
@@ -97,8 +110,8 @@ public class MediadorModificaContacto {
 		}
 		return null;
 	}
-	
-	private MouseListener seleccionarContacto(){
+
+	private MouseListener seleccionarContacto() {
 		return new MouseListener() {
 
 			@Override
@@ -126,47 +139,47 @@ public class MediadorModificaContacto {
 						cambiarTelefonoTrabajo(contacto.getTelefonoTrabajo());
 						cambiarExtensionTrabajo(contacto.getExtensionTrabajo());
 						cambiarFax(contacto.getNumFax());
-						cambiarNomCorreoElectronico(contacto.getNomCorreoElectronico());						
+						cambiarNomCorreoElectronico(contacto
+								.getNomCorreoElectronico());
 					}
 					i++;
 				}
-				
+
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 		};
-		
-	
+
 	}
-	
+
 	private void cambiarNombre(String string) {
 		panelModificaContacto.setNombre(string);
 
 	}
-	
+
 	private void cambiarApellido(String string) {
 		panelModificaContacto.setApellidos(string);
 
@@ -176,75 +189,76 @@ public class MediadorModificaContacto {
 		panelModificaContacto.setDireccion(string);
 
 	}
-	
+
 	private void cambiarCiudad(String string) {
 		panelModificaContacto.setCiudad(string);
 
 	}
-	
+
 	private void cambiarMovil(String string) {
 		panelModificaContacto.setMovil(string);
 
 	}
-	
-	
+
 	private void cambiarNotas(String string) {
 		panelModificaContacto.setNotas(string);
 
 	}
-	
+
 	private void cambiarEstimado(String string) {
 		panelModificaContacto.otrosCampos.setEstimado(string);
 	}
-	
+
 	private void cambiarProv(String string) {
 		panelModificaContacto.otrosCampos.setProv(string);
 
 	}
-	
+
 	private void cambiarCodPostal(String string) {
 		panelModificaContacto.otrosCampos.setCodPostal(string);
 
 	}
+
 	private void cambiarRegion(String string) {
 		panelModificaContacto.otrosCampos.setRegion(string);
 
 	}
-	
+
 	private void cambiarPais(String string) {
 		panelModificaContacto.otrosCampos.setPais(string);
 
 	}
-	
+
 	private void cambiarNombreCompania(String string) {
 		panelModificaContacto.otrosCampos.setNombreCompania(string);
 
 	}
-	
+
 	private void cambiarCargo(String string) {
 		panelModificaContacto.otrosCampos.setCargo(string);
 
 	}
-	
+
 	private void cambiarTelefonoTrabajo(String string) {
 		panelModificaContacto.otrosCampos.setTelefonoTrabajo(string);
 
 	}
-	
+
 	private void cambiarExtensionTrabajo(String string) {
 		panelModificaContacto.otrosCampos.setExtensionTrabajo(string);
 
 	}
-	
+
 	private void cambiarFax(String string) {
 		panelModificaContacto.otrosCampos.setFax(string);
 
 	}
+
 	private void cambiarNomCorreoElectronico(String string) {
 		panelModificaContacto.otrosCampos.setNomCorreoElectronico(string);
 
 	}
-	
+
 	private void resetCampos() {
 
 		panelModificaContacto.setNombre("");
@@ -265,7 +279,7 @@ public class MediadorModificaContacto {
 			}
 		};
 	}
-	
+
 	private ActionListener otrosCampos() {
 		return new ActionListener() {
 
@@ -276,8 +290,8 @@ public class MediadorModificaContacto {
 			}
 		};
 	}
-	
-	private ActionListener DescartarPanelOtrosCampos(){
+
+	private ActionListener DescartarPanelOtrosCampos() {
 		return new ActionListener() {
 
 			@Override
@@ -287,6 +301,5 @@ public class MediadorModificaContacto {
 			}
 		};
 	}
-
 
 }

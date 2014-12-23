@@ -13,6 +13,18 @@ import ubu.lsi.dms.agenda.gui.JPanelLlamada;
 import ubu.lsi.dms.agenda.modelo.Llamada;
 import ubu.lsi.dms.agenda.modelo.ModelTemporal;
 
+/**
+ * @author <A HREF="mailto:jld0016@alu.ubu.es">Jorge Laguna</A>
+ * @author <A HREF="mailto:rmp0046@alu.ubu.es">Roberto Miranda</A>
+ * @author <A HREF="mailto:aam0093@alu.ubu.es">Asier Alonso</A>
+ * @author <A HREF="mailto:dlr0008@alu.ubu.es">Daniel Lozano</A>
+ * @version 1.0
+ * 
+ *          Clase que implementa el Patron mediador, se encarga del manejo de el
+ *          Jpanel de Llamada, modificandolo para el caso de uso de modificar
+ *          llamada, tambien el patron comando asignado los listener a los
+ *          distintos elementos.
+ */
 public class MediadorModificaLlamada {
 
 	private JPanelLlamada panelModificarLlamada;
@@ -27,7 +39,8 @@ public class MediadorModificaLlamada {
 		panelModificarLlamada.recargarTabla(frame.tablaLLamadas());
 		panelModificarLlamada.añadirListenerGuardar(guardarLlamada());
 		panelModificarLlamada.añadirListeterTabla(seleccionarContacto());
-		panelModificarLlamada.añadirListenerDescartarContacto(descartarCampos());
+		panelModificarLlamada
+				.añadirListenerDescartarContacto(descartarCampos());
 
 	}
 
@@ -36,8 +49,6 @@ public class MediadorModificaLlamada {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// Añadir aqui la funcion para guardar los campos del contacto y
-				// otros
 
 				añadirLlamada();
 				JOptionPane.showMessageDialog(null, "Llamada Modificada");
@@ -46,8 +57,10 @@ public class MediadorModificaLlamada {
 			}
 
 			private void añadirLlamada() {
-				Llamada llam = new Llamada(llamada.getIdLlamada(), llamada.getContacto(),
-						panelModificarLlamada.getFecha(), panelModificarLlamada.getNotas(),
+				Llamada llam = new Llamada(llamada.getIdLlamada(),
+						llamada.getContacto(),
+						panelModificarLlamada.getFecha(),
+						panelModificarLlamada.getNotas(),
 						panelModificarLlamada.getAsunto());
 				modelo.getLlamadas().addLLamada(llam);
 			}
@@ -66,7 +79,8 @@ public class MediadorModificaLlamada {
 				for (Llamada l : llamadas) {
 					if (fila == i) {
 						llamada = l;
-						cambiarNombre(llamada.getContacto().getNombre() + " " + llamada.getContacto().getApellidos());
+						cambiarNombre(llamada.getContacto().getNombre() + " "
+								+ llamada.getContacto().getApellidos());
 						cambiarFecha(llamada.getFechaLlamada());
 						cambiarAsunto(llamada.getAsunto());
 						cambiarNotas(llamada.getNotas());
@@ -122,7 +136,6 @@ public class MediadorModificaLlamada {
 	}
 
 	private void resetCampos() {
-		// panelNuevaLlamada.setTextPane("");
 		panelModificarLlamada.setfecha("");
 		panelModificarLlamada.setasunto("");
 		panelModificarLlamada.setTextPane("");

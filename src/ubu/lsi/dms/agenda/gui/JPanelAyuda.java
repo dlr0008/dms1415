@@ -4,24 +4,29 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JTextPane;
 
+/**
+ * @author <A HREF="mailto:jld0016@alu.ubu.es">Jorge Laguna</A>
+ * @author <A HREF="mailto:rmp0046@alu.ubu.es">Roberto Miranda</A>
+ * @author <A HREF="mailto:aam0093@alu.ubu.es">Asier Alonso</A>
+ * @author <A HREF="mailto:dlr0008@alu.ubu.es">Daniel Lozano</A>
+ * @version 1.0
+ * 
+ *          JPanel que contiene el panel de ayuda.
+ * 
+ */
 public class JPanelAyuda extends JPanel {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-	private JFramePrincipal frame;
 
 	/**
 	 * Create the panel.
 	 */
 	public JPanelAyuda() {
 		setLayout(null);
-		
+
 		JLabel lblAyudaDeAgenda = new JLabel("Ayuda de Agenda");
 		lblAyudaDeAgenda.setBounds(10, 11, 141, 14);
 		add(lblAyudaDeAgenda);
-		
+
 		JTextPane textPane = new JTextPane();
 		textPane.setBounds(10, 36, 924, 523);
 		add(textPane);
@@ -44,10 +49,5 @@ public class JPanelAyuda extends JPanel {
 				+ "\t-rmp0046@alu.ubu.es - Roberto Miranda\n"
 				+ "\t-aam0093@alu.ubu.es - Asier Alonso\n"
 				+ "\t-dlr0008@alu.ubu.es - Daniel Lozano\n");
-	}
-
-	public void setFrame(JFramePrincipal frame) {
-		this.frame=frame;
-		
 	}
 }

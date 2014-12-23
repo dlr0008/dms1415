@@ -4,6 +4,16 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Observable;
 
+/**
+ * @author <A HREF="mailto:jld0016@alu.ubu.es">Jorge Laguna</A>
+ * @author <A HREF="mailto:rmp0046@alu.ubu.es">Roberto Miranda</A>
+ * @author <A HREF="mailto:aam0093@alu.ubu.es">Asier Alonso</A>
+ * @author <A HREF="mailto:dlr0008@alu.ubu.es">Daniel Lozano</A>
+ * @version 1.0
+ * 
+ *          Clase que implementa el Patron Observador, es el sujeto Concreto,
+ *          contiene la lista de tipos de contacto
+ */
 public class ListaTiposContacto extends Observable {
 
 	Collection<TipoContacto> listaTipos = new ArrayList<TipoContacto>();

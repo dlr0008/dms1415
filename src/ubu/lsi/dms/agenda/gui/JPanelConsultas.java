@@ -3,10 +3,6 @@ package ubu.lsi.dms.agenda.gui;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
-import java.util.Observer;
-
-import java.util.Observable;
-
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -18,10 +14,19 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 
-public class JPanelConsultas extends JPanel implements Observer{
-	/**
-	 * 
-	 */
+/**
+ * @author <A HREF="mailto:jld0016@alu.ubu.es">Jorge Laguna</A>
+ * @author <A HREF="mailto:rmp0046@alu.ubu.es">Roberto Miranda</A>
+ * @author <A HREF="mailto:aam0093@alu.ubu.es">Asier Alonso</A>
+ * @author <A HREF="mailto:dlr0008@alu.ubu.es">Daniel Lozano</A>
+ * @version 1.0
+ * 
+ *          JPanel que contiene el panel para poder Consultar las distintas
+ *          tablas que se utilizan en la aplicacion
+ * 
+ */
+public class JPanelConsultas extends JPanel {
+
 	private static final long serialVersionUID = 1L;
 	/**
 	 * Create the panel.
@@ -78,7 +83,8 @@ public class JPanelConsultas extends JPanel implements Observer{
 		listScroller = new JScrollPane();
 		listScroller.setBounds(6, 87, 929, 467);
 		add(listScroller);
-		listScroller.setToolTipText("Lista en la que se muestran los elementos selecionados");
+		listScroller
+				.setToolTipText("Lista en la que se muestran los elementos selecionados");
 
 	}
 
@@ -95,6 +101,11 @@ public class JPanelConsultas extends JPanel implements Observer{
 
 	}
 
+	/**
+	 * Activa o desactiva los campos
+	 * 
+	 * @param encendido
+	 */
 	public void activar(Boolean encendido) {
 
 		campo.setEnabled(encendido);
@@ -106,6 +117,11 @@ public class JPanelConsultas extends JPanel implements Observer{
 		lblIntroduce.setEnabled(encendido);
 	}
 
+	/**
+	 * Recarga la tabla del Scroll panel
+	 * 
+	 * @param tabla
+	 */
 	public void crearListaConsultas(JTable tabla) {
 		if (listScroller != null)
 			remove(listScroller);
@@ -156,12 +172,5 @@ public class JPanelConsultas extends JPanel implements Observer{
 		btnTodos.addActionListener(listener);
 
 	}
-
-	@Override
-	public void update(Observable arg0, Object arg1) {
-		// TODO Auto-generated method stub
-		
-	}
-
 
 }

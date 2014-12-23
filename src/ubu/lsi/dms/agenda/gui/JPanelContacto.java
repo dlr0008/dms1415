@@ -20,10 +20,22 @@ import javax.swing.ScrollPaneConstants;
 import ubu.lsi.dms.agenda.modelo.Contacto;
 import ubu.lsi.dms.agenda.modelo.TipoContacto;
 
+/**
+ * @author <A HREF="mailto:jld0016@alu.ubu.es">Jorge Laguna</A>
+ * @author <A HREF="mailto:rmp0046@alu.ubu.es">Roberto Miranda</A>
+ * @author <A HREF="mailto:aam0093@alu.ubu.es">Asier Alonso</A>
+ * @author <A HREF="mailto:dlr0008@alu.ubu.es">Daniel Lozano</A>
+ * @version 1.0
+ * 
+ *          JPanel que contiene el panel para poder insertar y modificar
+ *          contactos , Es observador Concreto, ya que cuando se actualiza la
+ *          lista de contactos se debe actualizar la tabla, tambien cuando se
+ *          actualizan los tipos de contacto, se recarga la lista de selecion de
+ *          estos
+ * 
+ */
 public class JPanelContacto extends JPanel implements Observer {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 9166276019426152339L;
 
 	private JFramePrincipal frame = null;
@@ -158,7 +170,7 @@ public class JPanelContacto extends JPanel implements Observer {
 	public String getMovil() {
 		return Movil.getText();
 	}
-	
+
 	public String getNotas() {
 		return notas.getText();
 	}
@@ -186,12 +198,12 @@ public class JPanelContacto extends JPanel implements Observer {
 	public void setMovil(String texto) {
 		Movil.setText(texto);
 	}
-	
+
 	public void setNotas(String texto) {
 		notas.setText(texto);
 
 	}
-	
+
 	public String setTipoDeContacto() {
 		return notas.getText();
 	}
@@ -223,7 +235,12 @@ public class JPanelContacto extends JPanel implements Observer {
 	public void añadirListenerGuardarOtrosCampos(ActionListener listener) {
 		otrosCampos.getBtnGuardar().addActionListener(listener);
 	}
-	
+
+	/**
+	 * Coloca en el SrollPanel una tabla pasada por parametro
+	 * 
+	 * @param tabla
+	 */
 	public void recargarTabla(JTable tabla) {
 		table = tabla;
 		if (scrollPane != null)
@@ -243,17 +260,21 @@ public class JPanelContacto extends JPanel implements Observer {
 		validate();
 		repaint();
 	}
-	
+
 	public void añadirListenerTabla(MouseListener listener) {
 		table.addMouseListener(listener);
 
 	}
-	
+
 	public int getFilaSeleccionada() {
 		return table.getSelectedRow();
 
 	}
 
+	/**
+	 * Abre el panel de otros Campos
+	 * 
+	 */
 	public void abrirOtrosCampos() {
 		otrosCampos.setVisible(true);
 		this.setVisible(false);
@@ -262,6 +283,10 @@ public class JPanelContacto extends JPanel implements Observer {
 		frame.repaint();
 	}
 
+	/**
+	 * Cierra el Panel de Otros Campos
+	 * 
+	 */
 	public void cerrarOtrosCampos() {
 		otrosCampos.setVisible(false);
 		setVisible(true);
@@ -288,7 +313,11 @@ public class JPanelContacto extends JPanel implements Observer {
 			return true;
 		}
 	}
-	
+
+	/**
+	 * Activa los campos para editar
+	 * 
+	 */
 	public void activarCampos() {
 		nombre.setEnabled(true);
 		nombre.setBackground(Color.WHITE);
@@ -303,9 +332,19 @@ public class JPanelContacto extends JPanel implements Observer {
 		btnGuardar.setEnabled(true);
 
 	}
-	
-	
 
+	/**
+	 * @author <A HREF="mailto:jld0016@alu.ubu.es">Jorge Laguna</A>
+	 * @author <A HREF="mailto:rmp0046@alu.ubu.es">Roberto Miranda</A>
+	 * @author <A HREF="mailto:aam0093@alu.ubu.es">Asier Alonso</A>
+	 * @author <A HREF="mailto:dlr0008@alu.ubu.es">Daniel Lozano</A>
+	 * @version 1.0
+	 * 
+	 *          JPanel que contiene el panel auziliar que se utiliza para los
+	 *          otros campos
+	 * 
+	 * 
+	 */
 	public class JPanelOtrosCampos extends JPanel {
 		/**
 		 * 
@@ -443,76 +482,76 @@ public class JPanelContacto extends JPanel implements Observer {
 		public String getEstimado() {
 			return estimado.getText();
 		}
-		
-		public void setEstimado(String texto){
+
+		public void setEstimado(String texto) {
 			estimado.setText(texto);
 		}
 
 		public String getProv() {
 			return prov.getText();
 		}
-		
-		public void setProv(String texto){
+
+		public void setProv(String texto) {
 			prov.setText(texto);
 		}
 
 		public String getCodPostal() {
 			return codPostal.getText();
 		}
-		
-		public void setCodPostal(String texto){
+
+		public void setCodPostal(String texto) {
 			codPostal.setText(texto);
 		}
 
 		public String getRegion() {
 			return region.getText();
 		}
-		
-		public void setRegion(String texto){
+
+		public void setRegion(String texto) {
 			region.setText(texto);
 		}
-		
+
 		public String getPais() {
 			return pais.getText();
 		}
-		
-		public void setPais(String texto){
+
+		public void setPais(String texto) {
 			pais.setText(texto);
 		}
 
 		public String getNombreCompania() {
 			return nombreCompania.getText();
 		}
-		
-		public void setNombreCompania(String texto){
+
+		public void setNombreCompania(String texto) {
 			nombreCompania.setText(texto);
 		}
 
 		public String getCargo() {
 			return cargo.getText();
 		}
-		
-		public void setCargo(String texto){
+
+		public void setCargo(String texto) {
 			cargo.setText(texto);
 		}
 
 		public String getTelefonoTrabajo() {
 			return telefonoTrabajo.getText();
 		}
-		
-		public void setTelefonoTrabajo(String texto){
+
+		public void setTelefonoTrabajo(String texto) {
 			telefonoTrabajo.setText(texto);
 		}
-		
+
 		public String getExtensionTrabajo() {
 			return extensionTrabajo.getText();
 		}
 
-		public void setExtensionTrabajo(String texto){
-			
+		public void setExtensionTrabajo(String texto) {
+
 			extensionTrabajo.setText(texto);
 		}
-		
+
 		public JButton getBtnGuardar() {
 			return btnGuardar;
 		}
@@ -524,16 +563,16 @@ public class JPanelContacto extends JPanel implements Observer {
 		public String getFax() {
 			return fax.getText();
 		}
-		
-		public void setFax(String texto){
+
+		public void setFax(String texto) {
 			fax.setText(texto);
 		}
 
 		public String getNomCorreoElectronico() {
 			return nomCorreoElectronico.getText();
 		}
-		
-		public void setNomCorreoElectronico(String texto){
+
+		public void setNomCorreoElectronico(String texto) {
 			nomCorreoElectronico.setText(texto);
 		}
 	}

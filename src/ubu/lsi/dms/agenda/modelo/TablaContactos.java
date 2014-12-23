@@ -6,6 +6,17 @@ import javax.swing.table.AbstractTableModel;
 
 import ubu.lsi.dms.agenda.modelo.Contacto;
 
+/**
+ * @author <A HREF="mailto:jld0016@alu.ubu.es">Jorge Laguna</A>
+ * @author <A HREF="mailto:rmp0046@alu.ubu.es">Roberto Miranda</A>
+ * @author <A HREF="mailto:aam0093@alu.ubu.es">Asier Alonso</A>
+ * @author <A HREF="mailto:dlr0008@alu.ubu.es">Daniel Lozano</A>
+ * @version 1.0
+ * 
+ *          Tabla Abstacta que permite crear las tablas de Contactos empleada
+ *          para crar los JTable que usa la aplicacion, contiene la lista de
+ *          contactos
+ */
 public class TablaContactos extends AbstractTableModel {
 
 	private static final long serialVersionUID = 1L;
